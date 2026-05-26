@@ -13,13 +13,13 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // ── Config ───────────────────────────────────────────────────────────────────
 
-const AGENT_PORT       = parseInt(process.env.AGENT_PORT       ?? '3000')
-const SPECTATOR_PORT   = parseInt(process.env.SPECTATOR_PORT   ?? '3001')
-const MIN_PLAYERS      = parseInt(process.env.MIN_PLAYERS      ?? '2')
-const MAX_PLAYERS      = parseInt(process.env.MAX_PLAYERS      ?? '8')
-const STARTING_STACK   = parseInt(process.env.STARTING_STACK   ?? '1000')
-const ACTION_TIMEOUT   = parseInt(process.env.ACTION_TIMEOUT   ?? '5000')
-const TABLE_SIZE       = parseInt(process.env.TABLE_SIZE       ?? '6')
+const PORT                   = parseInt(process.env.PORT                    ?? '3000')
+const MIN_PLAYERS            = parseInt(process.env.MIN_PLAYERS             ?? '2')
+const MAX_PLAYERS            = parseInt(process.env.MAX_PLAYERS             ?? '8')
+const STARTING_STACK         = parseInt(process.env.STARTING_STACK          ?? '1000')
+const ACTION_TIMEOUT         = parseInt(process.env.ACTION_TIMEOUT          ?? '5000')
+const TABLE_SIZE             = parseInt(process.env.TABLE_SIZE              ?? '6')
+const TOURNAMENT_START_DELAY = parseInt(process.env.TOURNAMENT_START_DELAY  ?? '30')
 
 const BLIND_LEVELS: TournamentConfig['blindLevels'] = [
   { smallBlind: 10,  bigBlind: 20,  handsPerLevel: 10 },
@@ -29,21 +29,23 @@ const BLIND_LEVELS: TournamentConfig['blindLevels'] = [
   { smallBlind: 200, bigBlind: 400, handsPerLevel: 999 },
 ]
 
-// ── Spectator server ─────────────────────────────────────────────────────────
-
-const spectators = new Set<WebSocket>()
+// ── HTTP server (serves dashboard + routes WebSocket upgrades) ───────────────
 
 const dashboardHtml = readFileSync(
   join(__dirname, '../../../dashboard/index.html'),
   'utf-8'
 )
 
-const httpServer = createServer((req, res) => {
+const httpServer = createServer((_req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' })
   res.end(dashboardHtml)
 })
 
-const spectatorWss = new WebSocketServer({ server: httpServer })
+// ── Spectator WebSocket (/spectate) ──────────────────────────────────────────
+
+const spectators = new Set<WebSocket>()
+const spectatorWss = new WebSocketServer({ noServer: true })
+
 spectatorWss.on('connection', (ws) => {
   spectators.add(ws)
   ws.on('close', () => spectators.delete(ws))
@@ -56,19 +58,94 @@ function broadcast(msg: TournamentUpdateMsg | HandResultMsg): void {
   }
 }
 
-// ── Agent hub ────────────────────────────────────────────────────────────────
+// ── Agent WebSocket (all other paths) ────────────────────────────────────────
 
 const hub = new WebSocketHub({
-  port: AGENT_PORT,
+  noServer: true,
   actionTimeoutMs: ACTION_TIMEOUT,
   onAgentConnect: (agent) => {
-    console.log(`[+] ${agent.name} (${agent.id}) connected  (${hub.agentCount} total)`)
-    if (hub.agentCount >= MIN_PLAYERS) maybeStart()
+    console.log(`[+] ${agent.name} (${agent.id}) connected  (${hub.agentCount}/${MAX_PLAYERS})`)
+    maybeScheduleStart()
   },
   onAgentDisconnect: (id) => console.log(`[-] ${id} disconnected`),
 })
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// Route WebSocket upgrades by path
+httpServer.on('upgrade', (req, socket, head) => {
+  if (req.url === '/spectate') {
+    spectatorWss.handleUpgrade(req, socket, head, (ws) => {
+      spectatorWss.emit('connection', ws, req)
+    })
+  } else {
+    hub.handleUpgrade(req, socket, head)
+  }
+})
+
+// ── Tournament start countdown ────────────────────────────────────────────────
+
+let started = false
+let countdownTimer: ReturnType<typeof setTimeout> | null = null
+
+function maybeScheduleStart(): void {
+  if (started || hub.agentCount < MIN_PLAYERS) return
+  if (countdownTimer) return  // already counting down
+
+  console.log(`\n${MIN_PLAYERS} agents connected — starting in ${TOURNAMENT_START_DELAY}s (waiting for more players...)\n`)
+
+  let remaining = TOURNAMENT_START_DELAY
+  const tick = setInterval(() => {
+    remaining--
+    if (hub.agentCount >= MAX_PLAYERS || remaining <= 0) {
+      clearInterval(tick)
+      countdownTimer = null
+      start()
+    } else if (remaining % 10 === 0) {
+      console.log(`  ${remaining}s until start  (${hub.agentCount} agents connected)`)
+    }
+  }, 1000)
+
+  countdownTimer = tick
+}
+
+function start(): void {
+  if (started) return
+  started = true
+
+  const agentIds = hub.getConnectedAgentIds().slice(0, MAX_PLAYERS)
+  console.log(`\nStarting tournament with ${agentIds.length} agents: ${agentIds.join(', ')}\n`)
+
+  const config: TournamentConfig = {
+    players: agentIds.map(id => ({ id, name: id })),
+    startingStack: STARTING_STACK,
+    blindLevels: BLIND_LEVELS,
+    tableSizes: TABLE_SIZE,
+    actionTimeoutMs: ACTION_TIMEOUT,
+  }
+
+  runTournament(config).catch(console.error)
+}
+
+// ── Tournament loop ───────────────────────────────────────────────────────────
+
+async function runTournament(config: TournamentConfig): Promise<void> {
+  const tournament = new Tournament(config)
+  tournament.seatTables()
+
+  let handNumber = 0
+
+  while (!tournament.isFinished()) {
+    const tables = [...(tournament as any).tables.keys()] as string[]
+    await Promise.all(tables.map(tableId => playHand(tournament, tableId, ++handNumber)))
+
+    rebalanceTables(tournament)
+    broadcastStandings(tournament, handNumber)
+  }
+
+  const winner = tournament.standings[0]
+  console.log(`\nTournament over! Winner: ${winner.name} (${winner.id}) with ${winner.stack} chips`)
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 const POSITIONS = ['BTN', 'SB', 'BB', 'UTG', 'UTG+1', 'HJ', 'CO', 'MP']
 
@@ -87,50 +164,6 @@ function validActionsFor(state: GameState, playerIdx: number): ActionType[] {
   }
   if (p.stack > state.currentBet - p.bet) actions.push(ActionType.RAISE)
   return actions
-}
-
-// ── Tournament ───────────────────────────────────────────────────────────────
-
-let started = false
-
-function maybeStart(): void {
-  if (started) return
-  if (hub.agentCount < MIN_PLAYERS) return
-  started = true
-
-  const agentIds = hub.getConnectedAgentIds().slice(0, MAX_PLAYERS)
-  console.log(`\nStarting tournament with ${agentIds.length} agents: ${agentIds.join(', ')}\n`)
-
-  const config: TournamentConfig = {
-    players: agentIds.map(id => ({ id, name: id })),
-    startingStack: STARTING_STACK,
-    blindLevels: BLIND_LEVELS,
-    tableSizes: TABLE_SIZE,
-    actionTimeoutMs: ACTION_TIMEOUT,
-  }
-
-  runTournament(config).catch(console.error)
-}
-
-async function runTournament(config: TournamentConfig): Promise<void> {
-  const tournament = new Tournament(config)
-  tournament.seatTables()
-
-  let handNumber = 0
-
-  while (!tournament.isFinished()) {
-    // Play one hand on each active table concurrently
-    const tables = [...tournament['tables'].keys()]
-    await Promise.all(tables.map(tableId => playHand(tournament, tableId, ++handNumber)))
-
-    // Rebalance: remove empty tables and redistribute players
-    rebalanceTables(tournament)
-
-    broadcastStandings(tournament, handNumber)
-  }
-
-  const winner = tournament.standings[0]
-  console.log(`\n🏆 Tournament over! Winner: ${winner.name} (${winner.id}) with ${winner.stack} chips`)
 }
 
 async function playHand(tournament: Tournament, tableId: string, handNumber: number): Promise<void> {
@@ -207,12 +240,13 @@ function broadcastStandings(tournament: Tournament, handNumber: number): void {
   console.log(`Hand ${handNumber} | ${tournament.activePlayers.length} players remaining | Blinds ${msg.smallBlind}/${msg.bigBlind}`)
 }
 
-// ── Start ────────────────────────────────────────────────────────────────────
+// ── Start ─────────────────────────────────────────────────────────────────────
 
-httpServer.listen(SPECTATOR_PORT, () => {
-  console.log(`Dashboard: http://localhost:${SPECTATOR_PORT}`)
-  console.log(`Spectator WS: ws://localhost:${SPECTATOR_PORT}`)
+httpServer.listen(PORT, () => {
+  console.log(`Poker server listening on port ${PORT}`)
+  console.log(`  Dashboard:    http://localhost:${PORT}`)
+  console.log(`  Agent WS:     ws://localhost:${PORT}`)
+  console.log(`  Spectator WS: ws://localhost:${PORT}/spectate`)
+  console.log(`\nWaiting for ${MIN_PLAYERS}–${MAX_PLAYERS} agents...`)
+  console.log(`Tournament starts ${TOURNAMENT_START_DELAY}s after MIN_PLAYERS connects\n`)
 })
-
-console.log(`Agent WS: ws://localhost:${AGENT_PORT}`)
-console.log(`Waiting for ${MIN_PLAYERS}–${MAX_PLAYERS} agents to connect...\n`)

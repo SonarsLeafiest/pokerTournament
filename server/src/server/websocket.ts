@@ -1,5 +1,6 @@
 import { WebSocketServer, WebSocket } from 'ws'
 import type { IncomingMessage } from 'http'
+import type { Duplex } from 'stream'
 import type { AgentMessage, ServerMessage } from './protocol.js'
 
 export interface ConnectedAgent {
@@ -10,8 +11,10 @@ export interface ConnectedAgent {
 }
 
 export interface HubOptions {
-  port: number
+  port?: number          // standalone mode (local dev / tests)
+  noServer?: boolean     // attach to an existing HTTP server via handleUpgrade()
   actionTimeoutMs?: number
+  heartbeatIntervalMs?: number
   onAgentConnect?: (agent: ConnectedAgent) => void
   onAgentDisconnect?: (agentId: string) => void
 }
@@ -19,16 +22,54 @@ export interface HubOptions {
 export class WebSocketHub {
   private wss: WebSocketServer
   private agents: Map<string, ConnectedAgent> = new Map()
+  private isAlive: Map<string, boolean> = new Map()
   private readonly actionTimeoutMs: number
 
   constructor(private opts: HubOptions) {
     this.actionTimeoutMs = opts.actionTimeoutMs ?? 5000
-    this.wss = new WebSocketServer({ port: opts.port })
+
+    if (opts.noServer) {
+      this.wss = new WebSocketServer({ noServer: true })
+    } else {
+      this.wss = new WebSocketServer({ port: opts.port })
+    }
+
     this.wss.on('connection', (ws, req) => this.handleConnection(ws, req))
+
+    const heartbeatMs = opts.heartbeatIntervalMs ?? 30_000
+    const interval = setInterval(() => this.heartbeat(), heartbeatMs)
+    // Don't block process exit
+    interval.unref()
+  }
+
+  // For use with noServer mode — call from the HTTP server's 'upgrade' handler
+  handleUpgrade(req: IncomingMessage, socket: Duplex, head: Buffer): void {
+    this.wss.handleUpgrade(req, socket, head, (ws) => {
+      this.wss.emit('connection', ws, req)
+    })
+  }
+
+  private heartbeat(): void {
+    for (const [id, agent] of this.agents) {
+      if (!this.isAlive.get(id)) {
+        // No pong received since last ping — connection is dead
+        agent.ws.terminate()
+        this.agents.delete(id)
+        this.isAlive.delete(id)
+        this.opts.onAgentDisconnect?.(id)
+        continue
+      }
+      this.isAlive.set(id, false)
+      agent.ws.ping()
+    }
   }
 
   private handleConnection(ws: WebSocket, _req: IncomingMessage): void {
     let agentId: string | null = null
+
+    ws.on('pong', () => {
+      if (agentId) this.isAlive.set(agentId, true)
+    })
 
     ws.on('message', (data) => {
       let msg: AgentMessage
@@ -43,6 +84,7 @@ export class WebSocketHub {
         agentId = msg.agentId
         const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws }
         this.agents.set(agentId, agent)
+        this.isAlive.set(agentId, true)
         this.opts.onAgentConnect?.(agent)
         return
       }
@@ -62,6 +104,7 @@ export class WebSocketHub {
     ws.on('close', () => {
       if (agentId) {
         this.agents.delete(agentId)
+        this.isAlive.delete(agentId)
         this.opts.onAgentDisconnect?.(agentId)
       }
     })
