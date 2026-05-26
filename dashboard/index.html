@@ -25,6 +25,15 @@
     #connection { position: fixed; top: 12px; right: 20px; font-size: 0.75rem; }
     #connection.connected { color: #4c4; }
     #connection.disconnected { color: #c44; }
+    #countdown-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.85); z-index: 100;
+      flex-direction: column; align-items: center; justify-content: center;
+    }
+    #countdown-overlay.visible { display: flex; }
+    #countdown-number { font-size: 10rem; font-weight: bold; color: #f0c040; line-height: 1; }
+    #countdown-label  { color: #888; font-size: 1rem; letter-spacing: 3px; margin-top: 12px; }
+    #countdown-agents { color: #555; font-size: 0.8rem; margin-top: 8px; }
     .log { height: 180px; overflow-y: auto; font-size: 0.75rem; color: #666; }
     .log div { padding: 2px 0; border-bottom: 1px solid #1a1a1a; }
     .log div.win { color: #4c4; }
@@ -33,6 +42,12 @@
   </style>
 </head>
 <body>
+  <div id="countdown-overlay">
+    <div id="countdown-number">—</div>
+    <div id="countdown-label">TOURNAMENT STARTING</div>
+    <div id="countdown-agents"></div>
+  </div>
+
   <div id="connection" class="disconnected">● disconnected</div>
   <h1>♠ POKER TOURNAMENT ♠</h1>
 
@@ -90,9 +105,23 @@
     }
 
     function handleMessage(msg) {
-      if (msg.type === 'tournament_update') renderStandings(msg)
+      if (msg.type === 'countdown') renderCountdown(msg)
+      if (msg.type === 'tournament_update') { hideCountdown(); renderStandings(msg) }
       if (msg.type === 'action_required') renderHand(msg)
       if (msg.type === 'hand_result') renderResult(msg)
+    }
+
+    function renderCountdown(msg) {
+      const overlay = document.getElementById('countdown-overlay')
+      overlay.classList.add('visible')
+      document.getElementById('countdown-number').textContent =
+        msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
+      document.getElementById('countdown-agents').textContent =
+        msg.agentCount + ' agent' + (msg.agentCount !== 1 ? 's' : '') + ' connected'
+    }
+
+    function hideCountdown() {
+      document.getElementById('countdown-overlay').classList.remove('visible')
     }
 
     function renderStandings(msg) {

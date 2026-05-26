@@ -46,12 +46,18 @@ export interface TournamentUpdateMsg {
   bigBlind: number
 }
 
+export interface CountdownMsg {
+  type: 'countdown'
+  secondsRemaining: number
+  agentCount: number
+}
+
 export interface ErrorMsg {
   type: 'error'
   message: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | ErrorMsg
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 
