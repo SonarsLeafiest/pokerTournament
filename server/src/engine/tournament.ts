@@ -89,29 +89,20 @@ export class Tournament {
     const seeds = await fetchQuantumSeeds(8).catch(() => fallbackSeeds())
     const blinds = this.currentBlinds
 
-    const playerStacks = table.playerIds.map(id => ({
-      id,
-      stack: this.players.get(id)!.stack,
-    }))
+    const playerStacks: Record<string, number> = {}
+    for (const id of table.playerIds) {
+      playerStacks[id] = this.players.get(id)!.stack
+    }
 
     let state = dealHands(
       createGame({
         playerIds: table.playerIds,
-        startingStack: 0,  // overridden below
+        playerStacks,
         smallBlind: blinds.smallBlind,
         bigBlind: blinds.bigBlind,
         seeds,
       })
     )
-
-    // Apply actual stacks
-    state = {
-      ...state,
-      players: state.players.map((p, i) => ({
-        ...p,
-        stack: playerStacks[i].stack - p.bet,
-      })),
-    }
 
     // Betting loop
     while (state.stage !== GameStage.SHOWDOWN) {

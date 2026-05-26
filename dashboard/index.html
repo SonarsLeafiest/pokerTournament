@@ -61,7 +61,7 @@
   </div>
 
   <script>
-    const WS_URL = `ws://${location.host}/spectate`
+    const WS_URL = `ws://${location.hostname}:${location.port || 3001}`
     let ws
 
     function connect() {

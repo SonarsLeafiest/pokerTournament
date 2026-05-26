@@ -49,21 +49,23 @@ export interface GameState {
 
 export interface CreateGameOptions {
   playerIds: string[]
-  startingStack: number
+  startingStack?: number
+  playerStacks?: Record<string, number>
   smallBlind: number
   bigBlind: number
   seeds: number[]
 }
 
 export function createGame(opts: CreateGameOptions): GameState {
-  const { playerIds, startingStack, smallBlind, bigBlind, seeds } = opts
+  const { playerIds, smallBlind, bigBlind, seeds } = opts
   if (playerIds.length < 2) throw new Error('Need at least 2 players')
+  if (!opts.startingStack && !opts.playerStacks) throw new Error('Provide startingStack or playerStacks')
 
   const deck = shuffleDeck(createDeck(), seeds)
 
   const players: Player[] = playerIds.map(id => ({
     id,
-    stack: startingStack,
+    stack: opts.playerStacks?.[id] ?? opts.startingStack ?? 0,
     holeCards: [],
     bet: 0,
     folded: false,

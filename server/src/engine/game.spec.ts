@@ -37,6 +37,21 @@ describe('createGame', () => {
     expect(game.players[3].stack).toBe(1000)
   })
 
+  it('should support per-player stacks when players have unequal chips', () => {
+    const game = createGame({
+      playerIds: ['p1', 'p2', 'p3'],
+      playerStacks: { p1: 2000, p2: 500, p3: 800 },
+      smallBlind: 10,
+      bigBlind: 20,
+      seeds: SEEDS,
+    })
+    // p1=dealer(2000), p2=SB(500-10=490), p3=BB(800-20=780)
+    expect(game.players[0].stack).toBe(2000)
+    expect(game.players[1].stack).toBe(490)
+    expect(game.players[2].stack).toBe(780)
+    expect(game.pot).toBe(30)
+  })
+
   it('should post small and big blinds', () => {
     const game = newGame(4)
     // Dealer is index 0; SB=index 1, BB=index 2
