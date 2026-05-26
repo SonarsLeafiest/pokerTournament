@@ -3,6 +3,9 @@ Poker Tournament — Python Starter Agent
 
 Connects to the game server via WebSocket and plays random legal actions.
 Replace the `decide()` function with your own logic.
+
+Setup: cp .env.example .env  then edit .env
+Run:   python agent.py
 """
 
 import asyncio
@@ -10,6 +13,9 @@ import json
 import os
 import random
 import websockets
+from dotenv import load_dotenv
+
+load_dotenv()
 
 SERVER_URL = os.environ.get("POKER_SERVER", "ws://localhost:3000")
 AGENT_ID   = os.environ.get("AGENT_ID", "python-agent-1")

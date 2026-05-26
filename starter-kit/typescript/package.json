@@ -6,6 +6,7 @@
     "start": "tsx agent.ts"
   },
   "dependencies": {
+    "dotenv": "^16.0.0",
     "ws": "^8.18.0"
   },
   "devDependencies": {

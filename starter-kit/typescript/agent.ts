@@ -4,9 +4,11 @@
  * Connects to the game server via WebSocket and plays random legal actions.
  * Replace the `decide()` function with your own logic.
  *
- * Run:  POKER_SERVER=ws://localhost:3000 npx tsx agent.ts
+ * Setup: cp .env.example .env  then edit .env
+ * Run:   npm start
  */
 
+import 'dotenv/config'
 import WebSocket from 'ws'
 
 const SERVER_URL  = process.env.POKER_SERVER  ?? 'ws://localhost:3000'
