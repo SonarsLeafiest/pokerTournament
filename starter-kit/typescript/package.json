@@ -1,0 +1,16 @@
+{
+  "name": "poker-starter-agent",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "start": "tsx agent.ts"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.10",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

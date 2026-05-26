@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Poker Tournament — Live Dashboard</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: monospace; background: #0a0a0a; color: #e0e0e0; padding: 20px; }
+    h1 { color: #f0c040; margin-bottom: 20px; font-size: 1.4rem; letter-spacing: 2px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .panel { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 16px; }
+    .panel h2 { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { text-align: left; color: #555; padding: 4px 8px; border-bottom: 1px solid #2a2a2a; }
+    td { padding: 6px 8px; border-bottom: 1px solid #1e1e1e; }
+    tr.eliminated td { color: #444; text-decoration: line-through; }
+    tr.leader td { color: #f0c040; }
+    .cards { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .card { background: #fff; color: #000; border-radius: 4px; padding: 2px 6px; font-weight: bold; font-size: 0.9rem; }
+    .card.hearts, .card.diamonds { color: #cc2222; }
+    .status { font-size: 0.8rem; color: #555; margin-bottom: 8px; }
+    .blinds { color: #aaa; font-size: 0.8rem; }
+    .pot { font-size: 1.1rem; color: #f0c040; font-weight: bold; }
+    #connection { position: fixed; top: 12px; right: 20px; font-size: 0.75rem; }
+    #connection.connected { color: #4c4; }
+    #connection.disconnected { color: #c44; }
+    .log { height: 180px; overflow-y: auto; font-size: 0.75rem; color: #666; }
+    .log div { padding: 2px 0; border-bottom: 1px solid #1a1a1a; }
+    .log div.win { color: #4c4; }
+    .log div.fold { color: #666; }
+    .log div.raise { color: #fa0; }
+  </style>
+</head>
+<body>
+  <div id="connection" class="disconnected">● disconnected</div>
+  <h1>♠ POKER TOURNAMENT ♠</h1>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Standings</h2>
+      <table id="standings">
+        <thead><tr><th>#</th><th>Agent</th><th>Stack</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h2>Current Hand</h2>
+      <p class="blinds" id="blinds">Blinds: — / —</p>
+      <p class="pot" id="pot">Pot: —</p>
+      <p class="status" id="stage">Stage: —</p>
+      <p style="color:#888; font-size:0.8rem; margin-top:8px;">Community Cards</p>
+      <div class="cards" id="community"></div>
+    </div>
+
+    <div class="panel" style="grid-column: 1 / -1;">
+      <h2>Hand Log</h2>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <script>
+    const WS_URL = `ws://${location.host}/spectate`
+    let ws
+
+    function connect() {
+      ws = new WebSocket(WS_URL)
+      ws.onopen = () => setStatus(true)
+      ws.onclose = () => { setStatus(false); setTimeout(connect, 2000) }
+      ws.onerror = () => ws.close()
+      ws.onmessage = (e) => handleMessage(JSON.parse(e.data))
+    }
+
+    function setStatus(connected) {
+      const el = document.getElementById('connection')
+      el.textContent = connected ? '● connected' : '● disconnected'
+      el.className = connected ? 'connected' : 'disconnected'
+    }
+
+    function suitClass(card) {
+      return card.suit === 'h' || card.suit === 'd' ? 'hearts' : ''
+    }
+
+    function cardHtml(card) {
+      const ranks = { 14: 'A', 13: 'K', 12: 'Q', 11: 'J', 10: 'T' }
+      const suits = { s: '♠', h: '♥', d: '♦', c: '♣' }
+      const r = ranks[card.rank] ?? card.rank
+      return `<span class="card ${suitClass(card)}">${r}${suits[card.suit]}</span>`
+    }
+
+    function handleMessage(msg) {
+      if (msg.type === 'tournament_update') renderStandings(msg)
+      if (msg.type === 'action_required') renderHand(msg)
+      if (msg.type === 'hand_result') renderResult(msg)
+    }
+
+    function renderStandings(msg) {
+      document.getElementById('blinds').textContent =
+        `Blinds: ${msg.smallBlind} / ${msg.bigBlind}  (Level ${msg.blindLevel})`
+      const tbody = document.querySelector('#standings tbody')
+      tbody.innerHTML = msg.standings
+        .map((p, i) => `
+          <tr class="${p.eliminated ? 'eliminated' : i === 0 ? 'leader' : ''}">
+            <td>${i + 1}</td>
+            <td>${p.playerId}</td>
+            <td>${p.eliminated ? '—' : p.stack.toLocaleString()}</td>
+            <td>${p.eliminated ? '💀' : i === 0 ? '🏆' : '●'}</td>
+          </tr>`).join('')
+    }
+
+    function renderHand(msg) {
+      document.getElementById('stage').textContent = `Stage: ${msg.stage}`
+      document.getElementById('pot').textContent = `Pot: ${msg.pot.toLocaleString()}`
+      const comm = document.getElementById('community')
+      comm.innerHTML = msg.communityCards.length
+        ? msg.communityCards.map(cardHtml).join('')
+        : '<span style="color:#444">none yet</span>'
+    }
+
+    function renderResult(msg) {
+      const log = document.getElementById('log')
+      const winnerText = msg.winners.map(w => `${w.playerId} wins ${w.amount}`).join(', ')
+      const div = document.createElement('div')
+      div.className = 'win'
+      div.textContent = `Hand #${msg.handNumber}: ${winnerText}`
+      log.prepend(div)
+    }
+
+    connect()
+  </script>
+</body>
+</html>
