@@ -144,6 +144,7 @@ const handleHttp = createHttpHandler({
   setLobbyState:       (s) => { lobbyState = s },
   setAbort:            (v) => { tournamentAbort = v },
   onTriggerCountdown:  triggerCountdown,
+  onForceBounty:       () => orchestrator.forceNextBounty(),
 })
 
 const httpServer = createServer(handleHttp)

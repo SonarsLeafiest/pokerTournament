@@ -17,11 +17,27 @@ export function checkAdminKey(provided: string | null, expected: string): boolea
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
+// ── Dev-mode HTML injected into the admin panel template ──────────────────────
+
 const DEV_SECTION_HTML = `
   <div class="section">
     <h2>Developer Mode</h2>
     <button class="btn-danger" onclick="resetTournament()">↺ RESET TOURNAMENT</button>
     <p class="status" id="reset-status"></p>
+  </div>
+  <div class="section">
+    <h2>Bounty Testing</h2>
+    <p class="hint">Mock bounty events on the dashboard without a live tournament.</p>
+    <div class="btn-row">
+      <button onclick="mockBountyEvent('announced')">📣 Announce</button>
+      <button onclick="mockBountyEvent('claimed')">✅ Claimed</button>
+      <button onclick="mockBountyEvent('expired')">⌛ Expired</button>
+    </div>
+    <div class="btn-row" style="margin-top:8px">
+      <button class="btn-secondary" onclick="demoBountySequence()">▶ Demo (announce → claim)</button>
+      <button class="btn-secondary" onclick="triggerBountyNow()">⚡ Trigger in Live Tournament</button>
+    </div>
+    <p class="status" id="bounty-dev-status"></p>
   </div>`
 
 const DEV_SCRIPT = `
@@ -31,21 +47,46 @@ const DEV_SCRIPT = `
       const status = document.getElementById('reset-status')
       status.textContent = r.ok ? 'Reset! Open the lobby when ready.' : 'Error: ' + await r.text()
       status.className = 'status ' + (r.ok ? 'ok' : 'err')
+    }
+
+    async function mockBountyEvent(type) {
+      const r = await fetch('/api/dev/bounty-event?type=' + type + '&key=' + KEY, { method: 'POST' })
+      const el = document.getElementById('bounty-dev-status')
+      el.textContent = r.ok ? 'Sent: ' + type : 'Error: ' + await r.text()
+      el.className = 'status ' + (r.ok ? 'ok' : 'err')
+    }
+
+    async function demoBountySequence() {
+      const el = document.getElementById('bounty-dev-status')
+      await mockBountyEvent('announced')
+      el.textContent = 'Demo running — claim event in 4 seconds…'
+      el.className = 'status ok'
+      setTimeout(() => mockBountyEvent('claimed'), 4000)
+    }
+
+    async function triggerBountyNow() {
+      const r = await fetch('/api/dev/trigger-bounty?key=' + KEY, { method: 'POST' })
+      const el = document.getElementById('bounty-dev-status')
+      el.textContent = r.ok ? 'Bounty will fire at the next hand boundary' : 'Error: ' + await r.text()
+      el.className = 'status ' + (r.ok ? 'ok' : 'err')
     }`
+
+// ── Public types ──────────────────────────────────────────────────────────────
 
 export type LobbyState = 'closed' | 'open' | 'starting' | 'in_progress'
 
 export interface HttpHandlerOptions {
-  dashboardHtml:   string
-  adminKey:        string
-  minPlayers:      number
-  developerMode:   boolean
-  hub:             WebSocketHub
-  spectator:       SpectatorState
-  getLobbyState:   () => LobbyState
-  setLobbyState:   (s: LobbyState) => void
-  setAbort:        (v: boolean) => void
+  dashboardHtml:      string
+  adminKey:           string
+  minPlayers:         number
+  developerMode:      boolean
+  hub:                WebSocketHub
+  spectator:          SpectatorState
+  getLobbyState:      () => LobbyState
+  setLobbyState:      (s: LobbyState) => void
+  setAbort:           (v: boolean) => void
   onTriggerCountdown: () => void
+  onForceBounty:      () => void
 }
 
 /** Loads and stamps the admin HTML template with runtime values. */
@@ -61,7 +102,8 @@ export function loadAdminHtml(minPlayers: number, developerMode: boolean): strin
 export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessage, res: ServerResponse) => void {
   const {
     dashboardHtml, adminKey, minPlayers, developerMode,
-    hub, spectator, getLobbyState, setLobbyState, setAbort, onTriggerCountdown,
+    hub, spectator, getLobbyState, setLobbyState, setAbort,
+    onTriggerCountdown, onForceBounty,
   } = opts
 
   const adminHtml = loadAdminHtml(minPlayers, developerMode)
@@ -112,8 +154,8 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
 
     // Reset tournament (developer mode only)
     if (url.pathname === '/api/reset' && req.method === 'POST') {
-      if (!developerMode)                                         { res.writeHead(404); res.end('Not found'); return }
-      if (url.searchParams.get('key') !== adminKey)               { res.writeHead(401); res.end('Unauthorized'); return }
+      if (!developerMode)                                                        { res.writeHead(404); res.end('Not found');    return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey))                 { res.writeHead(401); res.end('Unauthorized'); return }
       setAbort(true)
       setLobbyState('closed')
       hub.disconnectAll()
@@ -132,6 +174,44 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
         res.writeHead(400); res.end(`Not enough players (need ${minPlayers}, have ${hub.agentCount})`); return
       }
       onTriggerCountdown()
+      res.writeHead(200); res.end('OK')
+      return
+    }
+
+    // [DEV] Mock bounty event on the spectator dashboard (no live tournament needed)
+    if (url.pathname === '/api/dev/bounty-event' && req.method === 'POST') {
+      if (!developerMode)                                             { res.writeHead(404); res.end('Not found');           return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey))      { res.writeHead(401); res.end('Unauthorized');        return }
+
+      const agents  = hub.getConnectedAgents()
+      const target  = agents[0] ?? { id: 'demo-target',  name: 'Demo Target' }
+      const claimer = agents[1] ?? agents[0] ?? { id: 'demo-claimer', name: 'Demo Agent' }
+
+      switch (url.searchParams.get('type')) {
+        case 'announced':
+          spectator.broadcast({ type: 'bounty_announced', targetId: target.id, targetName: target.name,
+            reward: 500, expiresAfterHand: 10, handNumber: 0 })
+          break
+        case 'claimed':
+          spectator.broadcast({ type: 'bounty_claimed', targetId: target.id, targetName: target.name,
+            claimedById: claimer.id, claimedByName: claimer.name, reward: 500, handNumber: 5 })
+          break
+        case 'expired':
+          spectator.broadcast({ type: 'bounty_expired', targetId: target.id, targetName: target.name, handNumber: 10 })
+          break
+        default:
+          res.writeHead(400); res.end('Unknown event type (use announced|claimed|expired)'); return
+      }
+      res.writeHead(200); res.end('OK')
+      return
+    }
+
+    // [DEV] Force the orchestrator to fire a bounty at the next hand boundary
+    if (url.pathname === '/api/dev/trigger-bounty' && req.method === 'POST') {
+      if (!developerMode)                                             { res.writeHead(404); res.end('Not found');                   return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey))      { res.writeHead(401); res.end('Unauthorized');                return }
+      if (getLobbyState() !== 'in_progress')                          { res.writeHead(409); res.end('Tournament not in progress'); return }
+      onForceBounty()
       res.writeHead(200); res.end('OK')
       return
     }

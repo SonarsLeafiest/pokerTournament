@@ -61,6 +61,15 @@ export class Orchestrator {
     return this.pendingActionMsgs.get(playerId)
   }
 
+  /**
+   * Force a bounty to be announced at the next hand boundary.
+   * No-op if bounties are disabled (bountyWindowHands === 0).
+   * Dev/testing use only — called from the admin panel.
+   */
+  forceNextBounty(): void {
+    if (this.opts.bountyWindowHands > 0) this.nextBountyAtHand = 0
+  }
+
   async runTournament(config: TournamentConfig): Promise<void> {
     const { hub, spectator, getLobbyState, setLobbyState, isAborted } = this.opts
 
