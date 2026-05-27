@@ -285,6 +285,31 @@
     .log-row.win    { color: #3a3; }
     .log-row.action { color: #555; }
 
+    /* ── Table winner banner ─────────────────────────────────────────────── */
+    #table-winner-banner {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(10, 10, 10, 0.92);
+      border: 2px solid #f0c040;
+      border-radius: 12px;
+      padding: 28px 48px;
+      text-align: center;
+      pointer-events: none;
+      z-index: 100;
+      animation: twb-fadeout 3.5s ease-out forwards;
+    }
+    #table-winner-banner .twb-trophy { font-size: 2rem; line-height: 1; }
+    #table-winner-banner .twb-table  { font-size: 0.65rem; color: #666; letter-spacing: 3px; text-transform: uppercase; margin: 6px 0 4px; }
+    #table-winner-banner .twb-name   { font-size: 1.6rem; font-weight: bold; color: #f0c040; letter-spacing: 2px; }
+    #table-winner-banner .twb-sub    { font-size: 0.7rem; color: #555; margin-top: 6px; letter-spacing: 1px; }
+    @keyframes twb-fadeout {
+      0%, 55% { opacity: 1; }
+      100%     { opacity: 0; }
+    }
+
     /* ── Countdown overlay ───────────────────────────────────────────────── */
     #countdown-overlay {
       display: none;
@@ -333,6 +358,13 @@
   </style>
 </head>
 <body>
+
+  <div id="table-winner-banner">
+    <div class="twb-trophy">🏆</div>
+    <div class="twb-table" id="twb-table"></div>
+    <div class="twb-name"  id="twb-name"></div>
+    <div class="twb-sub">Advancing to the final table</div>
+  </div>
 
   <div id="countdown-overlay">
     <div id="cd-num">—</div>
@@ -541,6 +573,19 @@
       renderTabs()
     }
 
+    function showTableWinnerBanner(msg) {
+      const tableLabel = msg.tableId.replace('table-', 'Table ')
+      document.getElementById('twb-table').textContent = tableLabel + ' Winner'
+      document.getElementById('twb-name').textContent  = msg.winnerName
+      const el = document.getElementById('table-winner-banner')
+      el.style.display   = 'block'
+      el.style.animation = 'none'
+      void el.offsetWidth
+      el.style.animation = ''
+      setTimeout(() => { el.style.display = 'none' }, 3600)
+      addLog(`${tableLabel} winner: ${esc(msg.winnerName)} — advancing to the final table`, 'win')
+    }
+
     function flashHandBanner(n) {
       const el = document.getElementById('hand-banner')
       el.textContent = `HAND  #${n}`
@@ -708,6 +753,7 @@
         const wins = msg.winners.map(w => `${w.playerId} +${w.amount}`).join(', ')
         addLog(`Hand #${msg.handNumber}: ${wins}`, 'win')
       }
+      if (msg.type === 'table_winner')       showTableWinnerBanner(msg)
       if (msg.type === 'tournament_complete') onTournamentComplete(msg)
     }
 

@@ -74,6 +74,24 @@ export class Tournament {
     return [...this.tables.keys()]
   }
 
+  /** Active (non-eliminated) players seated at a specific table. */
+  getTableActivePlayers(tableId: string): TournamentPlayer[] {
+    const table = this.tables.get(tableId)
+    if (!table) return []
+    return table.playerIds
+      .map(id => this.players.get(id))
+      .filter((p): p is TournamentPlayer => p !== undefined && !p.eliminated)
+  }
+
+  /**
+   * Returns the sole surviving player at a table, or null if more than one
+   * active player remains (or the table doesn't exist).
+   */
+  getTableWinner(tableId: string): TournamentPlayer | null {
+    const active = this.getTableActivePlayers(tableId)
+    return active.length === 1 ? active[0] : null
+  }
+
   isFinished(): boolean {
     return this.activePlayers.length <= 1
   }

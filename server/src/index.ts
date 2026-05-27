@@ -21,10 +21,19 @@ const ACTION_TIMEOUT        = parseInt(process.env.ACTION_TIMEOUT         ?? '50
 const TABLE_SIZE            = parseInt(process.env.TABLE_SIZE             ?? '6')
 const TOURNAMENT_START_DELAY = parseInt(process.env.TOURNAMENT_START_DELAY ?? '10')
 const TURN_DELAY_MS         = parseInt(process.env.TURN_DELAY_MS          ?? '1500')
+const SPECTATOR_DELAY_MS    = parseInt(process.env.SPECTATOR_DELAY_S      ?? '0') * 1000
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
 const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
   const generated = randomBytes(16).toString('hex').toUpperCase()
   console.warn(`\n  WARNING  ADMIN_KEY not set — generated key: ${generated}\n  Set ADMIN_KEY in .env to make it permanent.\n`)
+  return generated
+})()
+
+// Separate lower-privilege key: lets spectators see hole cards, but cannot
+// control the tournament.  Safe to share on a projector URL.
+const SPECTATOR_KEY = process.env.SPECTATOR_KEY ?? (() => {
+  const generated = randomBytes(16).toString('hex').toUpperCase()
+  console.warn(`  WARNING  SPECTATOR_KEY not set — generated key: ${generated}\n  Set SPECTATOR_KEY in .env to make it permanent.\n`)
   return generated
 })()
 
@@ -43,7 +52,7 @@ let tournamentAbort: boolean    = false
 
 // ── Core instances ────────────────────────────────────────────────────────────
 
-const spectator = new SpectatorState(ADMIN_KEY)
+const spectator = new SpectatorState(SPECTATOR_KEY, SPECTATOR_DELAY_MS)
 
 const hub = new WebSocketHub({
   noServer:        true,
@@ -153,8 +162,9 @@ httpServer.on('upgrade', (req, socket, head) => {
 
 httpServer.listen(PORT, () => {
   console.log(`\nPoker server on port ${PORT}`)
-  console.log(`  Dashboard (with cards): http://localhost:${PORT}/?key=${ADMIN_KEY}`)
-  console.log(`  Dashboard (public):     http://localhost:${PORT}/`)
+  const delayNote = SPECTATOR_DELAY_MS > 0 ? ` (${SPECTATOR_DELAY_MS / 1000}s delay)` : ''
+  console.log(`  Dashboard (with cards): http://localhost:${PORT}/?key=${SPECTATOR_KEY}${delayNote}`)
+  console.log(`  Dashboard (public):     http://localhost:${PORT}/${delayNote}`)
   console.log(`  Admin panel:  http://localhost:${PORT}/admin?key=${ADMIN_KEY}`)
   console.log(`  Agent WS:     ws://localhost:${PORT}`)
   console.log(`  Spectator WS: ws://localhost:${PORT}/spectate`)

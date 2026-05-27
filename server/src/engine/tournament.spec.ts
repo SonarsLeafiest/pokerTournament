@@ -130,6 +130,51 @@ describe('rebalance()', () => {
   })
 })
 
+describe('getTableActivePlayers / getTableWinner', () => {
+  it('getTableActivePlayers returns empty array for unknown table', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(t.getTableActivePlayers('table-99')).toEqual([])
+  })
+
+  it('getTableActivePlayers returns all players at a fresh table', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const ids = t.getTableActivePlayers('table-1').map(p => p.id)
+    expect(ids).toEqual(['p1', 'p2', 'p3'])
+  })
+
+  it('getTableActivePlayers excludes eliminated players', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    ;(t as any).players.get('p2').eliminated = true
+    const ids = t.getTableActivePlayers('table-1').map(p => p.id)
+    expect(ids).toEqual(['p1', 'p3'])
+  })
+
+  it('getTableWinner returns null when multiple players active', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(t.getTableWinner('table-1')).toBeNull()
+  })
+
+  it('getTableWinner returns null for unknown table', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(t.getTableWinner('table-99')).toBeNull()
+  })
+
+  it('getTableWinner returns the sole surviving player', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    ;(t as any).players.get('p2').eliminated = true
+    ;(t as any).players.get('p3').eliminated = true
+    const winner = t.getTableWinner('table-1')
+    expect(winner).not.toBeNull()
+    expect(winner!.id).toBe('p1')
+  })
+})
+
 describe('dealer button rotation', () => {
   it('should start with dealerIndex 0', () => {
     const t = new Tournament(BASE_CONFIG)

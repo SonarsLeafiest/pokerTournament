@@ -3,7 +3,7 @@ import type { SpectatorState } from './spectator.js'
 import type { LobbyState } from './http.js'
 import type {
   ActionRequiredMsg, AgentActionMsg,
-  HandResultMsg, TournamentUpdateMsg, TableStateMsg, TournamentCompleteMsg,
+  HandResultMsg, TournamentUpdateMsg, TableStateMsg, TournamentCompleteMsg, TableWinnerMsg,
 } from './protocol.js'
 import { Tournament, type TournamentConfig, type ActionRequestor } from '../engine/tournament.js'
 import { ActionType, type GameState } from '../engine/game.js'
@@ -170,6 +170,7 @@ export class Orchestrator {
       return { type: action as ActionType, amount }
     }
 
+    const activeBefore = tournament.getTableActivePlayers(tableId)
     const stacksBefore = new Map(tournament.standings.map(p => [p.id, p.stack]))
     const winners      = await tournament.playHand(tableId, requestAction)
     const stacksAfter  = new Map(tournament.standings.map(p => [p.id, p.stack]))
@@ -190,6 +191,21 @@ export class Orchestrator {
     }
     spectator.broadcast(resultMsg)
     hub.broadcast(resultMsg)
+
+    // Announce when a table finds its champion (before the final table merges)
+    const tableWinner = tournament.getTableWinner(tableId)
+    if (tableWinner && activeBefore.length > 1 && !tournament.isFinished()) {
+      const winnerMsg: TableWinnerMsg = {
+        type:        'table_winner',
+        tableId,
+        handNumber,
+        winnerId:    tableWinner.id,
+        winnerName:  tableWinner.name,
+        winnerStack: tableWinner.stack,
+      }
+      spectator.broadcast(winnerMsg)
+      console.log(`[table] ${tableWinner.name} (${tableWinner.id}) wins ${tableId} — advancing to the final table`)
+    }
   }
 
   private broadcastTableState(
