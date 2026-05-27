@@ -387,7 +387,8 @@
   </div>
 
   <script>
-    const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/spectate`
+    const KEY    = new URLSearchParams(location.search).get('key') || ''
+    const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/spectate${KEY ? '?key=' + encodeURIComponent(KEY) : ''}`
 
     const RANKS = { 14:'A', 13:'K', 12:'Q', 11:'J', 10:'T' }
     const SUITS = { s:'♠', h:'♥', d:'♦', c:'♣' }

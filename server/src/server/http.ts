@@ -6,7 +6,7 @@ import type { IncomingMessage, ServerResponse } from 'http'
 import type { WebSocketHub } from './websocket.js'
 import type { SpectatorState } from './spectator.js'
 
-function checkAdminKey(provided: string | null, expected: string): boolean {
+export function checkAdminKey(provided: string | null, expected: string): boolean {
   if (!provided) return false
   const maxLen = Math.max(provided.length, expected.length)
   const a = Buffer.from(provided.padEnd(maxLen).slice(0, maxLen))

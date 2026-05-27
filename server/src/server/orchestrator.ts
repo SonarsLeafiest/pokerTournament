@@ -214,7 +214,7 @@ export class Orchestrator {
         isActing:   p.id === actingPlayerId,
         isDealer:   i === state.dealerIndex,
         connected:  hub.isAgentConnected(p.id),
-        holeCards:  [],
+        holeCards:  p.holeCards,
         lastAction: lastActions.get(p.id),
       })),
       communityCards: state.communityCards,

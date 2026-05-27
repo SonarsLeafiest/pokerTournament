@@ -43,7 +43,7 @@ let tournamentAbort: boolean    = false
 
 // ── Core instances ────────────────────────────────────────────────────────────
 
-const spectator = new SpectatorState()
+const spectator = new SpectatorState(ADMIN_KEY)
 
 const hub = new WebSocketHub({
   noServer:        true,
@@ -153,7 +153,8 @@ httpServer.on('upgrade', (req, socket, head) => {
 
 httpServer.listen(PORT, () => {
   console.log(`\nPoker server on port ${PORT}`)
-  console.log(`  Dashboard:    http://localhost:${PORT}`)
+  console.log(`  Dashboard (with cards): http://localhost:${PORT}/?key=${ADMIN_KEY}`)
+  console.log(`  Dashboard (public):     http://localhost:${PORT}/`)
   console.log(`  Admin panel:  http://localhost:${PORT}/admin?key=${ADMIN_KEY}`)
   console.log(`  Agent WS:     ws://localhost:${PORT}`)
   console.log(`  Spectator WS: ws://localhost:${PORT}/spectate`)
