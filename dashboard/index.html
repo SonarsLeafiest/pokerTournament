@@ -255,6 +255,36 @@
     #cd-num    { font-size: 12rem; font-weight: bold; color: #f0c040; line-height: 1; }
     #cd-label  { color: #666; font-size: 0.9rem; letter-spacing: 4px; margin-top: 14px; }
     #cd-agents { color: #3a3a3a; font-size: 0.75rem; margin-top: 8px; }
+
+    /* ── Winner overlay ──────────────────────────────────────────────────── */
+    #winner-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 1000;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #winner-overlay.show { display: flex; }
+    #winner-trophy  { font-size: 5rem; animation: trophy-bounce 1s ease-in-out infinite alternate; }
+    #winner-label   { font-size: 0.75rem; color: #888; letter-spacing: 4px; text-transform: uppercase; margin-top: 18px; }
+    #winner-name    { font-size: 3rem; font-weight: bold; color: #f0c040; margin-top: 10px; letter-spacing: 2px; }
+    #winner-stack   { font-size: 1rem; color: #888; margin-top: 6px; }
+    #winner-table   { margin-top: 28px; border-collapse: collapse; font-size: 0.78rem; min-width: 260px; }
+    #winner-table th { color: #2a2a2a; padding: 3px 14px; border-bottom: 1px solid #1e1e1e; font-weight: normal; text-align: left; }
+    #winner-table td { padding: 5px 14px; border-bottom: 1px solid #191919; text-align: left; }
+    #winner-table tr.w-first td { color: #f0c040; }
+    #winner-table tr.w-out   td { color: #2a2a2a; }
+    #winner-dismiss { margin-top: 32px; font-size: 0.65rem; color: #2a2a2a; letter-spacing: 2px; cursor: pointer; }
+    #winner-dismiss:hover { color: #555; }
+
+    @keyframes trophy-bounce {
+      from { transform: translateY(0)   scale(1); }
+      to   { transform: translateY(-12px) scale(1.08); }
+    }
   </style>
 </head>
 <body>
@@ -263,6 +293,18 @@
     <div id="cd-num">—</div>
     <div id="cd-label">TOURNAMENT STARTING</div>
     <div id="cd-agents"></div>
+  </div>
+
+  <div id="winner-overlay">
+    <div id="winner-trophy">🏆</div>
+    <div id="winner-label">Tournament Winner</div>
+    <div id="winner-name"></div>
+    <div id="winner-stack"></div>
+    <table id="winner-table">
+      <thead><tr><th>#</th><th>Agent</th><th>Final Stack</th></tr></thead>
+      <tbody id="winner-tbody"></tbody>
+    </table>
+    <div id="winner-dismiss">click anywhere to dismiss</div>
   </div>
 
   <div id="header">
@@ -457,8 +499,55 @@
       log.prepend(el)
     }
 
+    function onTournamentComplete(msg) {
+      // Update standings panel with final placements
+      const tbody = document.getElementById('standings-body')
+      tbody.innerHTML = msg.standings.map((p, i) => {
+        const cls  = i === 0 ? 'leader' : i === msg.standings.length - 1 ? 'out' : ''
+        const icon = i === 0 ? '♛' : ''
+        return `<tr class="${cls}">
+          <td>${p.place}</td>
+          <td>${p.playerId}</td>
+          <td>${p.stack > 0 ? p.stack.toLocaleString() : '—'}</td>
+          <td>${icon}</td>
+        </tr>`
+      }).join('')
+
+      // Update seats to show final stacks (no cards, no active state)
+      if (lastState) {
+        const finalState = {
+          ...lastState,
+          players: lastState.players.map(p => {
+            const final = msg.standings.find(s => s.playerId === p.id)
+            return { ...p, isActing: false, lastAction: '', holeCards: [],
+                     stack: final ? final.stack : p.stack }
+          }),
+          communityCards: [],
+          pot: 0,
+        }
+        document.getElementById('stage-label').textContent = 'FINISHED'
+        document.getElementById('pot-display').textContent = ''
+        document.getElementById('community-cards').innerHTML = ''
+        positionSeats(finalState)
+      }
+
+      // Show winner overlay
+      document.getElementById('winner-name').textContent  = msg.winnerName
+      document.getElementById('winner-stack').textContent = `${msg.finalStack.toLocaleString()} chips`
+      document.getElementById('winner-tbody').innerHTML = msg.standings.map(p => {
+        const cls = p.place === 1 ? 'w-first' : p.stack === 0 ? 'w-out' : ''
+        return `<tr class="${cls}">
+          <td>#${p.place}</td>
+          <td>${p.playerId}</td>
+          <td>${p.stack > 0 ? p.stack.toLocaleString() : '—'}</td>
+        </tr>`
+      }).join('')
+      document.getElementById('winner-overlay').classList.add('show')
+    }
+
     function handleMessage(msg) {
       if (msg.type === 'countdown') {
+        document.getElementById('winner-overlay').classList.remove('show')
         document.getElementById('countdown-overlay').classList.add('show')
         document.getElementById('cd-num').textContent =
           msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
@@ -478,6 +567,7 @@
         const wins = msg.winners.map(w => `${w.playerId} +${w.amount}`).join(', ')
         addLog(`Hand #${msg.handNumber}: ${wins}`, 'win')
       }
+      if (msg.type === 'tournament_complete') onTournamentComplete(msg)
     }
 
     // ── WebSocket ─────────────────────────────────────────────────────────────
@@ -496,6 +586,11 @@
       ws.onerror  = () => ws.close()
       ws.onmessage = e => handleMessage(JSON.parse(e.data))
     }
+
+    // Dismiss winner overlay on click
+    document.getElementById('winner-overlay').addEventListener('click', () => {
+      document.getElementById('winner-overlay').classList.remove('show')
+    })
 
     window.addEventListener('resize', () => { if (lastState) positionSeats(lastState) })
     connect()

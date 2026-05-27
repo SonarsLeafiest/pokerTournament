@@ -86,6 +86,14 @@ export interface TournamentEndMsg {
   finalStack: number
 }
 
+export interface TournamentCompleteMsg {
+  type: 'tournament_complete'
+  winnerId: string
+  winnerName: string
+  finalStack: number
+  standings: { playerId: string; name: string; place: number; stack: number }[]
+}
+
 export interface LobbySnapshotMsg {
   type: 'lobby_snapshot'
   agents: { id: string; name: string }[]
@@ -96,7 +104,7 @@ export interface ErrorMsg {
   message: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | LobbySnapshotMsg | ErrorMsg
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | LobbySnapshotMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 

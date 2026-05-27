@@ -8,7 +8,7 @@ import { Tournament } from './engine/tournament.js'
 import type { ActionRequestor, TournamentConfig } from './engine/tournament.js'
 import { WebSocketHub } from './server/websocket.js'
 import { ActionType, type GameState } from './engine/game.js'
-import type { ActionRequiredMsg, AgentActionMsg, CountdownMsg, TournamentUpdateMsg, HandResultMsg, TableStateMsg, TournamentEndMsg, LobbySnapshotMsg } from './server/protocol.js'
+import type { ActionRequiredMsg, AgentActionMsg, CountdownMsg, TournamentUpdateMsg, HandResultMsg, TableStateMsg, TournamentEndMsg, TournamentCompleteMsg, LobbySnapshotMsg } from './server/protocol.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -259,6 +259,7 @@ let spectatorLastStandings: TournamentUpdateMsg | null = null
 let spectatorLastTableState: TableStateMsg | null = null
 let spectatorLastCountdown: CountdownMsg | null = null
 let spectatorLastLobbySnapshot: LobbySnapshotMsg | null = null
+let spectatorLastTournamentComplete: TournamentCompleteMsg | null = null
 const spectatorHandHistory: HandResultMsg[] = []
 const MAX_HAND_HISTORY = 200
 
@@ -270,13 +271,15 @@ spectatorWss.on('connection', (ws) => {
   if (spectatorLastStandings) ws.send(JSON.stringify(spectatorLastStandings))
   for (const h of spectatorHandHistory) ws.send(JSON.stringify(h))
   if (spectatorLastTableState) ws.send(JSON.stringify(spectatorLastTableState))
+  if (spectatorLastTournamentComplete) ws.send(JSON.stringify(spectatorLastTournamentComplete))
   ws.on('close', () => spectators.delete(ws))
 })
 
-function broadcastToSpectators(msg: TournamentUpdateMsg | HandResultMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | LobbySnapshotMsg): void {
+function broadcastToSpectators(msg: TournamentUpdateMsg | HandResultMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | LobbySnapshotMsg): void {
   if (msg.type === 'tournament_update')  spectatorLastStandings    = msg
   else if (msg.type === 'table_state')   spectatorLastTableState   = msg
   else if (msg.type === 'lobby_snapshot') spectatorLastLobbySnapshot = msg
+  else if (msg.type === 'tournament_complete') spectatorLastTournamentComplete = msg
   else if (msg.type === 'countdown') {
     spectatorLastCountdown = msg.secondsRemaining > 0 ? msg : null
   } else if (msg.type === 'hand_result') {
@@ -525,10 +528,11 @@ function startTournament(): void {
 
 async function runTournament(config: TournamentConfig): Promise<void> {
   tournamentAbort = false
-  spectatorLastStandings     = null
-  spectatorLastTableState    = null
-  spectatorLastLobbySnapshot = null
-  spectatorLastCountdown     = null
+  spectatorLastStandings          = null
+  spectatorLastTableState         = null
+  spectatorLastLobbySnapshot      = null
+  spectatorLastCountdown          = null
+  spectatorLastTournamentComplete = null
   spectatorHandHistory.length = 0
   const tournament = new Tournament(config)
   tournament.seatTables()
@@ -562,6 +566,21 @@ async function runTournament(config: TournamentConfig): Promise<void> {
     }
     hub.sendToAgent(player.id, endMsg)
   }
+
+  // Broadcast final result to spectators
+  const completeMsg: TournamentCompleteMsg = {
+    type: 'tournament_complete',
+    winnerId:   winner.id,
+    winnerName: winner.name,
+    finalStack: winner.stack,
+    standings:  standings.map((p, i) => ({
+      playerId: p.id,
+      name:     p.name,
+      place:    i + 1,
+      stack:    p.stack,
+    })),
+  }
+  broadcastToSpectators(completeMsg)
 
   await sleep(2000)
   hub.disconnectAll()
