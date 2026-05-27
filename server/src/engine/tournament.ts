@@ -197,6 +197,7 @@ export class Tournament {
 }
 
 function fallbackSeeds(): number[] {
+  console.warn('[rng] QRNG unavailable — using crypto.getRandomValues fallback')
   const buf = new Uint32Array(8)
   crypto.getRandomValues(buf)
   return [...buf]

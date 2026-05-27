@@ -12,6 +12,7 @@ export interface ConnectedAgent {
   _serverClose?: boolean                        // set by disconnectAll() to skip reconnect window
   pendingResolve?: (msg: AgentMessage) => void
   pendingReject?: (err: Error) => void
+  remoteAddress?: string
 }
 
 export interface HubOptions {
@@ -40,9 +41,9 @@ export class WebSocketHub {
     this.actionTimeoutMs = opts.actionTimeoutMs ?? 5000
 
     if (opts.noServer) {
-      this.wss = new WebSocketServer({ noServer: true })
+      this.wss = new WebSocketServer({ noServer: true, maxPayload: 65_536 })
     } else {
-      this.wss = new WebSocketServer({ port: opts.port })
+      this.wss = new WebSocketServer({ port: opts.port, maxPayload: 65_536 })
     }
 
     this.wss.on('connection', (ws, req) => this.handleConnection(ws, req))
@@ -75,6 +76,7 @@ export class WebSocketHub {
 
   private handleConnection(ws: WebSocket, _req: IncomingMessage): void {
     let agentId: string | null = null
+    const remoteAddress = (_req as any).socket?.remoteAddress as string | undefined
 
     ws.on('pong', () => {
       if (agentId) this.isAlive.set(agentId, true)
@@ -90,11 +92,28 @@ export class WebSocketHub {
       }
 
       if (msg.type === 'register') {
-        agentId = msg.agentId
+        const agentIdRaw   = msg.agentId
+        const agentNameRaw = msg.agentName
+        if (typeof agentIdRaw !== 'string' || agentIdRaw.length < 1 || agentIdRaw.length > 64
+            || !/^[\w\-]+$/.test(agentIdRaw)) {
+          this.send(ws, { type: 'error', message: 'Invalid agentId: must be 1-64 alphanumeric/dash/underscore characters' })
+          ws.close(); return
+        }
+        if (typeof agentNameRaw !== 'string' || agentNameRaw.length < 1 || agentNameRaw.length > 64) {
+          this.send(ws, { type: 'error', message: 'Invalid agentName: must be 1-64 characters' })
+          ws.close(); return
+        }
+        agentId = agentIdRaw
         const existing = this.agents.get(agentId)
 
         if (existing && !existing.connected) {
-          // Reconnect: restore the existing agent object so pendingResolve/Reject survive
+          // Reconnect: check IP matches to prevent identity hijacking
+          if (remoteAddress && existing.remoteAddress && existing.remoteAddress !== remoteAddress) {
+            this.send(ws, { type: 'error', message: 'Reconnect from different IP not allowed' })
+            ws.close()
+            return
+          }
+          // Restore the existing agent object so pendingResolve/Reject survive
           existing.ws           = ws
           existing.connected    = true
           existing._serverClose = undefined
@@ -117,13 +136,19 @@ export class WebSocketHub {
 
           this.opts.onAgentReconnect?.(existing)
         } else {
+          // Check if this ID is already taken by a currently-connected agent
+          if (existing && existing.connected) {
+            this.send(ws, { type: 'error', message: 'Agent ID already in use by a connected agent' })
+            ws.close()
+            return
+          }
           // New registration — check whether it's currently allowed
           if (this.opts.canRegister && !this.opts.canRegister(agentId, msg.agentName)) {
             this.send(ws, { type: 'error', message: 'Tournament is already in progress. Registration is closed.' })
             ws.close()
             return
           }
-          const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws, connected: true }
+          const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws, connected: true, remoteAddress }
           this.agents.set(agentId, agent)
           this.isAlive.set(agentId, true)
           this.opts.onAgentConnect?.(agent)
@@ -141,6 +166,10 @@ export class WebSocketHub {
         agent.pendingResolve(msg)
         agent.pendingResolve = undefined
       }
+    })
+
+    ws.on('error', (err) => {
+      console.error(`[ws] agent socket error (${agentId ?? 'unregistered'}):`, err.message)
     })
 
     ws.on('close', () => {

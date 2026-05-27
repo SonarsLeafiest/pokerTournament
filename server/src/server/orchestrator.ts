@@ -148,8 +148,15 @@ export class Orchestrator {
       const response = await hub.waitForAction(playerId) as AgentActionMsg
       this.pendingActionMsgs.delete(playerId)
 
-      const action = response.action ?? ActionType.FOLD
-      const amount = response.amount
+      const VALID_ACTIONS = ['FOLD', 'CHECK', 'CALL', 'RAISE']
+      const action = (typeof response.action === 'string' && VALID_ACTIONS.includes(response.action.toUpperCase()))
+        ? response.action.toUpperCase() as ActionType
+        : ActionType.FOLD
+
+      const rawAmount = response.amount
+      const amount = (typeof rawAmount === 'number' && Number.isFinite(rawAmount) && rawAmount >= 0)
+        ? Math.floor(rawAmount)
+        : undefined
 
       if (!validActions.includes(action as ActionType)) {
         hub.sendToAgent(playerId, { type: 'error', message: `Invalid action: ${action}` })
@@ -207,7 +214,7 @@ export class Orchestrator {
         isActing:   p.id === actingPlayerId,
         isDealer:   i === state.dealerIndex,
         connected:  hub.isAgentConnected(p.id),
-        holeCards:  p.holeCards,
+        holeCards:  [],
         lastAction: lastActions.get(p.id),
       })),
       communityCards: state.communityCards,

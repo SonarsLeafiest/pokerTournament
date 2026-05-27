@@ -132,6 +132,12 @@ export function dealRiver(state: GameState): GameState {
 }
 
 export function applyAction(state: GameState, playerId: string, action: Action): GameState {
+  if (action.type === ActionType.RAISE) {
+    if (action.amount == null || !Number.isFinite(action.amount) || action.amount < 0) {
+      throw new Error(`Invalid raise amount: ${action.amount}`)
+    }
+  }
+
   const actingPlayer = state.players[state.actionIndex]
   if (actingPlayer.id !== playerId) {
     throw new Error(`It is not ${playerId}'s turn (expected ${actingPlayer.id})`)

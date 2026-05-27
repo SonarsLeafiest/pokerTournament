@@ -27,7 +27,7 @@ export class SpectatorState {
   private handHistory:            HandResultMsg[]              = []
 
   constructor() {
-    this.wss = new WebSocketServer({ noServer: true })
+    this.wss = new WebSocketServer({ noServer: true, maxPayload: 1_024 })
     this.wss.on('connection', (ws) => this._handleConnection(ws))
   }
 
@@ -42,6 +42,9 @@ export class SpectatorState {
     for (const ts of this.lastTableStates.values()) ws.send(JSON.stringify(ts))
     if (this.lastTournamentComplete) ws.send(JSON.stringify(this.lastTournamentComplete))
 
+    ws.on('error', (err) => {
+      console.error('[ws] spectator socket error:', err.message)
+    })
     ws.on('close', () => this.spectators.delete(ws))
   }
 

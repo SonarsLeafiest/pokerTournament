@@ -1,9 +1,19 @@
 import { readFileSync } from 'fs'
 import { join, dirname } from 'path'
 import { fileURLToPath } from 'url'
+import { timingSafeEqual } from 'crypto'
 import type { IncomingMessage, ServerResponse } from 'http'
 import type { WebSocketHub } from './websocket.js'
 import type { SpectatorState } from './spectator.js'
+
+function checkAdminKey(provided: string | null, expected: string): boolean {
+  if (!provided) return false
+  const maxLen = Math.max(provided.length, expected.length)
+  const a = Buffer.from(provided.padEnd(maxLen).slice(0, maxLen))
+  const b = Buffer.from(expected.padEnd(maxLen).slice(0, maxLen))
+  if (a.length !== b.length) return false
+  return timingSafeEqual(a, b) && provided.length === expected.length
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -23,7 +33,7 @@ const DEV_SCRIPT = `
       status.className = 'status ' + (r.ok ? 'ok' : 'err')
     }`
 
-export type LobbyState = 'closed' | 'open' | 'in_progress'
+export type LobbyState = 'closed' | 'open' | 'starting' | 'in_progress'
 
 export interface HttpHandlerOptions {
   dashboardHtml:   string
@@ -70,7 +80,7 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
     if (url.pathname === '/api/agents') {
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({
-        agents:     hub.getConnectedAgentIds().map(id => ({ id, name: id })),
+        agents:     hub.getConnectedAgents(),
         count:      hub.agentCount,
         lobbyState: getLobbyState(),
         minPlayers,
@@ -80,7 +90,7 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
 
     // Open lobby
     if (url.pathname === '/api/open' && req.method === 'POST') {
-      if (url.searchParams.get('key') !== adminKey) { res.writeHead(401); res.end('Unauthorized'); return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey)) { res.writeHead(401); res.end('Unauthorized'); return }
       if (getLobbyState() === 'in_progress') { res.writeHead(409); res.end('Tournament is in progress'); return }
       setLobbyState('open')
       console.log('\nLobby opened — agents may now connect\n')
@@ -91,9 +101,9 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
 
     // Close lobby
     if (url.pathname === '/api/close' && req.method === 'POST') {
-      if (url.searchParams.get('key') !== adminKey) { res.writeHead(401); res.end('Unauthorized'); return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey)) { res.writeHead(401); res.end('Unauthorized'); return }
       setLobbyState('closed')
-      spectator.clearLobbySnapshot()
+      spectator.resetBuffers()
       hub.disconnectAll()
       console.log('\nLobby closed — all agents disconnected\n')
       res.writeHead(200); res.end('OK')
@@ -114,8 +124,9 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
 
     // Start tournament
     if (url.pathname === '/api/start' && req.method === 'POST') {
-      if (url.searchParams.get('key') !== adminKey) { res.writeHead(401); res.end('Unauthorized'); return }
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey)) { res.writeHead(401); res.end('Unauthorized'); return }
       if (getLobbyState() === 'in_progress') { res.writeHead(409); res.end('Tournament already in progress'); return }
+      if (getLobbyState() === 'starting')    { res.writeHead(409); res.end('Countdown already in progress'); return }
       if (getLobbyState() === 'closed')      { res.writeHead(409); res.end('Lobby is closed — open it first'); return }
       if (hub.agentCount < minPlayers) {
         res.writeHead(400); res.end(`Not enough players (need ${minPlayers}, have ${hub.agentCount})`); return

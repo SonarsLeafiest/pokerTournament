@@ -393,6 +393,10 @@
     const SUITS = { s:'♠', h:'♥', d:'♦', c:'♣' }
     const RED   = new Set(['h','d'])
 
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+    }
+
     function cardHtml(card, cls) {
       const r = RANKS[card.rank] ?? card.rank
       const s = SUITS[card.suit]
@@ -453,8 +457,9 @@
 
         const betText  = p.allIn ? 'ALL IN' : p.bet > 0 ? `bet: ${p.bet}` : ''
         const dealerEl = p.isDealer ? '<span class="dealer-btn">D</span>' : ''
-        const name     = p.id.length > 13 ? p.id.slice(0,13) + '…' : p.id
-        const dcEl     = p.connected === false ? '<div class="seat-dc">✕ disconnected</div>' : ''
+        const rawName  = p.id.length > 13 ? p.id.slice(0,13) + '…' : p.id
+        const name     = esc(rawName)
+        const dcEl     = p.connected === false ? '<div class="seat-dc">&#x2715; disconnected</div>' : ''
 
         const el = document.createElement('div')
         el.className = 'seat'
@@ -496,7 +501,7 @@
         const angle = (2 * Math.PI * i / n) - Math.PI / 2
         const x = cx + rx * Math.cos(angle)
         const y = cy + ry * Math.sin(angle)
-        const name = agent.id.length > 13 ? agent.id.slice(0, 13) + '…' : agent.id
+        const name = esc(agent.id.length > 13 ? agent.id.slice(0, 13) + '…' : agent.id)
         const el = document.createElement('div')
         el.className = 'seat'
         el.style.left = x + 'px'
@@ -521,9 +526,9 @@
       }
       tabsEl.style.display = 'flex'
       tabsEl.innerHTML = activeTablesFromServer.map(tid => {
-        const label = tid.replace('table-', 'Table ')
+        const label = esc(tid.replace('table-', 'Table '))
         const cls   = tid === activeTableId ? 'table-tab active' : 'table-tab'
-        return `<div class="${cls}" onclick="selectTable('${tid}')">${label}</div>`
+        return `<div class="${cls}" onclick="selectTable(${JSON.stringify(tid)})">${label}</div>`
       }).join('')
     }
 
@@ -585,11 +590,11 @@
       const tbody = document.getElementById('standings-body')
       tbody.innerHTML = msg.standings.map((p, i) => {
         const cls  = p.eliminated ? 'out' : i === 0 ? 'leader' : ''
-        const icon = p.eliminated ? '✕' : i === 0 ? '♛' : ''
+        const icon = p.eliminated ? '&#x2715;' : i === 0 ? '&#x265B;' : ''
         return `<tr class="${cls}">
           <td>${i+1}</td>
-          <td>${p.playerId}</td>
-          <td>${p.eliminated ? '—' : p.stack.toLocaleString()}</td>
+          <td>${esc(p.playerId)}</td>
+          <td>${p.eliminated ? '&mdash;' : p.stack.toLocaleString()}</td>
           <td>${icon}</td>
         </tr>`
       }).join('')
@@ -622,11 +627,11 @@
       const tbody = document.getElementById('standings-body')
       tbody.innerHTML = msg.standings.map((p, i) => {
         const cls  = i === 0 ? 'leader' : i === msg.standings.length - 1 ? 'out' : ''
-        const icon = i === 0 ? '♛' : ''
+        const icon = i === 0 ? '&#x265B;' : ''
         return `<tr class="${cls}">
           <td>${p.place}</td>
-          <td>${p.playerId}</td>
-          <td>${p.stack > 0 ? p.stack.toLocaleString() : '—'}</td>
+          <td>${esc(p.playerId)}</td>
+          <td>${p.stack > 0 ? p.stack.toLocaleString() : '&mdash;'}</td>
           <td>${icon}</td>
         </tr>`
       }).join('')
@@ -656,8 +661,8 @@
         const cls = p.place === 1 ? 'w-first' : p.stack === 0 ? 'w-out' : ''
         return `<tr class="${cls}">
           <td>#${p.place}</td>
-          <td>${p.playerId}</td>
-          <td>${p.stack > 0 ? p.stack.toLocaleString() : '—'}</td>
+          <td>${esc(p.playerId)}</td>
+          <td>${p.stack > 0 ? p.stack.toLocaleString() : '&mdash;'}</td>
         </tr>`
       }).join('')
       document.getElementById('winner-overlay').classList.add('show')

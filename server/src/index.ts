@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import { readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
+import { randomBytes } from 'crypto'
 import { WebSocketHub } from './server/websocket.js'
 import { SpectatorState } from './server/spectator.js'
 import { Orchestrator } from './server/orchestrator.js'
@@ -21,7 +22,11 @@ const TABLE_SIZE            = parseInt(process.env.TABLE_SIZE             ?? '6'
 const TOURNAMENT_START_DELAY = parseInt(process.env.TOURNAMENT_START_DELAY ?? '10')
 const TURN_DELAY_MS         = parseInt(process.env.TURN_DELAY_MS          ?? '1500')
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
-const ADMIN_KEY             = process.env.ADMIN_KEY ?? Math.random().toString(36).slice(2).toUpperCase()
+const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
+  const generated = randomBytes(16).toString('hex').toUpperCase()
+  console.warn(`\n  WARNING  ADMIN_KEY not set — generated key: ${generated}\n  Set ADMIN_KEY in .env to make it permanent.\n`)
+  return generated
+})()
 
 const BLIND_LEVELS: TournamentConfig['blindLevels'] = [
   { smallBlind: 10,  bigBlind: 20,  handsPerLevel: 10  },
@@ -79,11 +84,12 @@ const orchestrator = new Orchestrator({
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function broadcastLobbySnapshot(): void {
-  if (lobbyState !== 'open') return
+  if (lobbyState !== 'open' && lobbyState !== 'starting') return
   spectator.broadcast({ type: 'lobby_snapshot', agents: hub.getConnectedAgents() })
 }
 
 function triggerCountdown(): void {
+  lobbyState = 'starting'
   let remaining = TOURNAMENT_START_DELAY
   const tick = (): void => {
     const msg = { type: 'countdown' as const, secondsRemaining: remaining, agentCount: hub.agentCount }
@@ -95,7 +101,7 @@ function triggerCountdown(): void {
 }
 
 function startTournament(): void {
-  if (lobbyState !== 'open') return
+  if (lobbyState !== 'starting') return
   lobbyState      = 'in_progress'
   tournamentAbort = false
 
@@ -137,7 +143,7 @@ httpServer.on('upgrade', (req, socket, head) => {
     return
   }
   // Agent WebSocket — gate on lobby state
-  if (lobbyState === 'open' || lobbyState === 'in_progress') {
+  if (lobbyState === 'open' || lobbyState === 'starting' || lobbyState === 'in_progress') {
     hub.handleUpgrade(req, socket, head)
   } else {
     socket.write('HTTP/1.1 503 Service Unavailable\r\nConnection: close\r\n\r\n')

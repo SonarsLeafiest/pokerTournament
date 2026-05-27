@@ -88,10 +88,14 @@
     const KEY = new URLSearchParams(location.search).get('key') || ''
     const MIN_PLAYERS = __MIN_PLAYERS__
 
+    function esc(s) {
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+    }
+
     function showPanel(state) {
-      document.getElementById('panel-closed').style.display     = state === 'closed'      ? '' : 'none'
-      document.getElementById('panel-open').style.display       = state === 'open'        ? '' : 'none'
-      document.getElementById('panel-inprogress').style.display = state === 'in_progress' ? '' : 'none'
+      document.getElementById('panel-closed').style.display     = state === 'closed'                           ? '' : 'none'
+      document.getElementById('panel-open').style.display       = (state === 'open' || state === 'starting')   ? '' : 'none'
+      document.getElementById('panel-inprogress').style.display = state === 'in_progress'                      ? '' : 'none'
     }
 
     async function refresh() {
@@ -108,7 +112,7 @@
             list.innerHTML = '<li class="empty">none yet</li>'
           } else {
             list.innerHTML = data.agents.map(a =>
-              '<li>● ' + a.name + ' <span style="color:#555">(' + a.id + ')</span></li>'
+              '<li>● ' + esc(a.name) + ' <span style="color:#555">(' + esc(a.id) + ')</span></li>'
             ).join('')
           }
           const btn  = document.getElementById('startBtn')
