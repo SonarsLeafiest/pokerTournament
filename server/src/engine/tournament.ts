@@ -1,5 +1,5 @@
 import { createGame, dealHands, applyAction, getShowdownWinners, GameStage, ActionType } from './game.js'
-import type { GameState, Action } from './game.js'
+import type { GameState, Action, ShowdownResult } from './game.js'
 import { fetchQuantumSeeds } from './rng.js'
 
 export interface TournamentPlayer {
@@ -28,6 +28,7 @@ export interface TableState {
   gameState: GameState
   playerIds: string[]
   handNumber: number
+  dealerIndex: number
 }
 
 // Called by the server loop to request an action from a specific player.
@@ -78,11 +79,12 @@ export class Tournament {
         gameState: {} as GameState,
         playerIds: seats,
         handNumber: 0,
+        dealerIndex: 0,
       })
     }
   }
 
-  async playHand(tableId: string, requestAction: ActionRequestor): Promise<void> {
+  async playHand(tableId: string, requestAction: ActionRequestor): Promise<ShowdownResult[]> {
     const table = this.tables.get(tableId)
     if (!table) throw new Error(`Unknown table: ${tableId}`)
 
@@ -101,6 +103,7 @@ export class Tournament {
         smallBlind: blinds.smallBlind,
         bigBlind: blinds.bigBlind,
         seeds,
+        dealerIndex: table.dealerIndex,
       })
     )
 
@@ -141,6 +144,7 @@ export class Tournament {
       if (player.stack === 0) player.eliminated = true
     }
 
+    table.dealerIndex = (table.dealerIndex + 1) % table.playerIds.length
     table.handNumber++
     this.handCount++
     this.handsPlayedAtLevel++
@@ -150,6 +154,7 @@ export class Tournament {
     }
 
     table.gameState = state
+    return results
   }
 
   private advanceBlinds(): void {

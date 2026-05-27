@@ -1,6 +1,32 @@
 import type { Card } from '../engine/card.js'
 import type { ActionType, GameStage } from '../engine/game.js'
 
+// ── Spectator table state ────────────────────────────────────────────────────
+
+export interface TablePlayerState {
+  id: string
+  stack: number
+  bet: number
+  folded: boolean
+  allIn: boolean
+  isActing: boolean
+  isDealer: boolean
+  connected: boolean
+  holeCards: Card[]
+  lastAction?: string
+}
+
+export interface TableStateMsg {
+  type: 'table_state'
+  tableId: string
+  handNumber: number
+  stage: GameStage
+  players: TablePlayerState[]
+  communityCards: Card[]
+  pot: number
+  dealerIndex: number
+}
+
 // ── Server → Agent ──────────────────────────────────────────────────────────
 
 export interface PlayerView {
@@ -36,6 +62,7 @@ export interface HandResultMsg {
   handNumber: number
   winners: { playerId: string; amount: number; hand?: string }[]
   showdown: { playerId: string; holeCards: [Card, Card] }[]
+  deltas: Record<string, number>   // net chip change per player (positive = won, negative = lost)
 }
 
 export interface TournamentUpdateMsg {
@@ -52,12 +79,24 @@ export interface CountdownMsg {
   agentCount: number
 }
 
+export interface TournamentEndMsg {
+  type: 'tournament_end'
+  place: number
+  result: 'won' | 'lost'
+  finalStack: number
+}
+
+export interface LobbySnapshotMsg {
+  type: 'lobby_snapshot'
+  agents: { id: string; name: string }[]
+}
+
 export interface ErrorMsg {
   type: 'error'
   message: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | ErrorMsg
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | LobbySnapshotMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 

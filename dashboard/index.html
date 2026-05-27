@@ -1,161 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Poker Tournament — Live Dashboard</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Poker Tournament — Live</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: monospace; background: #0a0a0a; color: #e0e0e0; padding: 20px; }
-    h1 { color: #f0c040; margin-bottom: 20px; font-size: 1.4rem; letter-spacing: 2px; }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .panel { background: #1a1a1a; border: 1px solid #333; border-radius: 6px; padding: 16px; }
-    .panel h2 { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-    th { text-align: left; color: #555; padding: 4px 8px; border-bottom: 1px solid #2a2a2a; }
-    td { padding: 6px 8px; border-bottom: 1px solid #1e1e1e; }
-    tr.eliminated td { color: #444; text-decoration: line-through; }
-    tr.leader td { color: #f0c040; }
-    .cards { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-    .card { background: #fff; color: #000; border-radius: 4px; padding: 2px 6px; font-weight: bold; font-size: 0.9rem; }
-    .card.hearts, .card.diamonds { color: #cc2222; }
-    .status { font-size: 0.8rem; color: #555; margin-bottom: 8px; }
-    .blinds { color: #aaa; font-size: 0.8rem; }
-    .pot { font-size: 1.1rem; color: #f0c040; font-weight: bold; }
-    #connection { position: fixed; top: 12px; right: 20px; font-size: 0.75rem; }
-    #connection.connected { color: #4c4; }
-    #connection.disconnected { color: #c44; }
-    #countdown-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.85); z-index: 100;
-      flex-direction: column; align-items: center; justify-content: center;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0d0d0d;
+      color: #ddd;
+      min-height: 100vh;
     }
-    #countdown-overlay.visible { display: flex; }
-    #countdown-number { font-size: 10rem; font-weight: bold; color: #f0c040; line-height: 1; }
-    #countdown-label  { color: #888; font-size: 1rem; letter-spacing: 3px; margin-top: 12px; }
-    #countdown-agents { color: #555; font-size: 0.8rem; margin-top: 8px; }
-    .log { height: 180px; overflow-y: auto; font-size: 0.75rem; color: #666; }
-    .log div { padding: 2px 0; border-bottom: 1px solid #1a1a1a; }
-    .log div.win { color: #4c4; }
-    .log div.fold { color: #666; }
-    .log div.raise { color: #fa0; }
+
+    /* ── Header ──────────────────────────────────────────────────────────── */
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      background: #111;
+      border-bottom: 1px solid #1e1e1e;
+    }
+    #title { color: #f0c040; font-size: 1.1rem; letter-spacing: 3px; }
+    #conn { font-size: 0.72rem; }
+    #conn.on  { color: #4c4; }
+    #conn.off { color: #c44; }
+
+    /* ── Table area ──────────────────────────────────────────────────────── */
+    #table-area {
+      position: relative;
+      max-width: 1000px;
+      height: 560px;
+      margin: 20px auto;
+      overflow: visible;
+    }
+
+    /* ── Felt ────────────────────────────────────────────────────────────── */
+    #felt {
+      position: absolute;
+      inset: 105px 115px;
+      background: radial-gradient(ellipse at 50% 50%,
+        #2a7a2a 0%, #1d621d 52%, #0f400f 100%);
+      border-radius: 50%;
+      border: 14px solid #5c3410;
+      box-shadow:
+        0 0 0 3px #8a5520,
+        inset 0 0 100px rgba(0,0,0,0.35),
+        0 10px 50px rgba(0,0,0,0.8);
+    }
+
+    /* ── Table center ────────────────────────────────────────────────────── */
+    #table-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      pointer-events: none;
+      min-width: 280px;
+    }
+    #stage-label {
+      font-size: 0.6rem;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    #community-cards {
+      display: flex;
+      gap: 7px;
+      justify-content: center;
+      min-height: 58px;
+      margin-bottom: 10px;
+    }
+    #pot-display {
+      color: #f0c040;
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    /* ── Cards ───────────────────────────────────────────────────────────── */
+    .card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border-radius: 5px;
+      font-weight: bold;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.65);
+      flex-shrink: 0;
+      user-select: none;
+    }
+    .card.red   { color: #c91212; }
+    .card.black { color: #111; }
+    .card.back  {
+      background: repeating-linear-gradient(
+        45deg,
+        #1a2060 0px, #1a2060 4px,
+        #101540 4px, #101540 8px
+      );
+    }
+
+    /* Community card */
+    .c-card { width: 44px; height: 60px; font-size: 0.85rem; gap: 1px; }
+    .c-card .r { font-size: 1.05rem; line-height: 1; }
+    .c-card .s { font-size: 0.8rem;  line-height: 1; }
+
+    /* Hole card (in seats) */
+    .h-card { width: 28px; height: 40px; }
+    .h-card .r { font-size: 0.72rem; line-height: 1.1; }
+    .h-card .s { font-size: 0.6rem;  line-height: 1; }
+
+    /* ── Seats ───────────────────────────────────────────────────────────── */
+    .seat {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      width: 122px;
+      text-align: center;
+      z-index: 10;
+    }
+    .seat-box {
+      background: rgba(10, 10, 16, 0.9);
+      border: 1px solid #2e2e3a;
+      border-radius: 8px;
+      padding: 7px 8px 5px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .seat-box.acting {
+      border-color: #f0c040;
+      animation: pulse 1.2s ease-in-out infinite;
+    }
+    .seat-box.folded        { opacity: 0.32; }
+    .seat-box.disconnected  { border-color: #a03030; opacity: 0.55; }
+    .seat-dc { font-size: 0.55rem; color: #c44; margin-top: 1px; }
+    .seat-box.waiting { border-color: #444; opacity: 0.65; }
+    .seat-waiting { font-size: 0.55rem; color: #555; margin-top: 2px; }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 8px  rgba(240,192,64,0.5); }
+      50%       { box-shadow: 0 0 22px rgba(240,192,64,1);   }
+    }
+
+    .seat-name {
+      font-size: 0.6rem;
+      color: #bbb;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 2px;
+    }
+    .dealer-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px; height: 14px;
+      background: #fff;
+      color: #000;
+      border-radius: 50%;
+      font-size: 0.48rem;
+      font-weight: bold;
+      margin-left: 3px;
+      vertical-align: middle;
+    }
+    .seat-stack { font-size: 0.8rem; font-weight: bold; color: #f0c040; }
+    .seat-bet   { font-size: 0.6rem; color: #888; min-height: 13px; }
+    .seat-cards { display: flex; gap: 3px; justify-content: center; margin: 4px 0 3px; }
+    .seat-action { font-size: 0.58rem; min-height: 12px; color: #555; }
+    .seat-action.fold  { color: #484848; }
+    .seat-action.call  { color: #4af; }
+    .seat-action.check { color: #5d5; }
+    .seat-action.raise { color: #f90; font-weight: bold; }
+
+    /* ── Waiting state ───────────────────────────────────────────────────── */
+    #waiting {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: rgba(255,255,255,0.15);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      pointer-events: none;
+    }
+
+    /* ── Blinds label ────────────────────────────────────────────────────── */
+    #blinds-label {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #3a3a3a;
+      margin-top: -6px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Bottom panels ───────────────────────────────────────────────────── */
+    #bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 1000px;
+      margin: 0 auto 28px;
+      padding: 0 20px;
+    }
+    .panel {
+      background: #141414;
+      border: 1px solid #202020;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .panel h2 {
+      font-size: 0.6rem;
+      color: #3a3a3a;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    #standings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    #standings-table th {
+      text-align: left;
+      color: #333;
+      padding: 2px 6px;
+      border-bottom: 1px solid #1e1e1e;
+      font-weight: normal;
+    }
+    #standings-table td { padding: 4px 6px; border-bottom: 1px solid #191919; }
+    #standings-table tr.leader td { color: #f0c040; }
+    #standings-table tr.out    td { color: #2a2a2a; text-decoration: line-through; }
+
+    #log { height: 168px; overflow-y: auto; font-size: 0.68rem; }
+    .log-row        { padding: 3px 0; border-bottom: 1px solid #191919; color: #484848; }
+    .log-row.win    { color: #3a3; }
+    .log-row.action { color: #555; }
+
+    /* ── Countdown overlay ───────────────────────────────────────────────── */
+    #countdown-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.93);
+      z-index: 999;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #countdown-overlay.show { display: flex; }
+    #cd-num    { font-size: 12rem; font-weight: bold; color: #f0c040; line-height: 1; }
+    #cd-label  { color: #666; font-size: 0.9rem; letter-spacing: 4px; margin-top: 14px; }
+    #cd-agents { color: #3a3a3a; font-size: 0.75rem; margin-top: 8px; }
   </style>
 </head>
 <body>
+
   <div id="countdown-overlay">
-    <div id="countdown-number">—</div>
-    <div id="countdown-label">TOURNAMENT STARTING</div>
-    <div id="countdown-agents"></div>
+    <div id="cd-num">—</div>
+    <div id="cd-label">TOURNAMENT STARTING</div>
+    <div id="cd-agents"></div>
   </div>
 
-  <div id="connection" class="disconnected">● disconnected</div>
-  <h1>♠ POKER TOURNAMENT ♠</h1>
+  <div id="header">
+    <span id="title">♠ POKER TOURNAMENT ♠</span>
+    <span id="conn" class="off">● disconnected</span>
+  </div>
 
-  <div class="grid">
+  <div id="table-area">
+    <div id="felt">
+      <div id="table-center">
+        <div id="stage-label">WAITING</div>
+        <div id="community-cards"></div>
+        <div id="pot-display"></div>
+      </div>
+      <div id="waiting">Waiting for tournament to start…</div>
+    </div>
+  </div>
+  <div id="blinds-label"></div>
+
+  <div id="bottom">
     <div class="panel">
       <h2>Standings</h2>
-      <table id="standings">
-        <thead><tr><th>#</th><th>Agent</th><th>Stack</th><th>Status</th></tr></thead>
-        <tbody></tbody>
+      <table id="standings-table">
+        <thead><tr><th>#</th><th>Agent</th><th>Stack</th><th></th></tr></thead>
+        <tbody id="standings-body"></tbody>
       </table>
     </div>
-
     <div class="panel">
-      <h2>Current Hand</h2>
-      <p class="blinds" id="blinds">Blinds: — / —</p>
-      <p class="pot" id="pot">Pot: —</p>
-      <p class="status" id="stage">Stage: —</p>
-      <p style="color:#888; font-size:0.8rem; margin-top:8px;">Community Cards</p>
-      <div class="cards" id="community"></div>
-    </div>
-
-    <div class="panel" style="grid-column: 1 / -1;">
       <h2>Hand Log</h2>
-      <div class="log" id="log"></div>
+      <div id="log"></div>
     </div>
   </div>
 
   <script>
     const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/spectate`
-    let ws
 
-    function connect() {
-      ws = new WebSocket(WS_URL)
-      ws.onopen = () => setStatus(true)
-      ws.onclose = () => { setStatus(false); setTimeout(connect, 2000) }
-      ws.onerror = () => ws.close()
-      ws.onmessage = (e) => handleMessage(JSON.parse(e.data))
+    const RANKS = { 14:'A', 13:'K', 12:'Q', 11:'J', 10:'T' }
+    const SUITS = { s:'♠', h:'♥', d:'♦', c:'♣' }
+    const RED   = new Set(['h','d'])
+
+    function cardHtml(card, cls) {
+      const r = RANKS[card.rank] ?? card.rank
+      const s = SUITS[card.suit]
+      const col = RED.has(card.suit) ? 'red' : 'black'
+      return `<div class="card ${cls} ${col}"><span class="r">${r}</span><span class="s">${s}</span></div>`
+    }
+    function backHtml() {
+      return '<div class="card h-card back"></div>'
     }
 
-    function setStatus(connected) {
-      const el = document.getElementById('connection')
-      el.textContent = connected ? '● connected' : '● disconnected'
-      el.className = connected ? 'connected' : 'disconnected'
+    let lastState = null
+
+    // ── Seat layout ───────────────────────────────────────────────────────────
+
+    function positionSeats(state) {
+      document.querySelectorAll('.seat').forEach(e => e.remove())
+      if (!state || !state.players.length) return
+
+      const ta   = document.getElementById('table-area')
+      const felt = document.getElementById('felt')
+      const taR  = ta.getBoundingClientRect()
+      const fR   = felt.getBoundingClientRect()
+
+      // Seat centers sit just outside the felt oval
+      const cx = fR.left - taR.left + fR.width  / 2
+      const cy = fR.top  - taR.top  + fR.height / 2
+      const rx = fR.width  / 2 + 74  // horizontal radius to seat center
+      const ry = fR.height / 2 + 64  // vertical radius to seat center
+      const n  = state.players.length
+
+      state.players.forEach((p, i) => {
+        const angle = (2 * Math.PI * i / n) - Math.PI / 2
+        const x = cx + rx * Math.cos(angle)
+        const y = cy + ry * Math.sin(angle)
+
+        const boxCls = ['seat-box']
+        if (p.isActing)           boxCls.push('acting')
+        if (p.folded)             boxCls.push('folded')
+        if (p.connected === false) boxCls.push('disconnected')
+
+        let cardsHtml = ''
+        if (p.holeCards && p.holeCards.length >= 2 && !p.folded) {
+          cardsHtml = p.holeCards.map(c => cardHtml(c, 'h-card')).join('')
+        } else if (!p.folded) {
+          cardsHtml = backHtml() + backHtml()
+        }
+
+        const la = (p.lastAction ?? '').toUpperCase()
+        let actionCls = ''
+        if (la.startsWith('FOLD'))  actionCls = 'fold'
+        else if (la.startsWith('CALL'))  actionCls = 'call'
+        else if (la.startsWith('CHECK')) actionCls = 'check'
+        else if (la.startsWith('RAISE')) actionCls = 'raise'
+
+        const betText  = p.allIn ? 'ALL IN' : p.bet > 0 ? `bet: ${p.bet}` : ''
+        const dealerEl = p.isDealer ? '<span class="dealer-btn">D</span>' : ''
+        const name     = p.id.length > 13 ? p.id.slice(0,13) + '…' : p.id
+        const dcEl     = p.connected === false ? '<div class="seat-dc">✕ disconnected</div>' : ''
+
+        const el = document.createElement('div')
+        el.className = 'seat'
+        el.style.left = x + 'px'
+        el.style.top  = y + 'px'
+        el.innerHTML = `<div class="${boxCls.join(' ')}">
+          <div class="seat-name">${name}${dealerEl}</div>
+          <div class="seat-stack">${p.stack.toLocaleString()}</div>
+          <div class="seat-bet">${betText}</div>
+          <div class="seat-cards">${cardsHtml}</div>
+          <div class="seat-action ${actionCls}">${p.lastAction ?? ''}</div>
+          ${dcEl}
+        </div>`
+        ta.appendChild(el)
+      })
     }
 
-    function suitClass(card) {
-      return card.suit === 'h' || card.suit === 'd' ? 'hearts' : ''
+    // ── Lobby seat layout (pre-game) ─────────────────────────────────────────
+
+    function renderLobbySeats(agents) {
+      document.querySelectorAll('.seat').forEach(e => e.remove())
+      if (!agents.length) {
+        document.getElementById('waiting').style.display = ''
+        return
+      }
+      document.getElementById('waiting').style.display = 'none'
+
+      const ta   = document.getElementById('table-area')
+      const felt = document.getElementById('felt')
+      const taR  = ta.getBoundingClientRect()
+      const fR   = felt.getBoundingClientRect()
+      const cx = fR.left - taR.left + fR.width  / 2
+      const cy = fR.top  - taR.top  + fR.height / 2
+      const rx = fR.width  / 2 + 74
+      const ry = fR.height / 2 + 64
+      const n  = agents.length
+
+      agents.forEach((agent, i) => {
+        const angle = (2 * Math.PI * i / n) - Math.PI / 2
+        const x = cx + rx * Math.cos(angle)
+        const y = cy + ry * Math.sin(angle)
+        const name = agent.id.length > 13 ? agent.id.slice(0, 13) + '…' : agent.id
+        const el = document.createElement('div')
+        el.className = 'seat'
+        el.style.left = x + 'px'
+        el.style.top  = y + 'px'
+        el.innerHTML = `<div class="seat-box waiting">
+          <div class="seat-name">${name}</div>
+          <div class="seat-waiting">waiting…</div>
+        </div>`
+        ta.appendChild(el)
+      })
     }
 
-    function cardHtml(card) {
-      const ranks = { 14: 'A', 13: 'K', 12: 'Q', 11: 'J', 10: 'T' }
-      const suits = { s: '♠', h: '♥', d: '♦', c: '♣' }
-      const r = ranks[card.rank] ?? card.rank
-      return `<span class="card ${suitClass(card)}">${r}${suits[card.suit]}</span>`
+    // ── Message handlers ──────────────────────────────────────────────────────
+
+    function onTableState(msg) {
+      lastState = msg
+      document.getElementById('waiting').style.display = 'none'
+      document.getElementById('stage-label').textContent = msg.stage.replace(/_/g, ' ')
+      document.getElementById('pot-display').textContent =
+        msg.pot > 0 ? `POT  ${msg.pot.toLocaleString()}` : ''
+
+      const comm = document.getElementById('community-cards')
+      comm.innerHTML = msg.communityCards.length
+        ? msg.communityCards.map(c => cardHtml(c, 'c-card')).join('')
+        : ''
+
+      positionSeats(msg)
+    }
+
+    function onStandings(msg) {
+      document.getElementById('countdown-overlay').classList.remove('show')
+      const tbody = document.getElementById('standings-body')
+      tbody.innerHTML = msg.standings.map((p, i) => {
+        const cls  = p.eliminated ? 'out' : i === 0 ? 'leader' : ''
+        const icon = p.eliminated ? '✕' : i === 0 ? '♛' : ''
+        return `<tr class="${cls}">
+          <td>${i+1}</td>
+          <td>${p.playerId}</td>
+          <td>${p.eliminated ? '—' : p.stack.toLocaleString()}</td>
+          <td>${icon}</td>
+        </tr>`
+      }).join('')
+      document.getElementById('blinds-label').textContent =
+        `Blinds ${msg.smallBlind} / ${msg.bigBlind}  ·  Level ${msg.blindLevel}`
+    }
+
+    function addLog(text, cls) {
+      const el = document.createElement('div')
+      el.className = 'log-row' + (cls ? ' ' + cls : '')
+      el.textContent = text
+      const log = document.getElementById('log')
+      log.prepend(el)
     }
 
     function handleMessage(msg) {
-      if (msg.type === 'countdown') renderCountdown(msg)
-      if (msg.type === 'tournament_update') { hideCountdown(); renderStandings(msg) }
-      if (msg.type === 'action_required') renderHand(msg)
-      if (msg.type === 'hand_result') renderResult(msg)
+      if (msg.type === 'countdown') {
+        document.getElementById('countdown-overlay').classList.add('show')
+        document.getElementById('cd-num').textContent =
+          msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
+        document.getElementById('cd-agents').textContent =
+          msg.agentCount + ' agent' + (msg.agentCount !== 1 ? 's' : '') + ' connected'
+        if (msg.secondsRemaining === 0) {
+          setTimeout(() => document.getElementById('countdown-overlay').classList.remove('show'), 2000)
+        }
+      }
+      if (msg.type === 'lobby_snapshot') renderLobbySeats(msg.agents)
+      if (msg.type === 'tournament_update') onStandings(msg)
+      if (msg.type === 'table_state') {
+        document.getElementById('countdown-overlay').classList.remove('show')
+        onTableState(msg)
+      }
+      if (msg.type === 'hand_result') {
+        const wins = msg.winners.map(w => `${w.playerId} +${w.amount}`).join(', ')
+        addLog(`Hand #${msg.handNumber}: ${wins}`, 'win')
+      }
     }
 
-    function renderCountdown(msg) {
-      const overlay = document.getElementById('countdown-overlay')
-      overlay.classList.add('visible')
-      document.getElementById('countdown-number').textContent =
-        msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
-      document.getElementById('countdown-agents').textContent =
-        msg.agentCount + ' agent' + (msg.agentCount !== 1 ? 's' : '') + ' connected'
+    // ── WebSocket ─────────────────────────────────────────────────────────────
+
+    function connect() {
+      const ws = new WebSocket(WS_URL)
+      ws.onopen = () => {
+        document.getElementById('conn').textContent = '● connected'
+        document.getElementById('conn').className = 'on'
+      }
+      ws.onclose = () => {
+        document.getElementById('conn').textContent = '● disconnected'
+        document.getElementById('conn').className = 'off'
+        setTimeout(connect, 2000)
+      }
+      ws.onerror  = () => ws.close()
+      ws.onmessage = e => handleMessage(JSON.parse(e.data))
     }
 
-    function hideCountdown() {
-      document.getElementById('countdown-overlay').classList.remove('visible')
-    }
-
-    function renderStandings(msg) {
-      document.getElementById('blinds').textContent =
-        `Blinds: ${msg.smallBlind} / ${msg.bigBlind}  (Level ${msg.blindLevel})`
-      const tbody = document.querySelector('#standings tbody')
-      tbody.innerHTML = msg.standings
-        .map((p, i) => `
-          <tr class="${p.eliminated ? 'eliminated' : i === 0 ? 'leader' : ''}">
-            <td>${i + 1}</td>
-            <td>${p.playerId}</td>
-            <td>${p.eliminated ? '—' : p.stack.toLocaleString()}</td>
-            <td>${p.eliminated ? '💀' : i === 0 ? '🏆' : '●'}</td>
-          </tr>`).join('')
-    }
-
-    function renderHand(msg) {
-      document.getElementById('stage').textContent = `Stage: ${msg.stage}`
-      document.getElementById('pot').textContent = `Pot: ${msg.pot.toLocaleString()}`
-      const comm = document.getElementById('community')
-      comm.innerHTML = msg.communityCards.length
-        ? msg.communityCards.map(cardHtml).join('')
-        : '<span style="color:#444">none yet</span>'
-    }
-
-    function renderResult(msg) {
-      const log = document.getElementById('log')
-      const winnerText = msg.winners.map(w => `${w.playerId} wins ${w.amount}`).join(', ')
-      const div = document.createElement('div')
-      div.className = 'win'
-      div.textContent = `Hand #${msg.handNumber}: ${winnerText}`
-      log.prepend(div)
-    }
-
+    window.addEventListener('resize', () => { if (lastState) positionSeats(lastState) })
     connect()
   </script>
 </body>

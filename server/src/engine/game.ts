@@ -54,6 +54,7 @@ export interface CreateGameOptions {
   smallBlind: number
   bigBlind: number
   seeds: number[]
+  dealerIndex?: number
 }
 
 export function createGame(opts: CreateGameOptions): GameState {
@@ -72,7 +73,7 @@ export function createGame(opts: CreateGameOptions): GameState {
     allIn: false,
   }))
 
-  const dealerIndex = 0
+  const dealerIndex = opts.dealerIndex ?? 0
   const sbIndex = (dealerIndex + 1) % players.length
   const bbIndex = (dealerIndex + 2) % players.length
 

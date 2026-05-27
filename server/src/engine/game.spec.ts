@@ -236,6 +236,45 @@ describe('getShowdownWinners', () => {
   })
 })
 
+describe('dealerIndex option', () => {
+  it('should default dealer to index 0 when dealerIndex is omitted', () => {
+    const game = newGame(4)
+    expect(game.dealerIndex).toBe(0)
+  })
+
+  it('should respect a custom dealerIndex when provided', () => {
+    const game = createGame({
+      playerIds: ['p1', 'p2', 'p3', 'p4'],
+      startingStack: 1000,
+      smallBlind: 10,
+      bigBlind: 20,
+      seeds: SEEDS,
+      dealerIndex: 2,
+    })
+    expect(game.dealerIndex).toBe(2)
+    // SB = (2+1)%4 = 3, BB = (2+2)%4 = 0
+    expect(game.players[3].stack).toBe(990)   // SB paid 10
+    expect(game.players[0].stack).toBe(980)   // BB paid 20
+    // UTG = (2+3)%4 = 1
+    expect(game.actionIndex).toBe(1)
+  })
+
+  it('should wrap dealerIndex correctly for the last player', () => {
+    const game = createGame({
+      playerIds: ['p1', 'p2', 'p3'],
+      startingStack: 1000,
+      smallBlind: 10,
+      bigBlind: 20,
+      seeds: SEEDS,
+      dealerIndex: 2,
+    })
+    expect(game.dealerIndex).toBe(2)
+    // SB = (2+1)%3 = 0, BB = (2+2)%3 = 1
+    expect(game.players[0].stack).toBe(990)
+    expect(game.players[1].stack).toBe(980)
+  })
+})
+
 describe('all-in handling', () => {
   it('should cap a raise at the player stack (all-in)', () => {
     let game = dealHands(newGame(2, 100))
