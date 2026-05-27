@@ -55,6 +55,33 @@ function fmtCards(array $cards): string {
     return $cards ? implode(' ', array_map('fmtCard', $cards)) : 'none';
 }
 
+function buildBountySection(array $state): string {
+    global $AGENT_ID;
+    $b = $state['activeBounty'] ?? null;
+    if (!$b) return '';
+
+    $reward     = number_format((int)$b['reward']);
+    $expires    = $b['expiresAfterHand'];
+    $targetId   = $b['targetId'];
+    $targetName = $b['targetName'];
+
+    if ($targetId === $AGENT_ID) {
+        return "\n⚠️  BOUNTY ON YOU: You are the current bounty target! "
+             . "Opponents earn $reward bonus chips if they eliminate you before hand $expires. "
+             . "Play conservatively — avoid large all-in confrontations unless you have a very strong hand.\n";
+    }
+
+    $atTable = !empty(array_filter($state['players'] ?? [], fn($p) => $p['id'] === $targetId));
+    if ($atTable) {
+        return "\n💰 BOUNTY TARGET HERE: $targetName is the bounty target at this table. "
+             . "You earn $reward bonus chips if you eliminate them before hand $expires. "
+             . "Widen your calling/raising range against $targetName to pressure them out of chips.\n";
+    }
+
+    return "\n💰 ACTIVE BOUNTY: $targetName has a bounty at another table "
+         . "($reward chips, expires hand $expires). Focus on standard play.\n";
+}
+
 function buildPrompt(array $state): string {
     $raiseInfo = in_array('RAISE', $state['validActions'])
         ? "\n  Raise range: {$state['minRaise']} – {$state['maxRaise']}"
@@ -65,11 +92,14 @@ function buildPrompt(array $state): string {
         return "  - {$p['id']}: stack=" . number_format($p['stack']) . ", bet={$p['bet']}, $status";
     }, $state['players'] ?? []));
 
-    return "You are playing Texas Hold'em in a poker tournament. Make the best play.
+    $bountySection = buildBountySection($state);
+    $handNum = $state['handNumber'] ?? '?';
 
+    return "You are playing Texas Hold'em in a poker tournament. Make the best play.
+{$bountySection}
 YOUR HAND:    " . fmtCards($state['holeCards']) . "
 COMMUNITY:    " . fmtCards($state['communityCards']) . "
-STAGE:        {$state['stage']}
+STAGE:        {$state['stage']}   (hand #{$handNum})
 POSITION:     {$state['position']}
 POT:          " . number_format($state['pot']) . "
 MY STACK:     " . number_format($state['myStack']) . "
@@ -195,6 +225,23 @@ $loop = Loop::get();
                     echo ($delta > 0 ? "Won  " : "Lost ") . "hand #{$msg['handNumber']}  "
                        . ($delta > 0 ? "+$delta" : $delta) . "\n";
                 }
+
+            } elseif ($msg['type'] === 'bounty_announced') {
+                if ($msg['targetId'] === $AGENT_ID) {
+                    echo "\n⚠️  BOUNTY ON ME! {$msg['reward']} chips to whoever eliminates me before hand {$msg['expiresAfterHand']}\n\n";
+                } else {
+                    echo "💰 Bounty on {$msg['targetName']} — {$msg['reward']} chips, expires hand {$msg['expiresAfterHand']}\n";
+                }
+
+            } elseif ($msg['type'] === 'bounty_claimed') {
+                if ($msg['claimedById'] === $AGENT_ID) {
+                    echo "\n🎯 I claimed the bounty! Eliminated {$msg['targetName']} for +{$msg['reward']} bonus chips\n\n";
+                } else {
+                    echo "💰 Bounty claimed: {$msg['claimedByName']} eliminated {$msg['targetName']} (+{$msg['reward']})\n";
+                }
+
+            } elseif ($msg['type'] === 'bounty_expired') {
+                echo "⌛ Bounty on {$msg['targetName']} expired unclaimed\n";
 
             } elseif ($msg['type'] === 'tournament_update') {
                 $me = null;

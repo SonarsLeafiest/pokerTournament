@@ -35,10 +35,17 @@ const SUIT_LABELS: Record<string, string> = { s: "♠", h: "♥", d: "♦", c: "
 
 interface Card { rank: number; suit: string }
 interface Player { id: string; stack: number; bet: number; folded: boolean; allIn: boolean }
+interface BountyInfo {
+  targetId: string;
+  targetName: string;
+  reward: number;
+  expiresAfterHand: number;
+}
 
 interface ActionRequired {
   type: "action_required";
   gameId: string;
+  handNumber: number;
   holeCards: Card[];
   communityCards: Card[];
   stage: string;
@@ -51,6 +58,7 @@ interface ActionRequired {
   minRaise: number;
   maxRaise: number;
   players: Player[];
+  activeBounty: BountyInfo | null;
 }
 
 function fmtCard(c: Card): string {
@@ -61,6 +69,22 @@ function fmtCard(c: Card): string {
 
 function fmtCards(cards: Card[]): string {
   return cards.length ? cards.map(fmtCard).join(" ") : "none";
+}
+
+function buildBountySection(state: ActionRequired): string {
+  const b = state.activeBounty;
+  if (!b) return "";
+
+  if (b.targetId === AGENT_ID) {
+    return `\n⚠️  BOUNTY ON YOU: You are the current bounty target! Opponents earn ${b.reward.toLocaleString()} bonus chips if they eliminate you before hand ${b.expiresAfterHand}. Play conservatively — avoid large all-in confrontations unless you have a very strong hand.\n`;
+  }
+
+  const targetAtTable = state.players.some(p => p.id === b.targetId);
+  if (targetAtTable) {
+    return `\n💰 BOUNTY TARGET HERE: ${b.targetName} is the bounty target at this table. You earn ${b.reward.toLocaleString()} bonus chips if you eliminate them before hand ${b.expiresAfterHand}. Widen your calling/raising range against ${b.targetName} to pressure them out of chips.\n`;
+  }
+
+  return `\n💰 ACTIVE BOUNTY: ${b.targetName} has a bounty at another table (${b.reward.toLocaleString()} chips, expires hand ${b.expiresAfterHand}). Focus on standard play.\n`;
 }
 
 function buildPrompt(state: ActionRequired): string {
@@ -74,10 +98,10 @@ function buildPrompt(state: ActionRequired): string {
     .join("\n");
 
   return `You are playing Texas Hold'em in a poker tournament. Make the best play.
-
+${buildBountySection(state)}
 YOUR HAND:    ${fmtCards(state.holeCards)}
 COMMUNITY:    ${fmtCards(state.communityCards)}
-STAGE:        ${state.stage}
+STAGE:        ${state.stage}   (hand #${state.handNumber})
 POSITION:     ${state.position}
 POT:          ${state.pot.toLocaleString()}
 MY STACK:     ${state.myStack.toLocaleString()}
@@ -170,6 +194,23 @@ async function run(): Promise<void> {
           ? `Won  hand #${msg.handNumber}  +${delta}`
           : `Lost hand #${msg.handNumber}  ${delta}`);
       }
+
+    } else if (msg.type === "bounty_announced") {
+      if (msg.targetId === AGENT_ID) {
+        console.log(`\n⚠️  BOUNTY ON ME! ${msg.reward} chips to whoever eliminates me before hand ${msg.expiresAfterHand}\n`);
+      } else {
+        console.log(`💰 Bounty on ${msg.targetName} — ${msg.reward} chips, expires hand ${msg.expiresAfterHand}`);
+      }
+
+    } else if (msg.type === "bounty_claimed") {
+      if (msg.claimedById === AGENT_ID) {
+        console.log(`\n🎯 I claimed the bounty! Eliminated ${msg.targetName} for +${msg.reward} bonus chips\n`);
+      } else {
+        console.log(`💰 Bounty claimed: ${msg.claimedByName} eliminated ${msg.targetName} (+${msg.reward})`);
+      }
+
+    } else if (msg.type === "bounty_expired") {
+      console.log(`⌛ Bounty on ${msg.targetName} expired unclaimed`);
 
     } else if (msg.type === "tournament_update") {
       const me = msg.standings?.find((p: { playerId: string }) => p.playerId === AGENT_ID);

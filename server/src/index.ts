@@ -150,7 +150,7 @@ const handleHttp = createHttpHandler({
 const httpServer = createServer(handleHttp)
 
 httpServer.on('upgrade', (req, socket, head) => {
-  if (req.url === '/spectate') {
+  if (new URL(req.url ?? '/', 'http://localhost').pathname === '/spectate') {
     spectator.wss.handleUpgrade(req, socket, head, (ws) => {
       spectator.wss.emit('connection', ws, req)
     })

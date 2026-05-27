@@ -52,6 +52,37 @@ def fmt_cards(cards: list[dict]) -> str:
     return " ".join(fmt_card(c) for c in cards) if cards else "none"
 
 
+def build_bounty_section(state: dict) -> str:
+    b = state.get("activeBounty")
+    if not b:
+        return ""
+
+    reward   = b["reward"]
+    expires  = b["expiresAfterHand"]
+    target_id   = b["targetId"]
+    target_name = b["targetName"]
+
+    if target_id == AGENT_ID:
+        return (
+            f"\n⚠️  BOUNTY ON YOU: You are the current bounty target! "
+            f"Opponents earn {reward:,} bonus chips if they eliminate you before hand {expires}. "
+            f"Play conservatively — avoid large all-in confrontations unless you have a very strong hand.\n"
+        )
+
+    at_table = any(p["id"] == target_id for p in state.get("players", []))
+    if at_table:
+        return (
+            f"\n💰 BOUNTY TARGET HERE: {target_name} is the bounty target at this table. "
+            f"You earn {reward:,} bonus chips if you eliminate them before hand {expires}. "
+            f"Widen your calling/raising range against {target_name} to pressure them out of chips.\n"
+        )
+
+    return (
+        f"\n💰 ACTIVE BOUNTY: {target_name} has a bounty at another table "
+        f"({reward:,} chips, expires hand {expires}). Focus on standard play.\n"
+    )
+
+
 def build_prompt(state: dict) -> str:
     valid = state["validActions"]
     raise_info = ""
@@ -64,11 +95,14 @@ def build_prompt(state: dict) -> str:
         for p in state.get("players", [])
     )
 
-    return f"""You are playing Texas Hold'em in a poker tournament. Make the best play.
+    bounty_section = build_bounty_section(state)
+    hand_num = state.get("handNumber", "?")
 
+    return f"""You are playing Texas Hold'em in a poker tournament. Make the best play.
+{bounty_section}
 YOUR HAND:    {fmt_cards(state['holeCards'])}
 COMMUNITY:    {fmt_cards(state['communityCards'])}
-STAGE:        {state.get('stage', '?')}
+STAGE:        {state.get('stage', '?')}   (hand #{hand_num})
 POSITION:     {state.get('position', '?')}
 POT:          {state['pot']:,}
 MY STACK:     {state['myStack']:,}
@@ -172,6 +206,21 @@ async def run() -> None:
                         print(f"Won  hand #{msg['handNumber']}  +{delta}")
                     else:
                         print(f"Lost hand #{msg['handNumber']}  {delta}")
+
+            elif msg["type"] == "bounty_announced":
+                if msg["targetId"] == AGENT_ID:
+                    print(f"\n⚠️  BOUNTY ON ME! {msg['reward']} chips to whoever eliminates me before hand {msg['expiresAfterHand']}\n")
+                else:
+                    print(f"💰 Bounty on {msg['targetName']} — {msg['reward']} chips, expires hand {msg['expiresAfterHand']}")
+
+            elif msg["type"] == "bounty_claimed":
+                if msg["claimedById"] == AGENT_ID:
+                    print(f"\n🎯 I claimed the bounty! Eliminated {msg['targetName']} for +{msg['reward']} bonus chips\n")
+                else:
+                    print(f"💰 Bounty claimed: {msg['claimedByName']} eliminated {msg['targetName']} (+{msg['reward']})")
+
+            elif msg["type"] == "bounty_expired":
+                print(f"⌛ Bounty on {msg['targetName']} expired unclaimed")
 
             elif msg["type"] == "tournament_update":
                 me = next((p for p in msg["standings"] if p["playerId"] == AGENT_ID), None)
