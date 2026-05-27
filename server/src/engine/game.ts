@@ -64,14 +64,10 @@ export function createGame(opts: CreateGameOptions): GameState {
 
   const deck = shuffleDeck(createDeck(), seeds)
 
-  const players: Player[] = playerIds.map(id => ({
-    id,
-    stack: opts.playerStacks?.[id] ?? opts.startingStack ?? 0,
-    holeCards: [],
-    bet: 0,
-    folded: false,
-    allIn: false,
-  }))
+  const players: Player[] = playerIds.map(id => {
+    const stack = opts.playerStacks?.[id] ?? opts.startingStack ?? 0
+    return { id, stack, holeCards: [], bet: 0, folded: false, allIn: stack === 0 }
+  })
 
   const dealerIndex = opts.dealerIndex ?? 0
   const sbIndex = (dealerIndex + 1) % players.length

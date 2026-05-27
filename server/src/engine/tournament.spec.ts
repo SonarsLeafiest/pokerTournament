@@ -32,6 +32,104 @@ describe('playHand return value', () => {
   })
 })
 
+describe('tableIds getter', () => {
+  it('returns empty array before seatTables()', () => {
+    const t = new Tournament(BASE_CONFIG)
+    expect(t.tableIds).toEqual([])
+  })
+
+  it('returns ["table-1"] for 3-player config with tableSizes:6', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(t.tableIds).toEqual(['table-1'])
+  })
+
+  it('returns two table ids for 7-player config with tableSizes:4', () => {
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      players: Array.from({ length: 7 }, (_, i) => ({ id: `p${i+1}`, name: `P${i+1}` })),
+      tableSizes: 4,
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    expect(t.tableIds).toHaveLength(2)
+    expect(t.tableIds).toContain('table-1')
+    expect(t.tableIds).toContain('table-2')
+  })
+
+  it('updates after a second seatTables() call', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(t.tableIds).toHaveLength(1)
+    t.seatTables()
+    expect(t.tableIds).toHaveLength(1)
+  })
+})
+
+describe('blindLevel getter', () => {
+  it('returns 1 at the start of the tournament', () => {
+    const t = new Tournament(BASE_CONFIG)
+    expect(t.blindLevel).toBe(1)
+  })
+
+  it('increments after enough hands are played', async () => {
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      blindLevels: [
+        { smallBlind: 10, bigBlind: 20, handsPerLevel: 1 },
+        { smallBlind: 20, bigBlind: 40, handsPerLevel: 99 },
+      ],
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    expect(t.blindLevel).toBe(1)
+    await t.playHand('table-1', alwaysFold)
+    expect(t.blindLevel).toBe(2)
+  })
+})
+
+describe('rebalance()', () => {
+  it('does not re-seat when active tables have 2+ players each', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const idsBefore = [...t.tableIds]
+    t.rebalance()
+    expect(t.tableIds).toEqual(idsBefore)
+  })
+
+  it('consolidates tables when each has only 1 active player left', () => {
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      players: [
+        { id: 'p1', name: 'P1' },
+        { id: 'p2', name: 'P2' },
+        { id: 'p3', name: 'P3' },
+        { id: 'p4', name: 'P4' },
+      ],
+      tableSizes: 2,
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    expect(t.tableIds).toHaveLength(2)
+    // seatTables distributes round-robin: table-1=[p1,p3], table-2=[p2,p4]
+    // Eliminate one player from each table so each table has exactly 1 active
+    ;(t as any).players.get('p3').eliminated = true  // removes from table-1
+    ;(t as any).players.get('p4').eliminated = true  // removes from table-2
+
+    t.rebalance()
+    expect(t.tableIds).toHaveLength(1)
+  })
+
+  it('does not throw when tournament is finished', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    ;(t as any).players.forEach((p: any) => {
+      if (p.id !== 'p1') { p.eliminated = true; p.stack = 0 }
+    })
+    expect(() => t.rebalance()).not.toThrow()
+  })
+})
+
 describe('dealer button rotation', () => {
   it('should start with dealerIndex 0', () => {
     const t = new Tournament(BASE_CONFIG)

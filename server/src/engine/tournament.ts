@@ -64,8 +64,35 @@ export class Tournament {
     return this.config.blindLevels[this.blindLevelIndex]
   }
 
+  /** 1-based index of the current blind level. */
+  get blindLevel(): number {
+    return this.blindLevelIndex + 1
+  }
+
+  /** IDs of all tables currently in play. */
+  get tableIds(): string[] {
+    return [...this.tables.keys()]
+  }
+
   isFinished(): boolean {
     return this.activePlayers.length <= 1
+  }
+
+  /**
+   * Consolidates tables when no table has more than one active player left.
+   * Replaces the old `rebalanceTables` free function in the server orchestrator.
+   */
+  rebalance(): void {
+    let hasActiveTables = false
+    for (const table of this.tables.values()) {
+      const activeSeatCount = table.playerIds.filter(
+        pid => this.activePlayers.some(p => p.id === pid)
+      ).length
+      if (activeSeatCount > 1) hasActiveTables = true
+    }
+    if (!hasActiveTables && this.activePlayers.length > 1) {
+      this.seatTables()
+    }
   }
 
   seatTables(): void {
@@ -87,6 +114,10 @@ export class Tournament {
   async playHand(tableId: string, requestAction: ActionRequestor): Promise<ShowdownResult[]> {
     const table = this.tables.get(tableId)
     if (!table) throw new Error(`Unknown table: ${tableId}`)
+
+    // Prune any players eliminated in a previous hand before building the next game
+    table.playerIds = table.playerIds.filter(id => !this.players.get(id)?.eliminated)
+    if (table.playerIds.length < 2) return []  // table emptied out; caller rebalances
 
     const seeds = await fetchQuantumSeeds(8).catch(() => fallbackSeeds())
     const blinds = this.currentBlinds

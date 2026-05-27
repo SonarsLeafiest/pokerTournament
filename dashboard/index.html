@@ -187,6 +187,51 @@
       pointer-events: none;
     }
 
+    /* ── Table tabs ─────────────────────────────────────────────────────── */
+    #table-tabs {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      max-width: 1000px;
+      margin: 10px auto 0;
+      padding: 0 20px;
+    }
+    .table-tab {
+      padding: 5px 18px;
+      background: #1a1a1a;
+      border: 1px solid #2e2e3a;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      color: #666;
+      text-transform: uppercase;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .table-tab.active { border-color: #f0c040; color: #f0c040; background: #1e1c0e; }
+    .table-tab:hover:not(.active) { border-color: #555; color: #aaa; }
+
+    /* ── Hand banner ─────────────────────────────────────────────────────── */
+    #hand-banner {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #f0c040;
+      letter-spacing: 4px;
+      pointer-events: none;
+      z-index: 20;
+      text-shadow: 0 0 24px rgba(240,192,64,0.9);
+      animation: hand-fadeout 1.4s ease-out forwards;
+    }
+    @keyframes hand-fadeout {
+      0%, 40% { opacity: 1; }
+      100%     { opacity: 0; }
+    }
+
     /* ── Blinds label ────────────────────────────────────────────────────── */
     #blinds-label {
       text-align: center;
@@ -312,6 +357,8 @@
     <span id="conn" class="off">● disconnected</span>
   </div>
 
+  <div id="table-tabs"></div>
+
   <div id="table-area">
     <div id="felt">
       <div id="table-center">
@@ -319,6 +366,7 @@
         <div id="community-cards"></div>
         <div id="pot-display"></div>
       </div>
+      <div id="hand-banner"></div>
       <div id="waiting">Waiting for tournament to start…</div>
     </div>
   </div>
@@ -356,6 +404,10 @@
     }
 
     let lastState = null
+    const tableStates = new Map()    // tableId → TableStateMsg
+    let activeTableId  = null        // currently displayed table
+    let pinnedTableId  = null        // null = auto-follow most recent update
+    let activeTablesFromServer = []  // from tournament_update.activeTables
 
     // ── Seat layout ───────────────────────────────────────────────────────────
 
@@ -459,10 +511,49 @@
 
     // ── Message handlers ──────────────────────────────────────────────────────
 
-    function onTableState(msg) {
+    // ── Table tabs ────────────────────────────────────────────────────────────
+
+    function renderTabs() {
+      const tabsEl = document.getElementById('table-tabs')
+      if (activeTablesFromServer.length <= 1) {
+        tabsEl.style.display = 'none'
+        return
+      }
+      tabsEl.style.display = 'flex'
+      tabsEl.innerHTML = activeTablesFromServer.map(tid => {
+        const label = tid.replace('table-', 'Table ')
+        const cls   = tid === activeTableId ? 'table-tab active' : 'table-tab'
+        return `<div class="${cls}" onclick="selectTable('${tid}')">${label}</div>`
+      }).join('')
+    }
+
+    function selectTable(tableId) {
+      pinnedTableId = tableId
+      activeTableId = tableId
+      const ts = tableStates.get(tableId)
+      if (ts) renderTableState(ts)
+      renderTabs()
+    }
+
+    function flashHandBanner(n) {
+      const el = document.getElementById('hand-banner')
+      el.textContent = `HAND  #${n}`
+      el.style.display = 'block'
+      el.style.animation = 'none'
+      void el.offsetWidth                  // force reflow to restart CSS animation
+      el.style.animation = ''
+      setTimeout(() => { el.style.display = 'none' }, 1500)
+    }
+
+    // ── Table state render ────────────────────────────────────────────────────
+
+    function renderTableState(msg) {
       lastState = msg
       document.getElementById('waiting').style.display = 'none'
-      document.getElementById('stage-label').textContent = msg.stage.replace(/_/g, ' ')
+      document.getElementById('stage-label').textContent =
+        (activeTablesFromServer.length > 1
+          ? msg.tableId.replace('table-', 'Table ') + '  ·  '
+          : '') + msg.stage.replace(/_/g, ' ')
       document.getElementById('pot-display').textContent =
         msg.pot > 0 ? `POT  ${msg.pot.toLocaleString()}` : ''
 
@@ -472,6 +563,21 @@
         : ''
 
       positionSeats(msg)
+    }
+
+    function onTableState(msg) {
+      const prev = tableStates.get(msg.tableId)
+      tableStates.set(msg.tableId, msg)
+
+      // Auto-follow the most recently updated table unless user has pinned one
+      if (!pinnedTableId) activeTableId = msg.tableId
+
+      if (activeTableId === msg.tableId) {
+        // Flash hand banner when the hand number advances on the viewed table
+        if (prev && msg.handNumber > prev.handNumber) flashHandBanner(msg.handNumber)
+        renderTableState(msg)
+        renderTabs()
+      }
     }
 
     function onStandings(msg) {
@@ -487,8 +593,20 @@
           <td>${icon}</td>
         </tr>`
       }).join('')
-      document.getElementById('blinds-label').textContent =
-        `Blinds ${msg.smallBlind} / ${msg.bigBlind}  ·  Level ${msg.blindLevel}`
+
+      const blindsText = `Blinds ${msg.smallBlind} / ${msg.bigBlind}  ·  Level ${msg.blindLevel}`
+      const tablesText = msg.tableCount > 1 ? `  ·  ${msg.tableCount} tables` : ''
+      document.getElementById('blinds-label').textContent = blindsText + tablesText
+
+      // Sync tab list — remove stale tables that no longer exist after consolidation
+      if (msg.activeTables) {
+        activeTablesFromServer = msg.activeTables
+        for (const tid of tableStates.keys()) {
+          if (!msg.activeTables.includes(tid)) tableStates.delete(tid)
+        }
+        if (pinnedTableId && !msg.activeTables.includes(pinnedTableId)) pinnedTableId = null
+        renderTabs()
+      }
     }
 
     function addLog(text, cls) {
@@ -547,6 +665,12 @@
 
     function handleMessage(msg) {
       if (msg.type === 'countdown') {
+        // Reset table tracking whenever a (new) countdown arrives
+        tableStates.clear()
+        activeTableId = null
+        pinnedTableId = null
+        activeTablesFromServer = []
+        renderTabs()
         document.getElementById('winner-overlay').classList.remove('show')
         document.getElementById('countdown-overlay').classList.add('show')
         document.getElementById('cd-num').textContent =

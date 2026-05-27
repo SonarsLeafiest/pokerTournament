@@ -71,6 +71,8 @@ export interface TournamentUpdateMsg {
   blindLevel: number
   smallBlind: number
   bigBlind: number
+  activeTables: string[]
+  tableCount: number
 }
 
 export interface CountdownMsg {
