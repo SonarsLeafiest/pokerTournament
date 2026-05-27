@@ -1,4 +1,4 @@
-import { createGame, dealHands, applyAction, getShowdownWinners, GameStage, ActionType } from './game.js'
+import { createGame, dealHands, applyAction, getShowdownWinners, runOutBoard, GameStage, ActionType } from './game.js'
 import type { GameState, Action, ShowdownResult } from './game.js'
 import { fetchQuantumSeeds } from './rng.js'
 
@@ -167,7 +167,9 @@ export class Tournament {
 
     // Betting loop
     while (state.stage !== GameStage.SHOWDOWN) {
-      if (state.players.filter(p => !p.folded && !p.allIn).length <= 1) break
+      // Only stop betting when NO player can still act; if exactly 1 remains
+      // they must still complete their action before we run out the board.
+      if (state.players.filter(p => !p.folded && !p.allIn).length === 0) break
 
       const actingPlayer = state.players[state.actionIndex]
       if (actingPlayer.folded || actingPlayer.allIn) {
@@ -185,6 +187,10 @@ export class Tournament {
 
       state = applyAction(state, actingPlayer.id, action)
     }
+
+    // Run out any remaining community cards when all active players are all-in
+    // (the betting loop may have exited before dealing flop/turn/river).
+    state = runOutBoard(state)
 
     // Resolve winners and update stacks
     const results = getShowdownWinners(state)

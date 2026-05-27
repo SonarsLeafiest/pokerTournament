@@ -237,6 +237,20 @@ function advanceStage(state: GameState): GameState {
   }
 }
 
+/**
+ * Deals all remaining community cards and advances to SHOWDOWN without
+ * any further betting — used when all active players are all-in.
+ * Safe to call at any stage; at SHOWDOWN it is a no-op.
+ */
+export function runOutBoard(state: GameState): GameState {
+  let s = state
+  if (s.stage === GameStage.PRE_FLOP) s = { ...dealFlop(s),  stage: GameStage.FLOP }
+  if (s.stage === GameStage.FLOP)     s = { ...dealTurn(s),  stage: GameStage.TURN }
+  if (s.stage === GameStage.TURN)     s = { ...dealRiver(s), stage: GameStage.RIVER }
+  if (s.stage === GameStage.RIVER)    s = { ...s,            stage: GameStage.SHOWDOWN }
+  return s
+}
+
 export function getShowdownWinners(state: GameState): ShowdownResult[] {
   const activePlayers = state.players.filter(p => !p.folded)
 

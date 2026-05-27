@@ -254,3 +254,62 @@ describe('dealer button rotation', () => {
     expect(capturedDealerIndices).toEqual([0, 1, 2])
   })
 })
+
+describe('all-in runout', () => {
+  const alwaysCall: ActionRequestor = async () => ({ type: ActionType.CALL })
+
+  it('completes without throwing when BB is immediately all-in and SB calls', async () => {
+    // BB posts 20 and has no chips left; SB must call to complete betting.
+    // Without the fix this crashes with "Need at least 5 cards".
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      players: [{ id: 'p1', name: 'Alice' }, { id: 'p2', name: 'Bob' }],
+      startingStack: 20, // exactly the big blind → BB is immediately all-in
+      blindLevels: [{ smallBlind: 5, bigBlind: 20, handsPerLevel: 99 }],
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    await expect(t.playHand('table-1', alwaysCall)).resolves.not.toThrow()
+  })
+
+  it('completes when all players go all-in preflop', async () => {
+    // All three players call/raise all-in before any community cards are dealt.
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      players: [
+        { id: 'p1', name: 'Alice' },
+        { id: 'p2', name: 'Bob' },
+        { id: 'p3', name: 'Carol' },
+      ],
+      startingStack: 20,
+      blindLevels: [{ smallBlind: 5, bigBlind: 20, handsPerLevel: 99 }],
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    const results = await t.playHand('table-1', alwaysCall)
+    expect(results.length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('conserves total chips across an all-in hand', async () => {
+    const cfg: TournamentConfig = {
+      ...BASE_CONFIG,
+      players: [{ id: 'p1', name: 'Alice' }, { id: 'p2', name: 'Bob' }],
+      startingStack: 100,
+      blindLevels: [{ smallBlind: 10, bigBlind: 20, handsPerLevel: 99 }],
+    }
+    const t = new Tournament(cfg)
+    t.seatTables()
+    const totalBefore = t.standings.reduce((s, p) => s + p.stack, 0)
+
+    // Drive both players all-in
+    const alwaysRaiseAllIn: ActionRequestor = async (_tableId, _playerId, state) => {
+      const me = state.players.find(p => p.id === _playerId)!
+      if (state.validActions.includes('RAISE')) return { type: ActionType.RAISE, amount: me.stack + me.bet }
+      return { type: ActionType.CALL }
+    }
+
+    await t.playHand('table-1', alwaysRaiseAllIn)
+    const totalAfter = t.standings.reduce((s, p) => s + p.stack, 0)
+    expect(totalAfter).toBe(totalBefore)
+  })
+})

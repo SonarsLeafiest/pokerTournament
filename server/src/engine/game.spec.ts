@@ -7,6 +7,7 @@ import {
   dealRiver,
   applyAction,
   getShowdownWinners,
+  runOutBoard,
   GameStage,
   ActionType,
   type GameState,
@@ -272,6 +273,51 @@ describe('dealerIndex option', () => {
     // SB = (2+1)%3 = 0, BB = (2+2)%3 = 1
     expect(game.players[0].stack).toBe(990)
     expect(game.players[1].stack).toBe(980)
+  })
+})
+
+describe('runOutBoard', () => {
+  function gameAtStage(stage: GameStage): GameState {
+    let g = dealHands(newGame(2, 1000))
+    if (stage === GameStage.PRE_FLOP) return { ...g, stage }
+    g = { ...dealFlop(g), stage: GameStage.FLOP }
+    if (stage === GameStage.FLOP) return g
+    g = { ...dealTurn(g), stage: GameStage.TURN }
+    if (stage === GameStage.TURN) return g
+    g = { ...dealRiver(g), stage: GameStage.RIVER }
+    if (stage === GameStage.RIVER) return g
+    return { ...g, stage: GameStage.SHOWDOWN }
+  }
+
+  it('from PRE_FLOP → SHOWDOWN with 5 community cards', () => {
+    const g = runOutBoard(gameAtStage(GameStage.PRE_FLOP))
+    expect(g.stage).toBe(GameStage.SHOWDOWN)
+    expect(g.communityCards).toHaveLength(5)
+  })
+
+  it('from FLOP → SHOWDOWN with 5 community cards', () => {
+    const g = runOutBoard(gameAtStage(GameStage.FLOP))
+    expect(g.stage).toBe(GameStage.SHOWDOWN)
+    expect(g.communityCards).toHaveLength(5)
+  })
+
+  it('from TURN → SHOWDOWN with 5 community cards', () => {
+    const g = runOutBoard(gameAtStage(GameStage.TURN))
+    expect(g.stage).toBe(GameStage.SHOWDOWN)
+    expect(g.communityCards).toHaveLength(5)
+  })
+
+  it('from RIVER → SHOWDOWN (no extra cards dealt)', () => {
+    const g = runOutBoard(gameAtStage(GameStage.RIVER))
+    expect(g.stage).toBe(GameStage.SHOWDOWN)
+    expect(g.communityCards).toHaveLength(5)
+  })
+
+  it('from SHOWDOWN → unchanged (no-op)', () => {
+    const before = gameAtStage(GameStage.SHOWDOWN)
+    const g = runOutBoard(before)
+    expect(g.stage).toBe(GameStage.SHOWDOWN)
+    expect(g.communityCards).toHaveLength(5)
   })
 })
 
