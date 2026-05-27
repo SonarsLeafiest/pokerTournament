@@ -574,15 +574,18 @@
       const prev = tableStates.get(msg.tableId)
       tableStates.set(msg.tableId, msg)
 
-      // Auto-follow the most recently updated table unless user has pinned one
-      if (!pinnedTableId) activeTableId = msg.tableId
+      // Auto-follow: latch onto the first table we see; don't thrash between
+      // tables mid-game as concurrent updates arrive.  Only release the latch
+      // if the active table disappears (handled in onStandings).
+      if (!pinnedTableId && !activeTableId) activeTableId = msg.tableId
 
       if (activeTableId === msg.tableId) {
         // Flash hand banner when the hand number advances on the viewed table
         if (prev && msg.handNumber > prev.handNumber) flashHandBanner(msg.handNumber)
         renderTableState(msg)
-        renderTabs()
       }
+      // Always re-render tabs: a non-active table may have just come online
+      renderTabs()
     }
 
     function onStandings(msg) {
@@ -610,6 +613,14 @@
           if (!msg.activeTables.includes(tid)) tableStates.delete(tid)
         }
         if (pinnedTableId && !msg.activeTables.includes(pinnedTableId)) pinnedTableId = null
+        // If the displayed table was removed, fall back to the first remaining one
+        if (activeTableId && !msg.activeTables.includes(activeTableId)) {
+          activeTableId = pinnedTableId ?? msg.activeTables[0] ?? null
+          if (activeTableId) {
+            const ts = tableStates.get(activeTableId)
+            if (ts) renderTableState(ts)
+          }
+        }
         renderTabs()
       }
     }
