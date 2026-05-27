@@ -14,6 +14,7 @@ export interface TablePlayerState {
   connected: boolean
   holeCards: Card[]
   lastAction?: string
+  isBountyTarget?: boolean
 }
 
 export interface TableStateMsg {
@@ -37,6 +38,13 @@ export interface PlayerView {
   allIn: boolean
 }
 
+export interface BountyInfo {
+  targetId: string
+  targetName: string
+  reward: number
+  expiresAfterHand: number
+}
+
 export interface ActionRequiredMsg {
   type: 'action_required'
   gameId: string
@@ -54,6 +62,7 @@ export interface ActionRequiredMsg {
   minRaise: number
   maxRaise: number          // player's remaining stack
   timeLimitMs: number
+  activeBounty: BountyInfo | null
 }
 
 export interface HandResultMsg {
@@ -96,6 +105,32 @@ export interface TournamentCompleteMsg {
   standings: { playerId: string; name: string; place: number; stack: number }[]
 }
 
+export interface BountyAnnouncedMsg {
+  type: 'bounty_announced'
+  targetId: string
+  targetName: string
+  reward: number
+  expiresAfterHand: number
+  handNumber: number
+}
+
+export interface BountyClaimedMsg {
+  type: 'bounty_claimed'
+  targetId: string
+  targetName: string
+  claimedById: string
+  claimedByName: string
+  reward: number
+  handNumber: number
+}
+
+export interface BountyExpiredMsg {
+  type: 'bounty_expired'
+  targetId: string
+  targetName: string
+  handNumber: number
+}
+
 export interface TableWinnerMsg {
   type: 'table_winner'
   tableId: string
@@ -115,7 +150,7 @@ export interface ErrorMsg {
   message: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | LobbySnapshotMsg | ErrorMsg
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | LobbySnapshotMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 

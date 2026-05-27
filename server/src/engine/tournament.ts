@@ -92,6 +92,15 @@ export class Tournament {
     return active.length === 1 ? active[0] : null
   }
 
+  /**
+   * Add bonus chips directly to a player's stack (e.g. bounty reward).
+   * No-ops if the player is eliminated or unknown.
+   */
+  awardBonus(playerId: string, amount: number): void {
+    const player = this.players.get(playerId)
+    if (player && !player.eliminated) player.stack += amount
+  }
+
   isFinished(): boolean {
     return this.activePlayers.length <= 1
   }

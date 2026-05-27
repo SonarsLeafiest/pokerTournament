@@ -22,6 +22,8 @@ const TABLE_SIZE            = parseInt(process.env.TABLE_SIZE             ?? '6'
 const TOURNAMENT_START_DELAY = parseInt(process.env.TOURNAMENT_START_DELAY ?? '10')
 const TURN_DELAY_MS         = parseInt(process.env.TURN_DELAY_MS          ?? '1500')
 const SPECTATOR_DELAY_MS    = parseInt(process.env.SPECTATOR_DELAY_S      ?? '0') * 1000
+const BOUNTY_WINDOW_HANDS   = parseInt(process.env.BOUNTY_WINDOW_HANDS    ?? '0')
+const BOUNTY_REWARD         = parseInt(process.env.BOUNTY_REWARD          ?? '500')
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
 const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
   const generated = randomBytes(16).toString('hex').toUpperCase()
@@ -83,11 +85,13 @@ const hub = new WebSocketHub({
 const orchestrator = new Orchestrator({
   hub,
   spectator,
-  turnDelayMs:   TURN_DELAY_MS,
-  actionTimeout: ACTION_TIMEOUT,
-  getLobbyState: () => lobbyState,
-  setLobbyState: (s) => { lobbyState = s },
-  isAborted:     () => tournamentAbort,
+  turnDelayMs:       TURN_DELAY_MS,
+  actionTimeout:     ACTION_TIMEOUT,
+  getLobbyState:     () => lobbyState,
+  setLobbyState:     (s) => { lobbyState = s },
+  isAborted:         () => tournamentAbort,
+  bountyWindowHands: BOUNTY_WINDOW_HANDS,
+  bountyReward:      BOUNTY_REWARD,
 })
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

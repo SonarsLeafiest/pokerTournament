@@ -285,6 +285,59 @@
     .log-row.win    { color: #3a3; }
     .log-row.action { color: #555; }
 
+    /* ── Bounty bar ─────────────────────────────────────────────────────── */
+    #bounty-bar {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      gap: 14px;
+      max-width: 1000px;
+      margin: 8px auto 0;
+      padding: 9px 20px;
+      background: #1a0a0a;
+      border: 1px solid #8b1a1a;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+    #bounty-bar.show { display: flex; }
+    #bounty-icon  { font-size: 1.1rem; }
+    #bounty-label { color: #c44; font-weight: bold; text-transform: uppercase; }
+    #bounty-name  { color: #f0c040; font-weight: bold; }
+    #bounty-reward-text { color: #888; }
+    #bounty-hands { color: #555; font-size: 0.68rem; }
+    .seat-box.bounty-target { border-color: #c44 !important; box-shadow: 0 0 12px rgba(192,64,64,0.5); }
+
+    /* ── Bounty claim / expire banner ───────────────────────────────────── */
+    #bounty-event-banner {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(10, 4, 4, 0.94);
+      border: 2px solid #c44;
+      border-radius: 12px;
+      padding: 28px 48px;
+      text-align: center;
+      pointer-events: none;
+      z-index: 100;
+    }
+    #bounty-event-banner.claimed { border-color: #c44; }
+    #bounty-event-banner.expired { border-color: #444; }
+    #beb-icon   { font-size: 2rem; line-height: 1; }
+    #beb-title  { font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; margin: 6px 0 4px; }
+    #beb-name   { font-size: 1.4rem; font-weight: bold; letter-spacing: 2px; }
+    #beb-detail { font-size: 0.75rem; color: #888; margin-top: 6px; letter-spacing: 1px; }
+    #bounty-event-banner.claimed #beb-title { color: #c44; }
+    #bounty-event-banner.claimed #beb-name  { color: #f0c040; }
+    #bounty-event-banner.expired #beb-title { color: #555; }
+    #bounty-event-banner.expired #beb-name  { color: #444; }
+    @keyframes beb-fadeout {
+      0%, 55% { opacity: 1; }
+      100%     { opacity: 0; }
+    }
+
     /* ── Table winner banner ─────────────────────────────────────────────── */
     #table-winner-banner {
       display: none;
@@ -359,6 +412,13 @@
 </head>
 <body>
 
+  <div id="bounty-event-banner">
+    <div id="beb-icon"></div>
+    <div id="beb-title"></div>
+    <div id="beb-name"></div>
+    <div id="beb-detail"></div>
+  </div>
+
   <div id="table-winner-banner">
     <div class="twb-trophy">🏆</div>
     <div class="twb-table" id="twb-table"></div>
@@ -390,6 +450,14 @@
   </div>
 
   <div id="table-tabs"></div>
+
+  <div id="bounty-bar">
+    <span id="bounty-icon">💰</span>
+    <span id="bounty-label">Bounty</span>
+    <span id="bounty-name"></span>
+    <span id="bounty-reward-text"></span>
+    <span id="bounty-hands"></span>
+  </div>
 
   <div id="table-area">
     <div id="felt">
@@ -445,6 +513,7 @@
     let activeTableId  = null        // currently displayed table
     let pinnedTableId  = null        // null = auto-follow most recent update
     let activeTablesFromServer = []  // from tournament_update.activeTables
+    let activeBountyTargetId   = null  // currently wanted player (or null)
 
     // ── Seat layout ───────────────────────────────────────────────────────────
 
@@ -473,6 +542,7 @@
         if (p.isActing)           boxCls.push('acting')
         if (p.folded)             boxCls.push('folded')
         if (p.connected === false) boxCls.push('disconnected')
+        if (p.isBountyTarget)     boxCls.push('bounty-target')
 
         let cardsHtml = ''
         if (p.holeCards && p.holeCards.length >= 2 && !p.folded) {
@@ -571,6 +641,66 @@
       const ts = tableStates.get(tableId)
       if (ts) renderTableState(ts)
       renderTabs()
+    }
+
+    // ── Bounty handlers ───────────────────────────────────────────────────────
+
+    function updateBountyBar(targetName, reward, handsLeft) {
+      document.getElementById('bounty-name').textContent        = targetName
+      document.getElementById('bounty-reward-text').textContent = `+${reward} chips`
+      document.getElementById('bounty-hands').textContent       = handsLeft != null ? `(${handsLeft} hands left)` : ''
+      document.getElementById('bounty-bar').classList.add('show')
+    }
+
+    function clearBountyBar() {
+      document.getElementById('bounty-bar').classList.remove('show')
+    }
+
+    function showBountyEventBanner(type, title, name, detail, durationMs) {
+      const el = document.getElementById('bounty-event-banner')
+      el.className = type  // 'claimed' or 'expired'
+      document.getElementById('beb-icon').textContent   = type === 'claimed' ? '💰' : '⌛'
+      document.getElementById('beb-title').textContent  = title
+      document.getElementById('beb-name').textContent   = name
+      document.getElementById('beb-detail').textContent = detail
+      el.style.display   = 'block'
+      el.style.animation = 'none'
+      void el.offsetWidth
+      el.style.animation = `beb-fadeout ${durationMs / 1000}s ease-out forwards`
+      setTimeout(() => { el.style.display = 'none' }, durationMs)
+    }
+
+    function onBountyAnnounced(msg) {
+      activeBountyTargetId = msg.targetId
+      const handsLeft = msg.expiresAfterHand - msg.handNumber
+      updateBountyBar(msg.targetName, msg.reward, handsLeft)
+      addLog(`💰 BOUNTY: Eliminate ${esc(msg.targetName)} within ${handsLeft} hands for +${msg.reward} chips`, 'win')
+    }
+
+    function onBountyClaimed(msg) {
+      activeBountyTargetId = null
+      clearBountyBar()
+      showBountyEventBanner(
+        'claimed',
+        'Bounty Claimed!',
+        esc(msg.claimedByName),
+        `eliminated ${esc(msg.targetName)} — +${msg.reward} chips`,
+        4000
+      )
+      addLog(`💰 ${esc(msg.claimedByName)} claimed the bounty on ${esc(msg.targetName)} (+${msg.reward} chips)`, 'win')
+    }
+
+    function onBountyExpired(msg) {
+      activeBountyTargetId = null
+      clearBountyBar()
+      showBountyEventBanner(
+        'expired',
+        'Bounty Expired',
+        esc(msg.targetName),
+        'survived — no reward claimed',
+        3000
+      )
+      addLog(`⌛ Bounty on ${esc(msg.targetName)} expired unclaimed`, '')
     }
 
     function showTableWinnerBanner(msg) {
@@ -729,9 +859,11 @@
       if (msg.type === 'countdown') {
         // Reset table tracking whenever a (new) countdown arrives
         tableStates.clear()
-        activeTableId = null
-        pinnedTableId = null
+        activeTableId        = null
+        pinnedTableId        = null
         activeTablesFromServer = []
+        activeBountyTargetId = null
+        clearBountyBar()
         renderTabs()
         document.getElementById('winner-overlay').classList.remove('show')
         document.getElementById('countdown-overlay').classList.add('show')
@@ -753,6 +885,9 @@
         const wins = msg.winners.map(w => `${w.playerId} +${w.amount}`).join(', ')
         addLog(`Hand #${msg.handNumber}: ${wins}`, 'win')
       }
+      if (msg.type === 'bounty_announced')   onBountyAnnounced(msg)
+      if (msg.type === 'bounty_claimed')     onBountyClaimed(msg)
+      if (msg.type === 'bounty_expired')     onBountyExpired(msg)
       if (msg.type === 'table_winner')       showTableWinnerBanner(msg)
       if (msg.type === 'tournament_complete') onTournamentComplete(msg)
     }

@@ -130,6 +130,32 @@ describe('rebalance()', () => {
   })
 })
 
+describe('awardBonus', () => {
+  it('adds chips to an active player', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const before = t.standings.find(p => p.id === 'p1')!.stack
+    t.awardBonus('p1', 250)
+    expect(t.standings.find(p => p.id === 'p1')!.stack).toBe(before + 250)
+  })
+
+  it('does nothing for an eliminated player', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    ;(t as any).players.get('p2').eliminated = true
+    ;(t as any).players.get('p2').stack = 0
+    const before = t.standings.find(p => p.id === 'p2')!.stack
+    t.awardBonus('p2', 250)
+    expect(t.standings.find(p => p.id === 'p2')!.stack).toBe(before)
+  })
+
+  it('does nothing for an unknown player id', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(() => t.awardBonus('ghost', 250)).not.toThrow()
+  })
+})
+
 describe('getTableActivePlayers / getTableWinner', () => {
   it('getTableActivePlayers returns empty array for unknown table', () => {
     const t = new Tournament(BASE_CONFIG)
