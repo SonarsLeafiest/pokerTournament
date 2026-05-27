@@ -22,6 +22,12 @@ export interface HubOptions {
   onAgentConnect?: (agent: ConnectedAgent) => void
   onAgentDisconnect?: (agentId: string) => void
   onAgentReconnect?: (agent: ConnectedAgent) => void
+  /**
+   * Called before accepting a brand-new registration (not a reconnect).
+   * Return false to reject the connection with an error message.
+   * Reconnects of already-known agents always succeed regardless.
+   */
+  canRegister?: (agentId: string, agentName: string) => boolean
 }
 
 export class WebSocketHub {
@@ -111,6 +117,12 @@ export class WebSocketHub {
 
           this.opts.onAgentReconnect?.(existing)
         } else {
+          // New registration — check whether it's currently allowed
+          if (this.opts.canRegister && !this.opts.canRegister(agentId, msg.agentName)) {
+            this.send(ws, { type: 'error', message: 'Tournament is already in progress. Registration is closed.' })
+            ws.close()
+            return
+          }
           const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws, connected: true }
           this.agents.set(agentId, agent)
           this.isAlive.set(agentId, true)

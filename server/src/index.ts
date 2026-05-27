@@ -43,6 +43,8 @@ const spectator = new SpectatorState()
 const hub = new WebSocketHub({
   noServer:        true,
   actionTimeoutMs: ACTION_TIMEOUT,
+  // Only allow new registrations while the lobby is open; reconnects always pass.
+  canRegister: () => lobbyState === 'open',
 
   onAgentConnect(agent) {
     console.log(`[hub] ${agent.name} (${agent.id}) connected`)
