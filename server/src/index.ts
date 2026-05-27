@@ -41,6 +41,7 @@ let tournamentAbort: boolean    = false
 const spectator = new SpectatorState()
 
 const hub = new WebSocketHub({
+  noServer:        true,
   actionTimeoutMs: ACTION_TIMEOUT,
 
   onAgentConnect(agent) {
