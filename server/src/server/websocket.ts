@@ -151,6 +151,12 @@ export class WebSocketHub {
           const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws, connected: true, remoteAddress }
           this.agents.set(agentId, agent)
           this.isAlive.set(agentId, true)
+          this.send(ws, {
+            type:        'register_ack',
+            agentId,
+            agentName:   msg.agentName,
+            timeLimitMs: this.actionTimeoutMs,
+          })
           this.opts.onAgentConnect?.(agent)
         }
         return

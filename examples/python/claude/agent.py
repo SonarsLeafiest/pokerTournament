@@ -185,12 +185,15 @@ async def run() -> None:
             "agentId":   AGENT_ID,
             "agentName": AGENT_NAME,
         }))
-        print("Registered. Waiting for hands…")
-
         async for raw in ws:
             msg = json.loads(raw)
 
-            if msg["type"] == "action_required":
+            if msg["type"] == "register_ack":
+                print(f"Registered as {msg['agentName']}. "
+                      f"Action timeout: {msg['timeLimitMs']}ms — respond within this limit or the server auto-folds.")
+                print("Waiting for hands…")
+
+            elif msg["type"] == "action_required":
                 action = decide(msg)
                 await ws.send(json.dumps({
                     "type":   "action",

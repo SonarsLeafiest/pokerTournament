@@ -172,7 +172,14 @@ export interface BountyCursedMsg {
   handNumber:  number
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | LobbySnapshotMsg | ErrorMsg
+export interface RegisterAckMsg {
+  type:        'register_ack'
+  agentId:     string
+  agentName:   string
+  timeLimitMs: number   // respond faster than this per action or the server auto-folds
+}
+
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | RegisterAckMsg | LobbySnapshotMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 

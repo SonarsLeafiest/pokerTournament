@@ -146,12 +146,14 @@ async def run() -> None:
 
     async with websockets.connect(SERVER_URL) as ws:
         await ws.send(json.dumps({"type": "register", "agentId": AGENT_ID, "agentName": AGENT_NAME}))
-        print(f"  [{AGENT_NAME}] registered")
 
         async for raw in ws:
             msg = json.loads(raw)
 
-            if msg["type"] == "action_required":
+            if msg["type"] == "register_ack":
+                print(f"  [{AGENT_NAME}] registered. Action timeout: {msg['timeLimitMs']}ms")
+
+            elif msg["type"] == "action_required":
                 action = decide(msg, style)
                 await ws.send(json.dumps({"type": "action", "gameId": msg["gameId"], **action}))
 

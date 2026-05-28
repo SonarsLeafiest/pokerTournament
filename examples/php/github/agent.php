@@ -210,12 +210,15 @@ $loop = Loop::get();
 \Ratchet\Client\connect($SERVER_URL, [], [], $loop)->then(
     function (WebSocket $ws) use ($AGENT_ID, $AGENT_NAME) {
         $ws->send(json_encode(['type' => 'register', 'agentId' => $AGENT_ID, 'agentName' => $AGENT_NAME]));
-        echo "Registered. Waiting for hands…\n";
 
         $ws->on('message', function ($raw) use ($ws, $AGENT_ID) {
             $msg = json_decode((string)$raw, true);
 
-            if ($msg['type'] === 'action_required') {
+            if ($msg['type'] === 'register_ack') {
+                echo "Registered as {$msg['agentName']}. Action timeout: {$msg['timeLimitMs']}ms — respond within this limit or the server auto-folds.\n";
+                echo "Waiting for hands…\n";
+
+            } elseif ($msg['type'] === 'action_required') {
                 $action = decide($msg);
                 $ws->send(json_encode(array_merge(['type' => 'action', 'gameId' => $msg['gameId']], $action)));
 
