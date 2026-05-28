@@ -578,8 +578,9 @@
     }
 
     let lastState = null
-    const tableStates = new Map()    // tableId → TableStateMsg
-    let activeTableId  = null        // currently displayed table (auto-follow, read-only)
+    const tableStates  = new Map()    // tableId → TableStateMsg
+    const lastHandPots = new Map()    // tableId → pot size of most recent completed hand
+    let activeTableId  = null        // currently displayed table (auto-follow)
     let activeTablesFromServer = []  // from tournament_update.activeTables
     let activeBountyTargetId   = null  // currently wanted player (or null)
 
@@ -825,9 +826,23 @@
         activeTablesFromServer = [...activeTablesFromServer, msg.tableId]
       }
 
-      // Auto-follow: latch onto the first table we see.  Never switch unless
-      // the active table disappears (handled in onStandings).
-      if (!activeTableId) activeTableId = msg.tableId
+      // Auto-follow: on the first ever table state, latch.
+      // On each new hand (handNumber advances) re-evaluate which table has
+      // had the largest recent pot — switch to whichever looks most active.
+      if (!activeTableId) {
+        activeTableId = msg.tableId
+      } else if (prev && msg.handNumber > prev.handNumber && activeTablesFromServer.length > 1) {
+        // New hand started on this table — pick the most interesting active table
+        let bestTable = activeTableId
+        let bestPot   = lastHandPots.get(activeTableId) ?? 0
+        for (const tid of activeTablesFromServer) {
+          const pot = lastHandPots.get(tid) ?? 0
+          if (pot > bestPot) { bestPot = pot; bestTable = tid }
+        }
+        if (bestTable !== activeTableId) {
+          activeTableId = bestTable
+        }
+      }
 
       if (activeTableId === msg.tableId) {
         if (prev && msg.handNumber > prev.handNumber) flashHandBanner(msg.handNumber)
@@ -930,6 +945,7 @@
       if (msg.type === 'countdown') {
         // Reset table tracking whenever a (new) countdown arrives
         tableStates.clear()
+        lastHandPots.clear()
         activeTableId        = null
         activeTablesFromServer = []
         activeBountyTargetId = null
@@ -954,6 +970,11 @@
         onTableState(msg)
       }
       if (msg.type === 'hand_result') {
+        // Track the total chips that changed hands — used by auto-follow to find the
+        // most active table.  Sum of winning amounts is the pot size.
+        const pot = msg.winners.reduce((s, w) => s + w.amount, 0)
+        lastHandPots.set(msg.gameId, pot)
+
         const wins = msg.winners.map(w => `${esc(w.playerId)} +${w.amount}`).join(', ')
         let text = `Hand #${msg.handNumber}: ${wins}`
         if (msg.showdown && msg.showdown.length > 0) {
