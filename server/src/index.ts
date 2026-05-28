@@ -23,6 +23,7 @@ const TOURNAMENT_START_DELAY = parseInt(process.env.TOURNAMENT_START_DELAY ?? '1
 const TURN_DELAY_MS         = parseInt(process.env.TURN_DELAY_MS          ?? '1500')
 const SPECTATOR_DELAY_MS    = parseInt(process.env.SPECTATOR_DELAY_S      ?? '0') * 1000
 const BOUNTY_WINDOW_HANDS   = parseInt(process.env.BOUNTY_WINDOW_HANDS    ?? '0')
+const BOUNTY_FIRE_EVERY     = parseInt(process.env.BOUNTY_FIRE_EVERY      ?? '0')
 const BOUNTY_REWARD         = parseInt(process.env.BOUNTY_REWARD          ?? '500')
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
 const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
@@ -91,6 +92,7 @@ const orchestrator = new Orchestrator({
   setLobbyState:     (s) => { lobbyState = s },
   isAborted:         () => tournamentAbort,
   bountyWindowHands: BOUNTY_WINDOW_HANDS,
+  bountyFireEvery:   BOUNTY_FIRE_EVERY,
   bountyReward:      BOUNTY_REWARD,
 })
 

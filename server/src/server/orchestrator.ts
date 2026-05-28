@@ -45,7 +45,8 @@ export interface OrchestratorOptions {
   getLobbyState:      () => LobbyState
   setLobbyState:      (s: LobbyState) => void
   isAborted:          () => boolean
-  bountyWindowHands:  number   // 0 = disabled
+  bountyWindowHands:  number   // how many hands the target has before the bounty expires (0 = disabled)
+  bountyFireEvery:    number   // hands between successive bounties (0 = same as bountyWindowHands)
   bountyReward:       number
 }
 
@@ -55,6 +56,13 @@ export class Orchestrator {
   private nextBountyAtHand: number             = 0
 
   constructor(private opts: OrchestratorOptions) {}
+
+  /** Hands between one bounty resolving and the next being announced. */
+  private get cooldownHands(): number {
+    return this.opts.bountyFireEvery > 0
+      ? this.opts.bountyFireEvery
+      : this.opts.bountyWindowHands
+  }
 
   /** Returns the last action_required message sent to a player (for reconnect replay). */
   getPendingAction(playerId: string): ActionRequiredMsg | undefined {
@@ -75,7 +83,7 @@ export class Orchestrator {
 
     spectator.resetBuffers()
     this.activeBounty    = null
-    this.nextBountyAtHand = this.opts.bountyWindowHands > 0 ? this.opts.bountyWindowHands : Infinity
+    this.nextBountyAtHand = this.opts.bountyWindowHands > 0 ? this.cooldownHands : Infinity
 
     const tournament = new Tournament(config)
     tournament.seatTables()
@@ -196,7 +204,7 @@ export class Orchestrator {
       }
 
       this.activeBounty    = null
-      this.nextBountyAtHand = handNumber + this.opts.bountyWindowHands
+      this.nextBountyAtHand = handNumber + this.cooldownHands
       return
     }
 
@@ -211,7 +219,7 @@ export class Orchestrator {
       spectator.broadcast(expired)
       console.log(`[bounty] Bounty on ${bounty.targetName} expired unclaimed`)
       this.activeBounty    = null
-      this.nextBountyAtHand = handNumber + this.opts.bountyWindowHands
+      this.nextBountyAtHand = handNumber + this.cooldownHands
       return
     }
 

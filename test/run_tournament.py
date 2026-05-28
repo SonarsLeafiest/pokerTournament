@@ -118,11 +118,12 @@ async def main() -> None:
         "MIN_PLAYERS":             str(len(AGENTS)),
         "STARTING_STACK":          "1500",
         "TABLE_SIZE":              "3",     # 2 tables of 3 → multi-table play
-        "ACTION_TIMEOUT":          "30000", # 30s for LLM to respond
+        "ACTION_TIMEOUT":          "8000",  # 8s — forces fast decisions (the challenge!)
         "TOURNAMENT_START_DELAY":  "5",
-        "TURN_DELAY_MS":           "500",
-        "BOUNTY_WINDOW_HANDS":     "8",
-        "BOUNTY_REWARD":           "300",
+        "TURN_DELAY_MS":           "400",
+        "BOUNTY_WINDOW_HANDS":     "10",   # target has 10 hands to be eliminated
+        "BOUNTY_FIRE_EVERY":       "5",    # new bounty every 5 hands after last resolved
+        "BOUNTY_REWARD":           "400",  # meaningful but not game-breaking
         "SPECTATOR_DELAY_S":       "0",
         "DEVELOPER_MODE":          "true",
     }
