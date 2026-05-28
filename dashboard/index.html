@@ -612,7 +612,7 @@
         el.style.top  = y + 'px'
         el.innerHTML = `<div class="${boxCls.join(' ')}">
           <div class="seat-name">${name}${dealerEl}</div>
-          <div class="seat-stack">${p.stack.toLocaleString()}</div>
+          <div class="seat-stack">${p.stack === 0 && !p.allIn ? '' : p.stack.toLocaleString()}</div>
           <div class="seat-bet">${betText}</div>
           <div class="seat-cards">${cardsHtml}</div>
           <div class="seat-action ${actionCls}">${p.lastAction ?? ''}</div>

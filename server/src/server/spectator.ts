@@ -13,9 +13,14 @@ import type {
 
 const MAX_HAND_HISTORY = 200
 
-// Message types that reveal round outcomes — delayed for authenticated viewers
-// to keep their log/winner-screen in sync with the delayed table_state stream.
-const RESULT_MSG_TYPES = new Set<string>(['hand_result', 'table_winner', 'tournament_complete'])
+// All game-progress message types that are delayed for authenticated viewers.
+// Public (unauthenticated) connections receive these immediately since they
+// cannot see hole cards and have no unfair-advantage incentive to cheat.
+const DELAYED_FOR_AUTH = new Set<string>([
+  'hand_result', 'table_winner', 'tournament_complete',  // round outcomes
+  'tournament_update',                                   // standings, blind level, player counts
+  'bounty_announced', 'bounty_claimed', 'bounty_expired', // in-game events
+])
 
 /**
  * Owns all spectator WebSocket state: the WS server, connected clients,
@@ -99,6 +104,30 @@ export class SpectatorState {
     return { ...msg, players: msg.players.map(p => ({ ...p, holeCards: [] })) }
   }
 
+  /**
+   * Seat-position skeleton: keeps only player identity and table topology.
+   * Sent immediately to authenticated viewers so the felt looks populated,
+   * while all financial and game-state data is held until the delayed release.
+   */
+  private _skeletonTableState(msg: TableStateMsg): TableStateMsg {
+    return {
+      ...msg,
+      players: msg.players.map(p => ({
+        id:         p.id,
+        isDealer:   p.isDealer,
+        connected:  p.connected,
+        stack:      0,
+        bet:        0,
+        folded:     false,
+        allIn:      false,
+        isActing:   false,
+        holeCards:  [],
+      })),
+      communityCards: [],
+      pot: 0,
+    }
+  }
+
   /** Update the catch-up buffers when a message is actually released. */
   private _applyToBuffers(msg: ServerMessage): void {
     switch (msg.type) {
@@ -151,22 +180,26 @@ export class SpectatorState {
 
     if (this.delayMs > 0) {
       if (msg.type === 'table_state') {
-        // Stripped version: everyone gets it immediately (shows positions/bets/stacks)
+        // Public: stripped (all data except hole cards) — they can't cheat with cards.
+        // Keyed auth: skeleton only (seat positions, no financial/game state data).
+        // Full version queued for keyed auth and released after the delay.
         const stripped = this._stripHoleCards(msg)
+        const skeleton = this._skeletonTableState(msg)
         for (const ws of this.spectators) {
-          if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(stripped))
+          if (ws.readyState !== ws.OPEN) continue
+          const isAdmin = this.spectatorAuth.get(ws) ?? false
+          ws.send(JSON.stringify(isAdmin ? skeleton : stripped))
         }
-        // Full version (with hole cards): queued for authenticated only
         this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
-      } else if (RESULT_MSG_TYPES.has(msg.type)) {
-        // Round outcomes: immediate to unauthenticated, delayed for authenticated
+      } else if (DELAYED_FOR_AUTH.has(msg.type)) {
+        // Game-progress messages: immediate for public, delayed for keyed auth.
         for (const ws of this.spectators) {
           const isAdmin = this.spectatorAuth.get(ws) ?? false
           if (!isAdmin) this._send(ws, msg)
         }
         this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
       } else {
-        // Lobby / standings / countdown: immediate for all
+        // Pre-game only (countdown, lobby_snapshot): immediate for all
         for (const ws of this.spectators) this._send(ws, msg)
       }
     } else {
