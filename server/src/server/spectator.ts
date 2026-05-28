@@ -13,6 +13,10 @@ import type {
 
 const MAX_HAND_HISTORY = 200
 
+// Message types that reveal round outcomes — delayed for authenticated viewers
+// to keep their log/winner-screen in sync with the delayed table_state stream.
+const RESULT_MSG_TYPES = new Set<string>(['hand_result', 'table_winner', 'tournament_complete'])
+
 /**
  * Owns all spectator WebSocket state: the WS server, connected clients,
  * replay buffers, and the broadcast/catch-up logic.
@@ -131,27 +135,42 @@ export class SpectatorState {
 
   /** Buffer then fan out a message (honouring delay if configured).
    *
-   * When delayMs > 0, only hole-card data is delayed:
-   *   - Non-card messages (standings, results, countdowns) → immediate for everyone.
-   *   - table_state messages → stripped version immediate for everyone so the table
-   *     appears populated right away; full version queued for authenticated connections
-   *     only (cards reveal after the delay, preventing real-time reading by agents).
+   * When delayMs > 0, game-outcome data is delayed for authenticated viewers:
+   *   - Lobby / standings / countdown → immediate for everyone (no secrets).
+   *   - table_state → stripped version immediate for everyone (table appears
+   *     populated right away); full version (hole cards) queued for authenticated
+   *     connections only, released after delayMs.
+   *   - hand_result / table_winner / tournament_complete → immediate for
+   *     unauthenticated; queued for authenticated (keeps their view in sync with
+   *     the delayed table_state stream so round outcomes are revealed together).
    */
   broadcast(msg: ServerMessage): void {
-    // Catch-up buffers always reflect the latest state immediately so new connections
-    // join into a populated view regardless of the delay setting.
+    // Catch-up buffers always reflect the latest state so new connections join
+    // into a populated view regardless of the delay setting.
     this._applyToBuffers(msg)
 
-    if (msg.type === 'table_state' && this.delayMs > 0) {
-      // Immediately: send stripped version to all spectators (table is visible right away)
-      const stripped = this._stripHoleCards(msg)
-      for (const ws of this.spectators) {
-        if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(stripped))
+    if (this.delayMs > 0) {
+      if (msg.type === 'table_state') {
+        // Stripped version: everyone gets it immediately (shows positions/bets/stacks)
+        const stripped = this._stripHoleCards(msg)
+        for (const ws of this.spectators) {
+          if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(stripped))
+        }
+        // Full version (with hole cards): queued for authenticated only
+        this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
+      } else if (RESULT_MSG_TYPES.has(msg.type)) {
+        // Round outcomes: immediate to unauthenticated, delayed for authenticated
+        for (const ws of this.spectators) {
+          const isAdmin = this.spectatorAuth.get(ws) ?? false
+          if (!isAdmin) this._send(ws, msg)
+        }
+        this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
+      } else {
+        // Lobby / standings / countdown: immediate for all
+        for (const ws of this.spectators) this._send(ws, msg)
       }
-      // After delay: send full version to authenticated connections only
-      this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
     } else {
-      // No delay required: send to all connections immediately
+      // No delay configured: send everything immediately
       for (const ws of this.spectators) this._send(ws, msg)
     }
   }

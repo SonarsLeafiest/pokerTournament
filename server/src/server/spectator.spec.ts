@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { SpectatorState } from './spectator.js'
-import type { TableStateMsg, TournamentUpdateMsg } from './protocol.js'
+import type { TableStateMsg, TournamentUpdateMsg, HandResultMsg, TournamentCompleteMsg, TableWinnerMsg } from './protocol.js'
 import { GameStage } from '../engine/game.js'
 
 // ── Fake WebSocket helpers ────────────────────────────────────────────────────
@@ -184,4 +184,72 @@ describe('delay mode (delayMs > 0)', () => {
     expect(received(ws)).toHaveLength(2)
     expect(received(ws)[1].players[0].holeCards).toHaveLength(2)
   })
+})
+
+// ── Result message delay (hand_result, table_winner, tournament_complete) ────
+
+describe('result message delay', () => {
+  const HAND_RESULT_MSG: HandResultMsg = {
+    type: 'hand_result', gameId: 'table-1', handNumber: 5,
+    winners: [{ playerId: 'p1', amount: 100 }], showdown: [], deltas: { p1: 80, p2: -80 },
+  }
+
+  const TABLE_WINNER_MSG: TableWinnerMsg = {
+    type: 'table_winner', tableId: 'table-2', handNumber: 12,
+    winnerId: 'p3', winnerName: 'Carol', winnerStack: 1000,
+  }
+
+  const TOURNAMENT_COMPLETE_MSG: TournamentCompleteMsg = {
+    type: 'tournament_complete', winnerId: 'p1', winnerName: 'Alice',
+    finalStack: 2000,
+    standings: [{ playerId: 'p1', name: 'Alice', place: 1, stack: 2000 }],
+  }
+
+  beforeEach(() => { vi.useFakeTimers() })
+
+  for (const [label, msg] of [
+    ['hand_result',          HAND_RESULT_MSG],
+    ['table_winner',         TABLE_WINNER_MSG],
+    ['tournament_complete',  TOURNAMENT_COMPLETE_MSG],
+  ] as const) {
+    it(`${label}: unauthenticated receives immediately`, () => {
+      const state = new SpectatorState('key', 5000)
+      const ws = makeWs()
+      inject(state, ws, false)
+      state.broadcast(msg as any)
+      expect(received(ws)).toHaveLength(1)
+      expect(received(ws)[0].type).toBe(label)
+    })
+
+    it(`${label}: authenticated receives nothing immediately`, () => {
+      const state = new SpectatorState('key', 5000)
+      const ws = makeWs()
+      inject(state, ws, true)
+      state.broadcast(msg as any)
+      expect(received(ws)).toHaveLength(0)
+    })
+
+    it(`${label}: authenticated receives after delay`, () => {
+      const state = new SpectatorState('key', 5000)
+      const ws = makeWs()
+      inject(state, ws, true)
+      state.broadcast(msg as any)
+      vi.advanceTimersByTime(5100)
+      flush(state)
+      expect(received(ws)).toHaveLength(1)
+      expect(received(ws)[0].type).toBe(label)
+    })
+
+    it(`${label}: not queued when no delay configured`, () => {
+      const state = new SpectatorState('key', 0)
+      const wsAuth = makeWs()
+      const wsUnauth = makeWs()
+      inject(state, wsAuth, true)
+      inject(state, wsUnauth, false)
+      state.broadcast(msg as any)
+      expect(received(wsAuth)).toHaveLength(1)
+      expect(received(wsUnauth)).toHaveLength(1)
+      expect((state as any).queue).toHaveLength(0)
+    })
+  }
 })

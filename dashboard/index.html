@@ -187,29 +187,58 @@
       pointer-events: none;
     }
 
-    /* ── Table tabs ─────────────────────────────────────────────────────── */
-    #table-tabs {
-      display: none;
-      justify-content: center;
-      gap: 8px;
+    /* ── Table sidebar ───────────────────────────────────────────────────── */
+    /* Wraps the bounty bar, felt, and blinds label so the sidebar can be
+       absolutely positioned to the left of the 1000px centered area. */
+    #main-content {
+      position: relative;
       max-width: 1000px;
-      margin: 10px auto 0;
-      padding: 0 20px;
+      margin: 0 auto;
     }
-    .table-tab {
-      padding: 5px 18px;
-      background: #1a1a1a;
-      border: 1px solid #2e2e3a;
-      border-radius: 20px;
-      font-size: 0.7rem;
-      letter-spacing: 1px;
-      cursor: pointer;
-      color: #666;
+
+    #table-sidebar {
+      position: absolute;
+      /* 12px gap to the left of #main-content's left edge */
+      right: calc(100% + 12px);
+      top: 8px;
+      width: 110px;
+      display: none;
+    }
+    #table-sidebar.show { display: block; }
+
+    .tl-header {
+      font-size: 0.5rem;
+      color: #2a2a2a;
       text-transform: uppercase;
-      transition: border-color 0.15s, color 0.15s;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #191919;
     }
-    .table-tab.active { border-color: #f0c040; color: #f0c040; background: #1e1c0e; }
-    .table-tab:hover:not(.active) { border-color: #555; color: #aaa; }
+
+    .table-list-item {
+      padding: 9px 10px;
+      background: #141414;
+      border: 1px solid #1e1e1e;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 8px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .table-list-item.active {
+      border-color: #f0c040;
+      background: #1e1c0e;
+    }
+    .table-list-item:hover:not(.active) { border-color: #444; background: #1a1a1a; }
+
+    .tli-name {
+      font-size: 0.68rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #f0c040;
+    }
+    .tli-name.dim { color: #555; }
+    .tli-players { font-size: 0.58rem; color: #3a3a3a; margin-top: 3px; }
 
     /* ── Hand banner ─────────────────────────────────────────────────────── */
     #hand-banner {
@@ -449,28 +478,33 @@
     <span id="conn" class="off">● disconnected</span>
   </div>
 
-  <div id="table-tabs"></div>
-
-  <div id="bounty-bar">
-    <span id="bounty-icon">💰</span>
-    <span id="bounty-label">Bounty</span>
-    <span id="bounty-name"></span>
-    <span id="bounty-reward-text"></span>
-    <span id="bounty-hands"></span>
-  </div>
-
-  <div id="table-area">
-    <div id="felt">
-      <div id="table-center">
-        <div id="stage-label">WAITING</div>
-        <div id="community-cards"></div>
-        <div id="pot-display"></div>
-      </div>
-      <div id="hand-banner"></div>
-      <div id="waiting">Waiting for tournament to start…</div>
+  <div id="main-content">
+    <div id="table-sidebar">
+      <div class="tl-header">Tables</div>
+      <div id="table-list"></div>
     </div>
-  </div>
-  <div id="blinds-label"></div>
+
+    <div id="bounty-bar">
+      <span id="bounty-icon">💰</span>
+      <span id="bounty-label">Bounty</span>
+      <span id="bounty-name"></span>
+      <span id="bounty-reward-text"></span>
+      <span id="bounty-hands"></span>
+    </div>
+
+    <div id="table-area">
+      <div id="felt">
+        <div id="table-center">
+          <div id="stage-label">WAITING</div>
+          <div id="community-cards"></div>
+          <div id="pot-display"></div>
+        </div>
+        <div id="hand-banner"></div>
+        <div id="waiting">Waiting for tournament to start…</div>
+      </div>
+    </div>
+    <div id="blinds-label"></div>
+  </div><!-- #main-content -->
 
   <div id="bottom">
     <div class="panel">
@@ -619,19 +653,24 @@
 
     // ── Message handlers ──────────────────────────────────────────────────────
 
-    // ── Table tabs ────────────────────────────────────────────────────────────
+    // ── Table sidebar ─────────────────────────────────────────────────────────
 
-    function renderTabs() {
-      const tabsEl = document.getElementById('table-tabs')
+    function renderTableList() {
+      const sidebar = document.getElementById('table-sidebar')
       if (activeTablesFromServer.length <= 1) {
-        tabsEl.style.display = 'none'
+        sidebar.classList.remove('show')
         return
       }
-      tabsEl.style.display = 'flex'
-      tabsEl.innerHTML = activeTablesFromServer.map(tid => {
-        const label = esc(tid.replace('table-', 'Table '))
-        const cls   = tid === activeTableId ? 'table-tab active' : 'table-tab'
-        return `<div class="${cls}" onclick="selectTable(${JSON.stringify(tid)})">${label}</div>`
+      sidebar.classList.add('show')
+      document.getElementById('table-list').innerHTML = activeTablesFromServer.map(tid => {
+        const ts          = tableStates.get(tid)
+        const playerCount = ts ? ts.players.length : '—'
+        const isActive    = tid === activeTableId
+        const label       = esc(tid.replace('table-', 'Table '))
+        return `<div class="table-list-item${isActive ? ' active' : ''}" onclick="selectTable(${JSON.stringify(tid)})">
+          <div class="tli-name${isActive ? '' : ' dim'}">${label}</div>
+          <div class="tli-players">${playerCount} players</div>
+        </div>`
       }).join('')
     }
 
@@ -640,7 +679,7 @@
       activeTableId = tableId
       const ts = tableStates.get(tableId)
       if (ts) renderTableState(ts)
-      renderTabs()
+      renderTableList()
     }
 
     // ── Bounty handlers ───────────────────────────────────────────────────────
@@ -761,7 +800,7 @@
         renderTableState(msg)
       }
       // Always re-render tabs: a non-active table may have just come online
-      renderTabs()
+      renderTableList()
     }
 
     function onStandings(msg) {
@@ -797,7 +836,7 @@
             if (ts) renderTableState(ts)
           }
         }
-        renderTabs()
+        renderTableList()
       }
     }
 
@@ -864,7 +903,7 @@
         activeTablesFromServer = []
         activeBountyTargetId = null
         clearBountyBar()
-        renderTabs()
+        renderTableList()
         document.getElementById('winner-overlay').classList.remove('show')
         document.getElementById('countdown-overlay').classList.add('show')
         document.getElementById('cd-num').textContent =
