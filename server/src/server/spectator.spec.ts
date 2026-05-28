@@ -180,9 +180,23 @@ describe('delay mode (delayMs > 0)', () => {
     expect(received(ws)[1].players[0].holeCards).toHaveLength(2)
   })
 
-  // ── Pre-game messages (always immediate) ───────────────────────────────────
+  // ── Pre-game messages ─────────────────────────────────────────────────────
 
-  it('countdown and lobby messages are immediate for all connections', () => {
+  it('lobby_snapshot is immediate for all connections (keyed viewers need lobby state)', () => {
+    const state = new SpectatorState('key', 5000)
+    const wsAuth = makeWs()
+    const wsUnauth = makeWs()
+    inject(state, wsAuth, true)
+    inject(state, wsUnauth, false)
+    const msg = { type: 'lobby_snapshot' as const, agents: [] }
+    state.broadcast(msg)
+
+    expect(received(wsAuth)).toHaveLength(1)
+    expect(received(wsUnauth)).toHaveLength(1)
+    expect((state as any).queue).toHaveLength(0)
+  })
+
+  it('countdown is immediate for unauthenticated and delayed for authenticated', () => {
     const state = new SpectatorState('key', 5000)
     const wsAuth = makeWs()
     const wsUnauth = makeWs()
@@ -190,17 +204,23 @@ describe('delay mode (delayMs > 0)', () => {
     inject(state, wsUnauth, false)
     state.broadcast(COUNTDOWN_MSG)
 
-    expect(received(wsAuth)).toHaveLength(1)
+    // Unauthenticated sees it immediately
     expect(received(wsUnauth)).toHaveLength(1)
-    expect(received(wsAuth)[0].type).toBe('countdown')
+    expect(received(wsUnauth)[0].type).toBe('countdown')
+    // Authenticated does not see it yet
+    expect(received(wsAuth)).toHaveLength(0)
+    expect((state as any).queue).toHaveLength(1)
   })
 
-  it('countdown is not held in the queue', () => {
+  it('countdown is delivered to authenticated after delay', () => {
     const state = new SpectatorState('key', 5000)
     const ws = makeWs()
     inject(state, ws, true)
     state.broadcast(COUNTDOWN_MSG)
-    expect((state as any).queue).toHaveLength(0)
+    vi.advanceTimersByTime(5100)
+    flush(state)
+    expect(received(ws)).toHaveLength(1)
+    expect(received(ws)[0].type).toBe('countdown')
   })
 })
 
@@ -242,6 +262,7 @@ describe('result + standings message delay', () => {
     ['bounty_announced',     BOUNTY_ANNOUNCED_MSG],
     ['bounty_claimed',       BOUNTY_CLAIMED_MSG],
     ['bounty_expired',       BOUNTY_EXPIRED_MSG],
+    ['countdown',            COUNTDOWN_MSG],
   ] as const) {
     it(`${label}: unauthenticated receives immediately`, () => {
       const state = new SpectatorState('key', 5000)

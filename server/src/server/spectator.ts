@@ -20,6 +20,7 @@ const DELAYED_FOR_AUTH = new Set<string>([
   'hand_result', 'table_winner', 'tournament_complete',  // round outcomes
   'tournament_update',                                   // standings, blind level, player counts
   'bounty_announced', 'bounty_claimed', 'bounty_expired', // in-game events
+  'countdown',                                           // tournament start timing
 ])
 
 /**
