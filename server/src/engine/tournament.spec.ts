@@ -322,7 +322,8 @@ describe('all-in runout', () => {
     // Drive both players all-in
     const alwaysRaiseAllIn: ActionRequestor = async (_tableId, _playerId, state) => {
       const me = state.players.find(p => p.id === _playerId)!
-      if (state.validActions.includes('RAISE')) return { type: ActionType.RAISE, amount: me.stack + me.bet }
+      const allInAmount = me.stack + me.bet
+      if (allInAmount > state.currentBet) return { type: ActionType.RAISE, amount: allInAmount }
       return { type: ActionType.CALL }
     }
 

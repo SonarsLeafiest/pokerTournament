@@ -1,4 +1,5 @@
 import { type Card, createDeck, shuffleDeck } from './card.js'
+export type { Card } from './card.js'
 import { evaluateHand, compareHands } from './evaluator.js'
 import { buildSidePots } from './sidepot.js'
 
