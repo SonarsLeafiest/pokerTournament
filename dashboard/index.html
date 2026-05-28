@@ -221,15 +221,13 @@
       background: #141414;
       border: 1px solid #1e1e1e;
       border-radius: 6px;
-      cursor: pointer;
       margin-bottom: 8px;
-      transition: border-color 0.15s, background 0.15s;
+      transition: border-color 0.25s, background 0.25s;
     }
     .table-list-item.active {
       border-color: #f0c040;
       background: #1e1c0e;
     }
-    .table-list-item:hover:not(.active) { border-color: #444; background: #1a1a1a; }
 
     .tli-name {
       font-size: 0.68rem;
@@ -552,8 +550,7 @@
 
     let lastState = null
     const tableStates = new Map()    // tableId → TableStateMsg
-    let activeTableId  = null        // currently displayed table
-    let pinnedTableId  = null        // null = auto-follow most recent update
+    let activeTableId  = null        // currently displayed table (auto-follow, read-only)
     let activeTablesFromServer = []  // from tournament_update.activeTables
     let activeBountyTargetId   = null  // currently wanted player (or null)
 
@@ -661,7 +658,7 @@
 
     // ── Message handlers ──────────────────────────────────────────────────────
 
-    // ── Table sidebar ─────────────────────────────────────────────────────────
+    // ── Table sidebar (read-only indicator) ──────────────────────────────────
 
     function renderTableList() {
       const sidebar = document.getElementById('table-sidebar')
@@ -675,19 +672,11 @@
         const playerCount = ts ? ts.players.length : '—'
         const isActive    = tid === activeTableId
         const label       = esc(tid.replace('table-', 'Table '))
-        return `<div class="table-list-item${isActive ? ' active' : ''}" data-tid="${esc(tid)}">
+        return `<div class="table-list-item${isActive ? ' active' : ''}">
           <div class="tli-name${isActive ? '' : ' dim'}">${label}</div>
           <div class="tli-players">${playerCount} players</div>
         </div>`
       }).join('')
-    }
-
-    function selectTable(tableId) {
-      pinnedTableId = tableId
-      activeTableId = tableId
-      const ts = tableStates.get(tableId)
-      if (ts) renderTableState(ts)
-      renderTableList()
     }
 
     // ── Bounty handlers ───────────────────────────────────────────────────────
@@ -803,13 +792,11 @@
         activeTablesFromServer = [...activeTablesFromServer, msg.tableId]
       }
 
-      // Auto-follow: latch onto the first table we see; don't thrash between
-      // tables mid-game as concurrent updates arrive.  Only release the latch
-      // if the active table disappears (handled in onStandings).
-      if (!pinnedTableId && !activeTableId) activeTableId = msg.tableId
+      // Auto-follow: latch onto the first table we see.  Never switch unless
+      // the active table disappears (handled in onStandings).
+      if (!activeTableId) activeTableId = msg.tableId
 
       if (activeTableId === msg.tableId) {
-        // Flash hand banner when the hand number advances on the viewed table
         if (prev && msg.handNumber > prev.handNumber) flashHandBanner(msg.handNumber)
         renderTableState(msg)
       }
@@ -834,16 +821,15 @@
       const tablesText = msg.tableCount > 1 ? `  ·  ${msg.tableCount} tables` : ''
       document.getElementById('blinds-label').textContent = blindsText + tablesText
 
-      // Sync tab list — remove stale tables that no longer exist after consolidation
+      // Sync table list — remove stale tables that no longer exist after consolidation
       if (msg.activeTables) {
         activeTablesFromServer = msg.activeTables
         for (const tid of tableStates.keys()) {
           if (!msg.activeTables.includes(tid)) tableStates.delete(tid)
         }
-        if (pinnedTableId && !msg.activeTables.includes(pinnedTableId)) pinnedTableId = null
-        // If the displayed table was removed, fall back to the first remaining one
+        // If the displayed table was consolidated away, follow the first remaining one
         if (activeTableId && !msg.activeTables.includes(activeTableId)) {
-          activeTableId = pinnedTableId ?? msg.activeTables[0] ?? null
+          activeTableId = msg.activeTables[0] ?? null
           if (activeTableId) {
             const ts = tableStates.get(activeTableId)
             if (ts) renderTableState(ts)
@@ -912,7 +898,6 @@
         // Reset table tracking whenever a (new) countdown arrives
         tableStates.clear()
         activeTableId        = null
-        pinnedTableId        = null
         activeTablesFromServer = []
         activeBountyTargetId = null
         clearBountyBar()
@@ -964,12 +949,6 @@
     // Dismiss winner overlay on click
     document.getElementById('winner-overlay').addEventListener('click', () => {
       document.getElementById('winner-overlay').classList.remove('show')
-    })
-
-    // Table sidebar — event delegation so clicks work regardless of innerHTML re-renders
-    document.getElementById('table-list').addEventListener('click', e => {
-      const item = e.target.closest('[data-tid]')
-      if (item) selectTable(item.dataset.tid)
     })
 
     window.addEventListener('resize', () => { if (lastState) positionSeats(lastState) })

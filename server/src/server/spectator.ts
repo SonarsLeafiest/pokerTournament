@@ -13,29 +13,36 @@ import type {
 
 const MAX_HAND_HISTORY = 200
 
-// All game-progress message types that are delayed for authenticated viewers.
-// Public (unauthenticated) connections receive these immediately since they
-// cannot see hole cards and have no unfair-advantage incentive to cheat.
+// Message types that are delayed for authenticated (keyed) viewers.
+// Public connections always receive these immediately — they can't see hole
+// cards so they have no incentive to cheat via the spectator stream.
+//
+// Everything NOT in this set (i.e. lobby_snapshot) is immediate for all.
 const DELAYED_FOR_AUTH = new Set<string>([
+  'table_state',                                         // full game state with hole cards
   'hand_result', 'table_winner', 'tournament_complete',  // round outcomes
-  'tournament_update',                                   // standings, blind level, player counts
+  'tournament_update',                                   // standings, blind levels, counts
   'bounty_announced', 'bounty_claimed', 'bounty_expired', // in-game events
   'countdown',                                           // tournament start timing
 ])
 
 /**
- * Owns all spectator WebSocket state: the WS server, connected clients,
- * replay buffers, and the broadcast/catch-up logic.
+ * Owns all spectator WebSocket state.
  *
- * Authentication:
- *   Connections that supply the correct spectator key via `?key=` receive
- *   full holeCards in table_state messages.  All others see card backs.
+ * Two-tier broadcast model (when delayMs > 0):
  *
- * Broadcast delay:
- *   When delayMs > 0, messages are held in a queue and released after that
- *   many milliseconds.  Catch-up buffers are only updated when messages are
- *   actually released, so new spectators joining mid-game also see the
- *   delayed feed — preventing agents from reading the spectator stream.
+ *   Public (no key):
+ *     All messages immediate. table_state has hole cards stripped.
+ *     Full catch-up sent on connect.
+ *
+ *   Keyed (authenticated):
+ *     Every message in DELAYED_FOR_AUTH is queued and released after delayMs.
+ *     table_state is sent with full hole-card data once released.
+ *     NO game-state catch-up on connect — the felt starts empty and fills in
+ *     as the delayed feed arrives. This prevents any real-time information leak.
+ *     Only lobby_snapshot is sent immediately so they see who's registered.
+ *
+ * When delayMs === 0 both viewers behave identically (public path for all).
  */
 export class SpectatorState {
   readonly wss: WebSocketServer
@@ -43,7 +50,9 @@ export class SpectatorState {
   private spectators    = new Set<WebSocket>()
   private spectatorAuth = new Map<WebSocket, boolean>()   // ws → isAdmin
 
-  // Catch-up buffers — updated at release time (not enqueue time)
+  // Catch-up buffers — updated immediately at broadcast time so public viewers
+  // joining mid-game see current state. Keyed auth viewers skip game-state
+  // catch-up entirely and wait for the delayed queue to deliver data.
   private lastStandings:          TournamentUpdateMsg   | null = null
   private lastTableStates         = new Map<string, TableStateMsg>()
   private lastCountdown:          CountdownMsg          | null = null
@@ -74,13 +83,20 @@ export class SpectatorState {
     this.spectators.add(ws)
     this.spectatorAuth.set(ws, isAdmin)
 
-    // Replay already-released catch-up state
-    if (this.lastLobbySnapshot)      this._send(ws, this.lastLobbySnapshot)
-    if (this.lastCountdown)          this._send(ws, this.lastCountdown)
-    if (this.lastStandings)          this._send(ws, this.lastStandings)
-    for (const h of this.handHistory) this._send(ws, h)
-    for (const ts of this.lastTableStates.values()) this._send(ws, ts)
-    if (this.lastTournamentComplete) this._send(ws, this.lastTournamentComplete)
+    // Lobby snapshot: always immediate so both views show who's registered.
+    if (this.lastLobbySnapshot) this._send(ws, this.lastLobbySnapshot)
+
+    if (!isAdmin || this.delayMs === 0) {
+      // Public viewers (or delay disabled): full real-time catch-up.
+      if (this.lastCountdown)           this._send(ws, this.lastCountdown)
+      if (this.lastStandings)           this._send(ws, this.lastStandings)
+      for (const h of this.handHistory)  this._send(ws, h)
+      for (const ts of this.lastTableStates.values()) this._send(ws, ts)
+      if (this.lastTournamentComplete)  this._send(ws, this.lastTournamentComplete)
+    }
+    // Keyed auth with delay: no game-state catch-up. The felt starts blank and
+    // fills in as the delayed queue delivers messages. This ensures no real-time
+    // data is ever visible on the keyed view, even on initial load.
 
     ws.on('error', (err) => {
       console.error('[ws] spectator socket error:', err.message)
@@ -91,7 +107,7 @@ export class SpectatorState {
     })
   }
 
-  /** Send one message to a spectator, stripping hole cards when unauthenticated. */
+  /** Send one message to a spectator, stripping hole cards for public connections. */
   private _send(ws: WebSocket, msg: ServerMessage): void {
     if (ws.readyState !== ws.OPEN) return
     const isAdmin = this.spectatorAuth.get(ws) ?? false
@@ -105,31 +121,7 @@ export class SpectatorState {
     return { ...msg, players: msg.players.map(p => ({ ...p, holeCards: [] })) }
   }
 
-  /**
-   * Seat-position skeleton: keeps only player identity and table topology.
-   * Sent immediately to authenticated viewers so the felt looks populated,
-   * while all financial and game-state data is held until the delayed release.
-   */
-  private _skeletonTableState(msg: TableStateMsg): TableStateMsg {
-    return {
-      ...msg,
-      players: msg.players.map(p => ({
-        id:         p.id,
-        isDealer:   p.isDealer,
-        connected:  p.connected,
-        stack:      0,
-        bet:        0,
-        folded:     false,
-        allIn:      false,
-        isActing:   false,
-        holeCards:  [],
-      })),
-      communityCards: [],
-      pot: 0,
-    }
-  }
-
-  /** Update the catch-up buffers when a message is actually released. */
+  /** Update catch-up buffers so public viewers joining mid-game see current state. */
   private _applyToBuffers(msg: ServerMessage): void {
     switch (msg.type) {
       case 'tournament_update':   this.lastStandings = msg; break
@@ -146,7 +138,7 @@ export class SpectatorState {
     }
   }
 
-  /** Release queued card-data messages whose delivery time has passed. */
+  /** Release queued messages whose delivery time has passed. */
   private _flush(): void {
     const now = Date.now()
     let i = 0
@@ -154,8 +146,6 @@ export class SpectatorState {
     if (i === 0) return
     const toSend = this.queue.splice(0, i)
     for (const { msg } of toSend) {
-      // Buffers were already updated at broadcast time; only send to authenticated
-      // connections — unauthenticated already received the stripped version immediately.
       for (const ws of this.spectators) {
         const isAdmin = this.spectatorAuth.get(ws) ?? false
         if (isAdmin) this._send(ws, msg)
@@ -163,63 +153,43 @@ export class SpectatorState {
     }
   }
 
-  /** Buffer then fan out a message (honouring delay if configured).
+  /**
+   * Fan out a message to all spectators, honouring the delay for keyed viewers.
    *
-   * When delayMs > 0, game-outcome data is delayed for authenticated viewers:
-   *   - Lobby / standings / countdown → immediate for everyone (no secrets).
-   *   - table_state → stripped version immediate for everyone (table appears
-   *     populated right away); full version (hole cards) queued for authenticated
-   *     connections only, released after delayMs.
-   *   - hand_result / table_winner / tournament_complete → immediate for
-   *     unauthenticated; queued for authenticated (keeps their view in sync with
-   *     the delayed table_state stream so round outcomes are revealed together).
+   * When delayMs > 0:
+   *   - lobby_snapshot: immediate for everyone (pre-game state, not sensitive).
+   *   - All other messages (DELAYED_FOR_AUTH): immediate for public, queued for
+   *     keyed auth and released after delayMs. table_state is sent with full
+   *     hole-card data when released; stripped of hole cards for public.
+   *
+   * When delayMs === 0: everything immediate for everyone.
    */
   broadcast(msg: ServerMessage): void {
-    // Catch-up buffers always reflect the latest state so new connections join
-    // into a populated view regardless of the delay setting.
     this._applyToBuffers(msg)
 
-    if (this.delayMs > 0) {
-      if (msg.type === 'table_state') {
-        // Public: stripped (all data except hole cards) — they can't cheat with cards.
-        // Keyed auth: skeleton only (seat positions, no financial/game state data).
-        // Full version queued for keyed auth and released after the delay.
-        const stripped = this._stripHoleCards(msg)
-        const skeleton = this._skeletonTableState(msg)
-        for (const ws of this.spectators) {
-          if (ws.readyState !== ws.OPEN) continue
-          const isAdmin = this.spectatorAuth.get(ws) ?? false
-          ws.send(JSON.stringify(isAdmin ? skeleton : stripped))
-        }
-        this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
-      } else if (DELAYED_FOR_AUTH.has(msg.type)) {
-        // Game-progress messages: immediate for public, delayed for keyed auth.
-        for (const ws of this.spectators) {
-          const isAdmin = this.spectatorAuth.get(ws) ?? false
-          if (!isAdmin) this._send(ws, msg)
-        }
-        this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
-      } else {
-        // Pre-game only (countdown, lobby_snapshot): immediate for all
-        for (const ws of this.spectators) this._send(ws, msg)
+    if (this.delayMs > 0 && DELAYED_FOR_AUTH.has(msg.type)) {
+      // Public: send immediately (stripped for table_state)
+      for (const ws of this.spectators) {
+        const isAdmin = this.spectatorAuth.get(ws) ?? false
+        if (!isAdmin) this._send(ws, msg)
       }
+      // Keyed auth: queue for delayed delivery
+      this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
     } else {
-      // No delay configured: send everything immediately
+      // No delay or pre-game message: immediate for all
       for (const ws of this.spectators) this._send(ws, msg)
     }
   }
 
   /**
-   * Patches the connected flag for one player and immediately re-broadcasts
-   * the affected table state.  Skipped in delay mode — the next queued
-   * table_state already carries the correct status.
+   * Patches the connected flag for one player and re-broadcasts the table state.
+   * Skipped in delay mode — connection state is implicit in the delayed feed.
    */
   updatePlayerConnected(playerId: string, connected: boolean): void {
-    if (this.delayMs > 0) return   // connection patches are implicit in the delayed feed
+    if (this.delayMs > 0) return
 
     for (const [tableId, ts] of this.lastTableStates) {
       if (!ts.players.some(p => p.id === playerId)) continue
-
       const updated: TableStateMsg = {
         ...ts,
         players: ts.players.map(p => p.id === playerId ? { ...p, connected } : p),
@@ -240,6 +210,6 @@ export class SpectatorState {
     this.lastLobbySnapshot      = null
     this.lastTournamentComplete = null
     this.handHistory.length     = 0
-    this.queue.length           = 0  // drop in-flight messages from the previous tournament
+    this.queue.length           = 0
   }
 }

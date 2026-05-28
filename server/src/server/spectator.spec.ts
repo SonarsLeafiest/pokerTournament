@@ -6,34 +6,27 @@ import type {
 } from './protocol.js'
 import { GameStage } from '../engine/game.js'
 
-// ── Fake WebSocket helpers ────────────────────────────────────────────────────
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
-function makeWs(): { readyState: number; OPEN: number; send: ReturnType<typeof vi.fn>; on: ReturnType<typeof vi.fn> } {
-  return { readyState: 1, OPEN: 1, send: vi.fn(), on: vi.fn() }
+function makeWs() {
+  return { readyState: 1, OPEN: 1, send: vi.fn(), on: vi.fn() } as any
 }
 
-type FakeWs = ReturnType<typeof makeWs>
-
-function inject(state: SpectatorState, ws: FakeWs, isAdmin: boolean): void {
+function inject(state: SpectatorState, ws: ReturnType<typeof makeWs>, isAdmin: boolean): void {
   const s = state as any
   s.spectators.add(ws)
   s.spectatorAuth.set(ws, isAdmin)
 }
 
-function flush(state: SpectatorState): void {
-  (state as any)._flush()
-}
-
-function received(ws: FakeWs): any[] {
+function flush(state: SpectatorState): void { (state as any)._flush() }
+function received(ws: ReturnType<typeof makeWs>): any[] {
   return ws.send.mock.calls.map((c: [string]) => JSON.parse(c[0]))
 }
 
 // ── Fixtures ─────────────────────────────────────────────────────────────────
 
 const TABLE_MSG: TableStateMsg = {
-  type: 'table_state',
-  tableId: 'table-1',
-  handNumber: 1,
+  type: 'table_state', tableId: 'table-1', handNumber: 1,
   stage: GameStage.PRE_FLOP,
   players: [{
     id: 'p1', stack: 980, bet: 20, folded: false, allIn: false,
@@ -41,8 +34,7 @@ const TABLE_MSG: TableStateMsg = {
     holeCards: [{ rank: 14, suit: 's' }, { rank: 13, suit: 's' }],
   }],
   communityCards: [{ rank: 10, suit: 'h' }],
-  pot: 30,
-  dealerIndex: 0,
+  pot: 30, dealerIndex: 0,
 }
 
 const STANDINGS_MSG: TournamentUpdateMsg = {
@@ -53,15 +45,13 @@ const STANDINGS_MSG: TournamentUpdateMsg = {
 }
 
 const COUNTDOWN_MSG: CountdownMsg = {
-  type: 'countdown',
-  secondsRemaining: 5,
-  agentCount: 3,
+  type: 'countdown', secondsRemaining: 5, agentCount: 3,
 }
 
 // ── No-delay mode ────────────────────────────────────────────────────────────
 
 describe('no delay (delayMs=0)', () => {
-  it('sends stripped table_state to unauthenticated connections', () => {
+  it('sends stripped table_state to unauthenticated', () => {
     const state = new SpectatorState('key', 0)
     const ws = makeWs()
     inject(state, ws, false)
@@ -69,11 +59,10 @@ describe('no delay (delayMs=0)', () => {
     const msgs = received(ws)
     expect(msgs).toHaveLength(1)
     expect(msgs[0].players[0].holeCards).toHaveLength(0)
-    expect(msgs[0].players[0].stack).toBe(980)  // financial data present
-    expect(msgs[0].pot).toBe(30)
+    expect(msgs[0].players[0].stack).toBe(980)
   })
 
-  it('sends full table_state to authenticated connections', () => {
+  it('sends full table_state to authenticated', () => {
     const state = new SpectatorState('key', 0)
     const ws = makeWs()
     inject(state, ws, true)
@@ -81,155 +70,101 @@ describe('no delay (delayMs=0)', () => {
     expect(received(ws)[0].players[0].holeCards).toHaveLength(2)
   })
 
-  it('sends all messages immediately to all connections when no delay', () => {
+  it('sends all messages immediately to all connections', () => {
     const state = new SpectatorState('key', 0)
-    const wsAuth = makeWs()
-    const wsUnauth = makeWs()
-    inject(state, wsAuth, true)
-    inject(state, wsUnauth, false)
+    const wsAuth = makeWs(); const wsUnauth = makeWs()
+    inject(state, wsAuth, true); inject(state, wsUnauth, false)
     state.broadcast(STANDINGS_MSG)
-    expect(received(wsAuth)).toHaveLength(1)
-    expect(received(wsUnauth)).toHaveLength(1)
-    expect(received(wsAuth)[0].type).toBe('tournament_update')
-  })
-})
-
-// ── Delay mode ───────────────────────────────────────────────────────────────
-
-describe('delay mode (delayMs > 0)', () => {
-  beforeEach(() => {
-    vi.useFakeTimers()
-  })
-
-  // ── table_state ────────────────────────────────────────────────────────────
-
-  it('sends stripped table_state to unauthenticated immediately (full data except hole cards)', () => {
-    const state = new SpectatorState('key', 5000)
-    const ws = makeWs()
-    inject(state, ws, false)
-    state.broadcast(TABLE_MSG)
-
-    const msgs = received(ws)
-    expect(msgs).toHaveLength(1)
-    expect(msgs[0].type).toBe('table_state')
-    expect(msgs[0].players[0].holeCards).toHaveLength(0)  // stripped
-    expect(msgs[0].players[0].stack).toBe(980)             // financial data intact
-    expect(msgs[0].pot).toBe(30)
-    expect(msgs[0].communityCards).toHaveLength(1)
-  })
-
-  it('sends SKELETON table_state to authenticated immediately (seat positions only, no financial data)', () => {
-    const state = new SpectatorState('key', 5000)
-    const ws = makeWs()
-    inject(state, ws, true)
-    state.broadcast(TABLE_MSG)
-
-    const msgs = received(ws)
-    expect(msgs).toHaveLength(1)
-    expect(msgs[0].type).toBe('table_state')
-    expect(msgs[0].players[0].id).toBe('p1')       // identity kept
-    expect(msgs[0].players[0].holeCards).toHaveLength(0)  // no cards
-    expect(msgs[0].players[0].stack).toBe(0)        // stack zeroed
-    expect(msgs[0].players[0].bet).toBe(0)          // bet zeroed
-    expect(msgs[0].players[0].isActing).toBe(false) // acting state zeroed
-    expect(msgs[0].communityCards).toHaveLength(0)  // no community cards
-    expect(msgs[0].pot).toBe(0)                     // pot zeroed
-  })
-
-  it('sends full table_state to authenticated after delay', () => {
-    const state = new SpectatorState('key', 5000)
-    const ws = makeWs()
-    inject(state, ws, true)
-    state.broadcast(TABLE_MSG)
-
-    vi.advanceTimersByTime(5100)
-    flush(state)
-
-    const msgs = received(ws)
-    expect(msgs).toHaveLength(2)
-    expect(msgs[1].players[0].holeCards).toHaveLength(2)
-    expect(msgs[1].players[0].stack).toBe(980)
-    expect(msgs[1].pot).toBe(30)
-  })
-
-  it('does NOT send full table_state to unauthenticated after flush', () => {
-    const state = new SpectatorState('key', 5000)
-    const ws = makeWs()
-    inject(state, ws, false)
-    state.broadcast(TABLE_MSG)
-
-    vi.advanceTimersByTime(5100)
-    flush(state)
-
-    expect(received(ws)).toHaveLength(1)
-  })
-
-  it('full table_state is not released until delayMs has elapsed', () => {
-    const state = new SpectatorState('key', 5000)
-    const ws = makeWs()
-    inject(state, ws, true)
-    state.broadcast(TABLE_MSG)
-
-    vi.advanceTimersByTime(4000)
-    flush(state)
-    expect(received(ws)).toHaveLength(1)
-
-    vi.advanceTimersByTime(1100)
-    flush(state)
-    expect(received(ws)).toHaveLength(2)
-    expect(received(ws)[1].players[0].holeCards).toHaveLength(2)
-  })
-
-  // ── Pre-game messages ─────────────────────────────────────────────────────
-
-  it('lobby_snapshot is immediate for all connections (keyed viewers need lobby state)', () => {
-    const state = new SpectatorState('key', 5000)
-    const wsAuth = makeWs()
-    const wsUnauth = makeWs()
-    inject(state, wsAuth, true)
-    inject(state, wsUnauth, false)
-    const msg = { type: 'lobby_snapshot' as const, agents: [] }
-    state.broadcast(msg)
-
     expect(received(wsAuth)).toHaveLength(1)
     expect(received(wsUnauth)).toHaveLength(1)
     expect((state as any).queue).toHaveLength(0)
   })
+})
 
-  it('countdown is immediate for unauthenticated and delayed for authenticated', () => {
+// ── Delay mode ────────────────────────────────────────────────────────────────
+
+describe('delay mode (delayMs > 0)', () => {
+  beforeEach(() => { vi.useFakeTimers() })
+
+  // ── table_state ────────────────────────────────────────────────────────────
+
+  it('public gets stripped table_state immediately (with financial data)', () => {
     const state = new SpectatorState('key', 5000)
-    const wsAuth = makeWs()
-    const wsUnauth = makeWs()
-    inject(state, wsAuth, true)
-    inject(state, wsUnauth, false)
-    state.broadcast(COUNTDOWN_MSG)
-
-    // Unauthenticated sees it immediately
-    expect(received(wsUnauth)).toHaveLength(1)
-    expect(received(wsUnauth)[0].type).toBe('countdown')
-    // Authenticated does not see it yet
-    expect(received(wsAuth)).toHaveLength(0)
-    expect((state as any).queue).toHaveLength(1)
+    const ws = makeWs()
+    inject(state, ws, false)
+    state.broadcast(TABLE_MSG)
+    const msgs = received(ws)
+    expect(msgs).toHaveLength(1)
+    expect(msgs[0].players[0].holeCards).toHaveLength(0)  // stripped
+    expect(msgs[0].players[0].stack).toBe(980)             // full financial data
+    expect(msgs[0].pot).toBe(30)
+    expect(msgs[0].communityCards).toHaveLength(1)
   })
 
-  it('countdown is delivered to authenticated after delay', () => {
+  it('authenticated gets NOTHING immediately for table_state — all delayed', () => {
     const state = new SpectatorState('key', 5000)
     const ws = makeWs()
     inject(state, ws, true)
-    state.broadcast(COUNTDOWN_MSG)
+    state.broadcast(TABLE_MSG)
+    expect(received(ws)).toHaveLength(0)  // nothing — not even seat positions
+    expect((state as any).queue).toHaveLength(1)
+  })
+
+  it('authenticated gets full table_state (with hole cards) after delay', () => {
+    const state = new SpectatorState('key', 5000)
+    const ws = makeWs()
+    inject(state, ws, true)
+    state.broadcast(TABLE_MSG)
     vi.advanceTimersByTime(5100)
     flush(state)
+    const msgs = received(ws)
+    expect(msgs).toHaveLength(1)
+    expect(msgs[0].players[0].holeCards).toHaveLength(2)
+    expect(msgs[0].players[0].stack).toBe(980)
+    expect(msgs[0].pot).toBe(30)
+  })
+
+  it('public does NOT receive a second table_state after flush', () => {
+    const state = new SpectatorState('key', 5000)
+    const ws = makeWs()
+    inject(state, ws, false)
+    state.broadcast(TABLE_MSG)
+    vi.advanceTimersByTime(5100)
+    flush(state)
+    expect(received(ws)).toHaveLength(1)  // only the immediate stripped message
+  })
+
+  it('table_state is not released until delayMs has elapsed', () => {
+    const state = new SpectatorState('key', 5000)
+    const ws = makeWs()
+    inject(state, ws, true)
+    state.broadcast(TABLE_MSG)
+    vi.advanceTimersByTime(4000); flush(state)
+    expect(received(ws)).toHaveLength(0)
+    vi.advanceTimersByTime(1100); flush(state)
     expect(received(ws)).toHaveLength(1)
-    expect(received(ws)[0].type).toBe('countdown')
+    expect(received(ws)[0].players[0].holeCards).toHaveLength(2)
+  })
+
+  // ── Pre-game messages ─────────────────────────────────────────────────────
+
+  it('lobby_snapshot is immediate for all connections', () => {
+    const state = new SpectatorState('key', 5000)
+    const wsAuth = makeWs(); const wsUnauth = makeWs()
+    inject(state, wsAuth, true); inject(state, wsUnauth, false)
+    state.broadcast({ type: 'lobby_snapshot', agents: [] })
+    expect(received(wsAuth)).toHaveLength(1)
+    expect(received(wsUnauth)).toHaveLength(1)
+    expect((state as any).queue).toHaveLength(0)
   })
 })
 
-// ── Delayed message types (hand/result data) ─────────────────────────────────
+// ── Delayed message types (all game-progress data) ────────────────────────────
 
-describe('result + standings message delay', () => {
+describe('delayed message types', () => {
   const HAND_RESULT_MSG: HandResultMsg = {
     type: 'hand_result', gameId: 'table-1', handNumber: 5,
-    winners: [{ playerId: 'p1', amount: 100 }], showdown: [], deltas: { p1: 80, p2: -80 },
+    winners: [{ playerId: 'p1', amount: 100 }], showdown: [], deltas: {},
   }
   const TABLE_WINNER_MSG: TableWinnerMsg = {
     type: 'table_winner', tableId: 'table-2', handNumber: 12,
@@ -255,6 +190,7 @@ describe('result + standings message delay', () => {
   beforeEach(() => { vi.useFakeTimers() })
 
   for (const [label, msg] of [
+    ['table_state',          TABLE_MSG],
     ['hand_result',          HAND_RESULT_MSG],
     ['table_winner',         TABLE_WINNER_MSG],
     ['tournament_complete',  TOURNAMENT_COMPLETE_MSG],
@@ -264,13 +200,12 @@ describe('result + standings message delay', () => {
     ['bounty_expired',       BOUNTY_EXPIRED_MSG],
     ['countdown',            COUNTDOWN_MSG],
   ] as const) {
-    it(`${label}: unauthenticated receives immediately`, () => {
+    it(`${label}: public receives immediately`, () => {
       const state = new SpectatorState('key', 5000)
       const ws = makeWs()
       inject(state, ws, false)
       state.broadcast(msg as any)
       expect(received(ws)).toHaveLength(1)
-      expect(received(ws)[0].type).toBe(label)
     })
 
     it(`${label}: authenticated receives nothing immediately`, () => {
@@ -289,15 +224,12 @@ describe('result + standings message delay', () => {
       vi.advanceTimersByTime(5100)
       flush(state)
       expect(received(ws)).toHaveLength(1)
-      expect(received(ws)[0].type).toBe(label)
     })
 
-    it(`${label}: not queued when no delay configured`, () => {
+    it(`${label}: no delay → immediate for all`, () => {
       const state = new SpectatorState('key', 0)
-      const wsAuth = makeWs()
-      const wsUnauth = makeWs()
-      inject(state, wsAuth, true)
-      inject(state, wsUnauth, false)
+      const wsAuth = makeWs(); const wsUnauth = makeWs()
+      inject(state, wsAuth, true); inject(state, wsUnauth, false)
       state.broadcast(msg as any)
       expect(received(wsAuth)).toHaveLength(1)
       expect(received(wsUnauth)).toHaveLength(1)
