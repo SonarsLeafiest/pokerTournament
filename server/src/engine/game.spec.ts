@@ -331,3 +331,108 @@ describe('all-in handling', () => {
     expect(game.players.find(p => p.id === actingId)!.allIn).toBe(true)
   })
 })
+
+// ── Contributions tracking ────────────────────────────────────────────────────
+
+describe('contributions tracking', () => {
+  it('initialises from blind posts', () => {
+    const g = createGame({
+      playerIds: ['p1', 'p2', 'p3'],
+      startingStack: 1000,
+      smallBlind: 10,
+      bigBlind: 20,
+      seeds: SEEDS,
+    })
+    // Dealer=p1, SB=p2 (pays 10), BB=p3 (pays 20)
+    expect(g.contributions['p2']).toBe(10)
+    expect(g.contributions['p3']).toBe(20)
+    expect(g.contributions['p1']).toBeUndefined()
+  })
+
+  it('accumulates on CALL', () => {
+    let g = dealHands(newGame(2, 1000))
+    // Heads-up: dealer(p1)=SB pays 10, p2=BB pays 20; p1 acts first
+    const actorId = g.players[g.actionIndex].id
+    g = applyAction(g, actorId, { type: ActionType.CALL })
+    // Caller matched the big blind (paid 10 more to reach 20)
+    expect(g.contributions[actorId]).toBe(20)
+  })
+
+  it('accumulates on RAISE', () => {
+    let g = dealHands(newGame(3, 1000))
+    const actorId = g.players[g.actionIndex].id
+    g = applyAction(g, actorId, { type: ActionType.RAISE, amount: 60 })
+    expect(g.contributions[actorId]).toBe(60)
+  })
+
+  it('accumulates across multiple streets', () => {
+    let g = dealHands(newGame(2, 1000))
+    // Both players call/check to showdown
+    while (g.stage !== GameStage.SHOWDOWN) {
+      const actorId = g.players[g.actionIndex].id
+      g = applyAction(g, actorId, { type: ActionType.CALL })
+    }
+    // Each player contributed at least the big blind
+    const ids = g.players.map(p => p.id)
+    expect(g.contributions[ids[0]]).toBeGreaterThanOrEqual(20)
+    expect(g.contributions[ids[1]]).toBeGreaterThanOrEqual(20)
+  })
+})
+
+// ── Side pot showdown ─────────────────────────────────────────────────────────
+
+describe('getShowdownWinners — side pots', () => {
+  // Community cards that produce clear ranking: no straights/flushes possible.
+  // Best 5-card hand uses both hole cards as a pair.
+  // p1=AA (best), p2=KK (second), p3=QQ (third) vs 2♠ 7♦ 9♥ J♣ 3♠
+  const community = [
+    { rank: 2, suit: 's' }, { rank: 7, suit: 'd' },
+    { rank: 9, suit: 'h' }, { rank: 11, suit: 'c' }, { rank: 3, suit: 's' },
+  ]
+
+  function makeShowdown(contributions: Record<string, number>, pot: number): GameState {
+    return {
+      players: [
+        { id: 'p1', stack: 0,   holeCards: [{ rank: 14, suit: 's' }, { rank: 14, suit: 'd' }] as any, bet: 0, folded: false, allIn: true },
+        { id: 'p2', stack: 0,   holeCards: [{ rank: 13, suit: 's' }, { rank: 13, suit: 'd' }] as any, bet: 0, folded: false, allIn: true },
+        { id: 'p3', stack: 150, holeCards: [{ rank: 12, suit: 's' }, { rank: 12, suit: 'd' }] as any, bet: 0, folded: false, allIn: false },
+      ],
+      deck: [] as any,
+      communityCards: community as any,
+      pot,
+      stage: GameStage.SHOWDOWN,
+      dealerIndex: 0,
+      actionIndex: 0,
+      currentBet: 0,
+      lastRaiseSize: 0,
+      contributions,
+    }
+  }
+
+  it('short-stacked winner receives only their eligible portion', () => {
+    // p1 all-in for 50, p2 all-in for 150, p3 put in 150 (pot = 350)
+    // Main pot  (50×3 = 150): p1 wins (AA)
+    // Side pot ((150-50)×2 = 200): p2 wins (KK — p1 ineligible)
+    const state = makeShowdown({ p1: 50, p2: 150, p3: 150 }, 350)
+    const winners = getShowdownWinners(state)
+    const byId = Object.fromEntries(winners.map(w => [w.playerId, w.amount]))
+    expect(byId['p1']).toBe(150)
+    expect(byId['p2']).toBe(200)
+    expect(byId['p3']).toBeUndefined()
+  })
+
+  it('all chips are conserved across side pots', () => {
+    const state = makeShowdown({ p1: 50, p2: 150, p3: 150 }, 350)
+    const total = getShowdownWinners(state).reduce((s, w) => s + w.amount, 0)
+    expect(total).toBe(350)
+  })
+
+  it('equal contributions produce a single winner (no side pot complexity)', () => {
+    const state = makeShowdown({ p1: 100, p2: 100, p3: 100 }, 300)
+    const winners = getShowdownWinners(state)
+    const byId = Object.fromEntries(winners.map(w => [w.playerId, w.amount]))
+    expect(byId['p1']).toBe(300)  // AA wins everything
+    expect(byId['p2']).toBeUndefined()
+    expect(byId['p3']).toBeUndefined()
+  })
+})

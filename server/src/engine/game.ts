@@ -1,5 +1,6 @@
 import { type Card, createDeck, shuffleDeck } from './card.js'
 import { evaluateHand, compareHands } from './evaluator.js'
+import { buildSidePots } from './sidepot.js'
 
 export enum GameStage {
   PRE_FLOP = 'PRE_FLOP',
@@ -45,6 +46,7 @@ export interface GameState {
   actionIndex: number
   currentBet: number   // highest bet this round
   lastRaiseSize: number
+  contributions: Record<string, number>  // cumulative chips each player has put in
 }
 
 export interface CreateGameOptions {
@@ -76,6 +78,12 @@ export function createGame(opts: CreateGameOptions): GameState {
   postBlind(players[sbIndex], smallBlind)
   postBlind(players[bbIndex], bigBlind)
 
+  // Seed contributions from blind posts
+  const contributions: Record<string, number> = {}
+  for (const p of players) {
+    if (p.bet > 0) contributions[p.id] = p.bet
+  }
+
   return {
     players,
     deck,
@@ -86,6 +94,7 @@ export function createGame(opts: CreateGameOptions): GameState {
     actionIndex: (bbIndex + 1) % players.length,
     currentBet: bigBlind,
     lastRaiseSize: bigBlind,
+    contributions,
   }
 }
 
@@ -148,6 +157,7 @@ export function applyAction(state: GameState, playerId: string, action: Action):
   let pot = state.pot
   let currentBet = state.currentBet
   let lastRaiseSize = state.lastRaiseSize
+  const contributions = { ...state.contributions }
 
   switch (action.type) {
     case ActionType.FOLD:
@@ -164,6 +174,7 @@ export function applyAction(state: GameState, playerId: string, action: Action):
       actor.bet += toCall
       pot += toCall
       if (actor.stack === 0) actor.allIn = true
+      contributions[actor.id] = (contributions[actor.id] ?? 0) + toCall
       break
     }
 
@@ -181,6 +192,7 @@ export function applyAction(state: GameState, playerId: string, action: Action):
       if (actor.stack === 0) actor.allIn = true
       lastRaiseSize = Math.max(raiseSize, lastRaiseSize)
       currentBet = totalBet
+      contributions[actor.id] = (contributions[actor.id] ?? 0) + chips
       break
     }
   }
@@ -189,7 +201,7 @@ export function applyAction(state: GameState, playerId: string, action: Action):
 
   // If only one player remains, go straight to showdown
   if (activePlayers.length === 1) {
-    return { ...state, players, pot, currentBet, lastRaiseSize, stage: GameStage.SHOWDOWN, communityCards: state.communityCards }
+    return { ...state, players, pot, currentBet, lastRaiseSize, contributions, stage: GameStage.SHOWDOWN }
   }
 
   // Advance to next player who can still act
@@ -197,10 +209,10 @@ export function applyAction(state: GameState, playerId: string, action: Action):
 
   // Check if the betting round is over
   if (isBettingRoundComplete(players, currentBet)) {
-    return advanceStage({ ...state, players, pot, currentBet, lastRaiseSize, actionIndex: nextIndex })
+    return advanceStage({ ...state, players, pot, currentBet, lastRaiseSize, contributions, actionIndex: nextIndex })
   }
 
-  return { ...state, players, pot, currentBet, lastRaiseSize, actionIndex: nextIndex }
+  return { ...state, players, pot, currentBet, lastRaiseSize, contributions, actionIndex: nextIndex }
 }
 
 function nextActingIndex(players: Player[], fromIndex: number): number {
@@ -258,20 +270,34 @@ export function getShowdownWinners(state: GameState): ShowdownResult[] {
     return [{ playerId: activePlayers[0].id, amount: state.pot }]
   }
 
-  const evaluated = activePlayers.map(p => ({
-    player: p,
-    result: evaluateHand([...p.holeCards, ...state.communityCards]),
-  }))
+  const sidePots = buildSidePots(state.contributions)
+  const winnings = new Map<string, number>()
 
-  evaluated.sort((a, b) => compareHands(b.result, a.result))
+  for (const pot of sidePots) {
+    // Only non-folded players who contributed enough are eligible for this pot
+    const eligible = activePlayers.filter(p => pot.eligiblePlayerIds.includes(p.id))
+    if (eligible.length === 0) continue
 
-  const best = evaluated[0].result
-  const winners = evaluated.filter(e => compareHands(e.result, best) === 0)
-  const share = Math.floor(state.pot / winners.length)
-  const remainder = state.pot - share * winners.length
+    if (eligible.length === 1) {
+      winnings.set(eligible[0].id, (winnings.get(eligible[0].id) ?? 0) + pot.amount)
+      continue
+    }
 
-  return winners.map((w, i) => ({
-    playerId: w.player.id,
-    amount: share + (i === 0 ? remainder : 0),
-  }))
+    const evaluated = eligible.map(p => ({
+      player: p,
+      result: evaluateHand([...p.holeCards, ...state.communityCards]),
+    }))
+    evaluated.sort((a, b) => compareHands(b.result, a.result))
+
+    const best = evaluated[0].result
+    const potWinners = evaluated.filter(e => compareHands(e.result, best) === 0)
+    const share    = Math.floor(pot.amount / potWinners.length)
+    const remainder = pot.amount - share * potWinners.length
+
+    potWinners.forEach((w, i) => {
+      winnings.set(w.player.id, (winnings.get(w.player.id) ?? 0) + share + (i === 0 ? remainder : 0))
+    })
+  }
+
+  return [...winnings.entries()].map(([playerId, amount]) => ({ playerId, amount }))
 }
