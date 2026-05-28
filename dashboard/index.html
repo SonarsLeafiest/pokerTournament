@@ -315,13 +315,19 @@
     .log-row.action { color: #555; }
 
     /* ── Bounty bar ─────────────────────────────────────────────────────── */
+    /* Always-present slot so the felt doesn't jump when a bounty appears. */
+    #bounty-slot {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      margin: 8px 0 0;
+    }
     #bounty-bar {
       display: none;
       justify-content: center;
       align-items: center;
       gap: 14px;
-      max-width: 1000px;
-      margin: 8px auto 0;
+      width: 100%;
       padding: 9px 20px;
       background: #1a0a0a;
       border: 1px solid #8b1a1a;
@@ -484,12 +490,14 @@
       <div id="table-list"></div>
     </div>
 
-    <div id="bounty-bar">
-      <span id="bounty-icon">💰</span>
-      <span id="bounty-label">Bounty</span>
-      <span id="bounty-name"></span>
-      <span id="bounty-reward-text"></span>
-      <span id="bounty-hands"></span>
+    <div id="bounty-slot">
+      <div id="bounty-bar">
+        <span id="bounty-icon">💰</span>
+        <span id="bounty-label">Bounty</span>
+        <span id="bounty-name"></span>
+        <span id="bounty-reward-text"></span>
+        <span id="bounty-hands"></span>
+      </div>
     </div>
 
     <div id="table-area">
@@ -789,6 +797,12 @@
       const prev = tableStates.get(msg.tableId)
       tableStates.set(msg.tableId, msg)
 
+      // Track tables from table_state immediately — tournament_update may not have
+      // arrived yet (it comes at the end of each hand, but table_state fires during).
+      if (!activeTablesFromServer.includes(msg.tableId)) {
+        activeTablesFromServer = [...activeTablesFromServer, msg.tableId]
+      }
+
       // Auto-follow: latch onto the first table we see; don't thrash between
       // tables mid-game as concurrent updates arrive.  Only release the latch
       // if the active table disappears (handled in onStandings).
@@ -799,7 +813,6 @@
         if (prev && msg.handNumber > prev.handNumber) flashHandBanner(msg.handNumber)
         renderTableState(msg)
       }
-      // Always re-render tabs: a non-active table may have just come online
       renderTableList()
     }
 
