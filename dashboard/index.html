@@ -187,6 +187,31 @@
       pointer-events: none;
     }
 
+    /* ── Delayed-view catching-up indicator ─────────────────────────────── */
+    #delayed-view-msg {
+      display: none;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      pointer-events: none;
+      animation: dv-pulse 2.5s ease-in-out infinite;
+    }
+    #delayed-view-msg.show { display: block; }
+    #delayed-view-msg .dv-icon  { font-size: 1.1rem; }
+    #delayed-view-msg .dv-label {
+      font-size: 0.55rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    @keyframes dv-pulse {
+      0%, 100% { opacity: 0.5; }
+      50%       { opacity: 1;   }
+    }
+
     /* ── Table sidebar ───────────────────────────────────────────────────── */
     /* Wraps the bounty bar, felt, and blinds label so the sidebar can be
        absolutely positioned to the left of the 1000px centered area. */
@@ -507,6 +532,10 @@
         </div>
         <div id="hand-banner"></div>
         <div id="waiting">Waiting for tournament to start…</div>
+        <div id="delayed-view-msg">
+          <div class="dv-icon">⏳</div>
+          <div class="dv-label">Delayed view — catching up…</div>
+        </div>
       </div>
     </div>
     <div id="blinds-label"></div>
@@ -553,6 +582,9 @@
     let activeTableId  = null        // currently displayed table (auto-follow, read-only)
     let activeTablesFromServer = []  // from tournament_update.activeTables
     let activeBountyTargetId   = null  // currently wanted player (or null)
+
+    // Show catching-up indicator for keyed (delayed) connections until first data arrives
+    if (KEY) document.getElementById('delayed-view-msg').classList.add('show')
 
     // ── Seat layout ───────────────────────────────────────────────────────────
 
@@ -767,6 +799,7 @@
     function renderTableState(msg) {
       lastState = msg
       document.getElementById('waiting').style.display = 'none'
+      document.getElementById('delayed-view-msg').classList.remove('show')
       document.getElementById('stage-label').textContent =
         (activeTablesFromServer.length > 1
           ? msg.tableId.replace('table-', 'Table ') + '  ·  '
@@ -903,6 +936,8 @@
         clearBountyBar()
         renderTableList()
         document.getElementById('winner-overlay').classList.remove('show')
+        // Re-show catching-up indicator for keyed connections (new tournament, new delay)
+        if (KEY) document.getElementById('delayed-view-msg').classList.add('show')
         document.getElementById('countdown-overlay').classList.add('show')
         document.getElementById('cd-num').textContent =
           msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
