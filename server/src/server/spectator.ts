@@ -112,7 +112,7 @@ export class SpectatorState {
     }
   }
 
-  /** Release queued messages whose delivery time has passed. */
+  /** Release queued card-data messages whose delivery time has passed. */
   private _flush(): void {
     const now = Date.now()
     let i = 0
@@ -120,18 +120,39 @@ export class SpectatorState {
     if (i === 0) return
     const toSend = this.queue.splice(0, i)
     for (const { msg } of toSend) {
-      this._applyToBuffers(msg)
-      for (const ws of this.spectators) this._send(ws, msg)
+      // Buffers were already updated at broadcast time; only send to authenticated
+      // connections — unauthenticated already received the stripped version immediately.
+      for (const ws of this.spectators) {
+        const isAdmin = this.spectatorAuth.get(ws) ?? false
+        if (isAdmin) this._send(ws, msg)
+      }
     }
   }
 
-  /** Buffer then fan out a message (honouring delay if configured). */
+  /** Buffer then fan out a message (honouring delay if configured).
+   *
+   * When delayMs > 0, only hole-card data is delayed:
+   *   - Non-card messages (standings, results, countdowns) → immediate for everyone.
+   *   - table_state messages → stripped version immediate for everyone so the table
+   *     appears populated right away; full version queued for authenticated connections
+   *     only (cards reveal after the delay, preventing real-time reading by agents).
+   */
   broadcast(msg: ServerMessage): void {
-    if (this.delayMs === 0) {
-      this._applyToBuffers(msg)
-      for (const ws of this.spectators) this._send(ws, msg)
-    } else {
+    // Catch-up buffers always reflect the latest state immediately so new connections
+    // join into a populated view regardless of the delay setting.
+    this._applyToBuffers(msg)
+
+    if (msg.type === 'table_state' && this.delayMs > 0) {
+      // Immediately: send stripped version to all spectators (table is visible right away)
+      const stripped = this._stripHoleCards(msg)
+      for (const ws of this.spectators) {
+        if (ws.readyState === ws.OPEN) ws.send(JSON.stringify(stripped))
+      }
+      // After delay: send full version to authenticated connections only
       this.queue.push({ deliverAt: Date.now() + this.delayMs, msg })
+    } else {
+      // No delay required: send to all connections immediately
+      for (const ws of this.spectators) this._send(ws, msg)
     }
   }
 
