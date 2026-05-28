@@ -332,7 +332,7 @@
     #standings-table tr.leader td { color: #f0c040; }
     #standings-table tr.out    td { color: #2a2a2a; text-decoration: line-through; }
 
-    #log { height: 168px; overflow-y: auto; font-size: 0.68rem; }
+    #log { height: 400px; overflow-y: auto; font-size: 0.68rem; }
     .log-row        { padding: 3px 0; border-bottom: 1px solid #191919; color: #484848; }
     .log-row.win    { color: #3a3; }
     .log-row.action { color: #555; }
@@ -695,7 +695,7 @@
 
     function renderTableList() {
       const sidebar = document.getElementById('table-sidebar')
-      if (activeTablesFromServer.length <= 1) {
+      if (activeTablesFromServer.length === 0) {
         sidebar.classList.remove('show')
         return
       }

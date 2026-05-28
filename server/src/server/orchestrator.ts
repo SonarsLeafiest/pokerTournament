@@ -212,6 +212,22 @@ export class Orchestrator {
       console.log(`[bounty] Bounty on ${bounty.targetName} expired unclaimed`)
       this.activeBounty    = null
       this.nextBountyAtHand = handNumber + this.opts.bountyWindowHands
+      return
+    }
+
+    // Cancel any active bounty when the game reaches heads-up — with only two
+    // players left there is no third party to create a bounty incentive.
+    if (tournament.activePlayers.length <= 2) {
+      const expired: BountyExpiredMsg = {
+        type:       'bounty_expired',
+        targetId:   bounty.targetId,
+        targetName: bounty.targetName,
+        handNumber,
+      }
+      spectator.broadcast(expired)
+      console.log(`[bounty] Bounty on ${bounty.targetName} cancelled — heads-up reached`)
+      this.activeBounty    = null
+      this.nextBountyAtHand = Infinity  // no more bounties at heads-up
     }
   }
 
@@ -219,7 +235,7 @@ export class Orchestrator {
   private maybeAnnounceBounty(tournament: Tournament, handNumber: number): void {
     if (this.activeBounty) return
     if (handNumber < this.nextBountyAtHand) return
-    if (tournament.activePlayers.length < 2) return
+    if (tournament.activePlayers.length <= 2) return  // need 3+ for bounty to have tactical value
 
     // Pick a random active player as the target
     const active = tournament.activePlayers
