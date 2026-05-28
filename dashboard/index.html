@@ -675,7 +675,7 @@
         const playerCount = ts ? ts.players.length : '—'
         const isActive    = tid === activeTableId
         const label       = esc(tid.replace('table-', 'Table '))
-        return `<div class="table-list-item${isActive ? ' active' : ''}" onclick="selectTable(${JSON.stringify(tid)})">
+        return `<div class="table-list-item${isActive ? ' active' : ''}" onclick="selectTable('${esc(tid)}')">
           <div class="tli-name${isActive ? '' : ' dim'}">${label}</div>
           <div class="tli-players">${playerCount} players</div>
         </div>`
