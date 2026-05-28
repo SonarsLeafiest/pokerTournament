@@ -221,6 +221,21 @@ $loop = Loop::get();
             } elseif ($msg['type'] === 'bounty_expired') {
                 echo "⌛ Bounty on {$msg['targetName']} expired unclaimed\n";
 
+            } elseif ($msg['type'] === 'bounty_curse_required') {
+                // Curse the player with the most chips — biggest threat
+                $target = array_reduce($msg['availableTargets'], function($best, $t) {
+                    return (!$best || $t['stack'] > $best['stack']) ? $t : $best;
+                }, null);
+                if ($target) {
+                    $ws->send(json_encode(['type' => 'bounty_curse', 'targetId' => $target['id']]));
+                    echo "  [$AGENT_NAME] 💀 Cursing {$target['name']} (-{$msg['curseAmount']} chips)\n";
+                }
+
+            } elseif ($msg['type'] === 'bounty_cursed') {
+                if ($msg['targetId'] === $AGENT_ID) {
+                    echo "  [$AGENT_NAME] 😤 Cursed by {$msg['curserName']} — -{$msg['amount']} chips!\n";
+                }
+
             } elseif ($msg['type'] === 'tournament_update') {
                 $me = null;
                 foreach ($msg['standings'] as $p) {

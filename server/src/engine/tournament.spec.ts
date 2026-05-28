@@ -174,6 +174,49 @@ describe('awardBonus', () => {
   })
 })
 
+describe('penalizePlayer', () => {
+  it('deducts chips from an active player and returns actual amount', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const before = t.standings.find(p => p.id === 'p1')!.stack  // 500
+    const actual  = t.penalizePlayer('p1', 100)
+    expect(actual).toBe(100)
+    expect(t.standings.find(p => p.id === 'p1')!.stack).toBe(before - 100)
+  })
+
+  it('caps at the player stack — never goes negative', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const stack  = t.standings.find(p => p.id === 'p2')!.stack   // 500
+    const actual = t.penalizePlayer('p2', 9999)
+    expect(actual).toBe(stack)
+    expect(t.standings.find(p => p.id === 'p2')!.stack).toBe(0)
+  })
+
+  it('eliminates the player when penalty drains stack to 0', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    t.penalizePlayer('p3', 9999)
+    expect(t.standings.find(p => p.id === 'p3')!.eliminated).toBe(true)
+  })
+
+  it('no-ops for an already-eliminated player', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    ;(t as any).players.get('p1').eliminated = true
+    ;(t as any).players.get('p1').stack = 0
+    const actual = t.penalizePlayer('p1', 100)
+    expect(actual).toBe(0)
+  })
+
+  it('no-ops for unknown id', () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    expect(() => t.penalizePlayer('ghost', 100)).not.toThrow()
+    expect(t.penalizePlayer('ghost', 100)).toBe(0)
+  })
+})
+
 describe('getTableActivePlayers / getTableWinner', () => {
   it('getTableActivePlayers returns empty array for unknown table', () => {
     const t = new Tournament(BASE_CONFIG)

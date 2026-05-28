@@ -124,6 +124,7 @@ async def main() -> None:
         "BOUNTY_WINDOW_HANDS":     "10",   # target has 10 hands to be eliminated
         "BOUNTY_FIRE_EVERY":       "5",    # new bounty every 5 hands after last resolved
         "BOUNTY_REWARD":           "400",  # meaningful but not game-breaking
+        "BOUNTY_CURSE_AMOUNT":     "100",  # curse the rival!
         "SPECTATOR_DELAY_S":       "0",
         "DEVELOPER_MODE":          "true",
     }

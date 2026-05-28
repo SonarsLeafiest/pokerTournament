@@ -213,6 +213,35 @@ export class WebSocketHub {
     if (agent?.connected) this.send(agent.ws, msg)
   }
 
+  /**
+   * Wait for the next message from an agent, resolving with null on timeout
+   * instead of rejecting.  Used for optional interactions (e.g. bounty curse)
+   * where a non-response should fall back gracefully rather than auto-fold.
+   */
+  waitForCurse(agentId: string, timeoutMs: number): Promise<AgentMessage | null> {
+    return new Promise((resolve) => {
+      const agent = this.agents.get(agentId)
+      if (!agent?.connected) { resolve(null); return }
+
+      agent.pendingResolve = (msg) => {
+        clearTimeout(agent.actionTimer)
+        agent.actionTimer   = undefined
+        agent.pendingReject = undefined
+        resolve(msg)
+      }
+      agent.pendingReject = () => resolve(null)  // disconnect → null, not reject
+
+      agent.actionTimer = setTimeout(() => {
+        if (agent.pendingResolve) {
+          agent.pendingResolve = undefined
+          agent.pendingReject  = undefined
+          agent.actionTimer    = undefined
+          resolve(null)
+        }
+      }, timeoutMs)
+    })
+  }
+
   waitForAction(agentId: string): Promise<AgentMessage> {
     return new Promise((resolve, reject) => {
       const agent = this.agents.get(agentId)

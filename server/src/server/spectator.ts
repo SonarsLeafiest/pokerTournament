@@ -22,7 +22,7 @@ const DELAYED_FOR_AUTH = new Set<string>([
   'table_state',                                         // full game state with hole cards
   'hand_result', 'table_winner', 'tournament_complete',  // round outcomes
   'tournament_update',                                   // standings, blind levels, counts
-  'bounty_announced', 'bounty_claimed', 'bounty_expired', // in-game events
+  'bounty_announced', 'bounty_claimed', 'bounty_expired', 'bounty_cursed', // in-game events
   'countdown',                                           // tournament start timing
 ])
 

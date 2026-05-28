@@ -199,6 +199,8 @@ describe('delayed message types', () => {
     ['bounty_claimed',       BOUNTY_CLAIMED_MSG],
     ['bounty_expired',       BOUNTY_EXPIRED_MSG],
     ['countdown',            COUNTDOWN_MSG],
+    ['bounty_cursed',        { type: 'bounty_cursed' as const, curserId: 'p1', curserName: 'Alice',
+                               targetId: 'p2', targetName: 'Bob', amount: 100, handNumber: 9 }],
   ] as const) {
     it(`${label}: public receives immediately`, () => {
       const state = new SpectatorState('key', 5000)

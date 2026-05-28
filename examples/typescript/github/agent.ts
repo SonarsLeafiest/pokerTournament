@@ -212,6 +212,12 @@ async function run(): Promise<void> {
     } else if (msg.type === "bounty_expired") {
       console.log(`⌛ Bounty on ${msg.targetName} expired unclaimed`);
 
+    } else if (msg.type === "bounty_curse_required") {
+      const targets = (msg as any).availableTargets as Array<{id: string; name: string; stack: number}>;
+      const target  = targets.reduce((best, t) => t.stack > best.stack ? t : best);
+      ws.send(JSON.stringify({ type: "bounty_curse", targetId: target.id }));
+      console.log(`💀 Cursing ${target.name} (-${(msg as any).curseAmount} chips)`);
+
     } else if (msg.type === "tournament_update") {
       const me = msg.standings?.find((p: { playerId: string }) => p.playerId === AGENT_ID);
       if (me) console.log(`Stack: ${me.stack.toLocaleString()}  |  Blinds ${msg.smallBlind}/${msg.bigBlind}`);

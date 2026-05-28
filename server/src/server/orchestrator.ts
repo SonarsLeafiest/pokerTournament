@@ -5,6 +5,7 @@ import type {
   ActionRequiredMsg, AgentActionMsg,
   HandResultMsg, TournamentUpdateMsg, TableStateMsg, TournamentCompleteMsg, TableWinnerMsg,
   BountyAnnouncedMsg, BountyClaimedMsg, BountyExpiredMsg, BountyInfo,
+  BountyCurseRequiredMsg, BountyCursedMsg,
 } from './protocol.js'
 import { Tournament, type TournamentConfig, type ActionRequestor } from '../engine/tournament.js'
 import { ActionType, type GameState } from '../engine/game.js'
@@ -48,6 +49,7 @@ export interface OrchestratorOptions {
   bountyWindowHands:  number   // how many hands the target has before the bounty expires (0 = disabled)
   bountyFireEvery:    number   // hands between successive bounties (0 = same as bountyWindowHands)
   bountyReward:       number
+  bountyCurseAmount:  number   // chips cursed after a claim (0 = disabled)
 }
 
 export class Orchestrator {
@@ -198,9 +200,15 @@ export class Orchestrator {
           handNumber,
         }
         spectator.broadcast(claimed)
+        hub.broadcast(claimed)
         console.log(
           `[bounty] ${eliminatorName} eliminated ${bounty.targetName} and claimed ${bounty.reward} bonus chips!`
         )
+
+        // ── Curse mechanic ────────────────────────────────────────────────────
+        if (this.opts.bountyCurseAmount > 0) {
+          await this._applyCurse(hub, spectator, tournament, eliminatorId, eliminatorName, handNumber)
+        }
       }
 
       this.activeBounty    = null
@@ -441,5 +449,66 @@ export class Orchestrator {
       ` | Blinds ${msg.smallBlind}/${msg.bigBlind}` +
       ` | Tables: ${msg.activeTables.join(', ')}`
     )
+  }
+
+  // ── Curse mechanic ──────────────────────────────────────────────────────────
+
+  /**
+   * After a bounty claim the eliminator chooses one opponent to curse
+   * (-bountyCurseAmount chips).  A short window is given for the agent to
+   * respond; if they time out or send an invalid target, a random active
+   * opponent is chosen instead.  The cursed player and all spectators are
+   * notified via bounty_cursed.
+   */
+  private async _applyCurse(
+    hub:           typeof this.opts.hub,
+    spectator:     typeof this.opts.spectator,
+    tournament:    Tournament,
+    curserId:      string,
+    curserName:    string,
+    handNumber:    number,
+  ): Promise<void> {
+    const curseAmount = this.opts.bountyCurseAmount
+    const available   = tournament.activePlayers
+      .filter(p => p.id !== curserId)
+      .map(p => ({ id: p.id, name: p.name, stack: p.stack }))
+
+    if (available.length === 0) return
+
+    const curseMsg: BountyCurseRequiredMsg = {
+      type:             'bounty_curse_required',
+      reward:           this.opts.bountyReward,
+      curseAmount,
+      availableTargets: available,
+      timeLimitMs:      this.opts.actionTimeout,
+    }
+    hub.sendToAgent(curserId, curseMsg)
+
+    // Wait for curse response; fall back to random target on silence
+    let targetId: string | null = null
+    const response = await hub.waitForCurse(curserId, this.opts.actionTimeout)
+    if (response?.type === 'bounty_curse' && available.some(t => t.id === (response as any).targetId)) {
+      targetId = (response as any).targetId
+    }
+    if (!targetId) {
+      targetId = available[Math.floor(Math.random() * available.length)].id
+    }
+
+    const target = tournament.standings.find(p => p.id === targetId)
+    if (!target) return
+
+    const actual = tournament.penalizePlayer(targetId, curseAmount)
+    const cursed: BountyCursedMsg = {
+      type:       'bounty_cursed',
+      curserId,
+      curserName,
+      targetId,
+      targetName: target.name,
+      amount:     actual,
+      handNumber,
+    }
+    spectator.broadcast(cursed)
+    hub.broadcast(cursed)
+    console.log(`[bounty] 💀 ${curserName} curses ${target.name} for -${actual} chips!`)
   }
 }

@@ -160,6 +160,16 @@ async def run() -> None:
                         for s in msg["showdown"]
                     )
                     print(f"  [{AGENT_NAME}] showdown → {cards_str}")
+            elif msg["type"] == "bounty_curse_required":
+                # Curse the highest-stack player — biggest threat to winning
+                target = max(msg["availableTargets"], key=lambda t: t["stack"])
+                await ws.send(json.dumps({"type": "bounty_curse", "targetId": target["id"]}))
+                print(f"  [{AGENT_NAME}] 💀 Cursing {target['name']} (-{msg['curseAmount']} chips)")
+
+            elif msg["type"] == "bounty_cursed":
+                if msg["targetId"] == AGENT_ID:
+                    print(f"  [{AGENT_NAME}] 😤 Cursed by {msg['curserName']} — -{msg['amount']} chips!")
+
             elif msg["type"] == "tournament_end":
                 result = "🏆 WINNER" if msg["result"] == "won" else f"place #{msg['place']}"
                 print(f"\n  [{AGENT_NAME}] {result}  stack: {msg['finalStack']:,}\n")

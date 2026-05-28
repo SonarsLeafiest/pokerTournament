@@ -222,6 +222,11 @@ async def run() -> None:
             elif msg["type"] == "bounty_expired":
                 print(f"⌛ Bounty on {msg['targetName']} expired unclaimed")
 
+            elif msg["type"] == "bounty_curse_required":
+                target = max(msg["availableTargets"], key=lambda t: t["stack"])
+                await ws.send(json.dumps({"type": "bounty_curse", "targetId": target["id"]}))
+                print(f"  [{AGENT_NAME}] 💀 Cursing {target['name']} (-{msg['curseAmount']} chips)")
+
             elif msg["type"] == "tournament_update":
                 me = next((p for p in msg["standings"] if p["playerId"] == AGENT_ID), None)
                 if me:

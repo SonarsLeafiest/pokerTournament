@@ -150,7 +150,29 @@ export interface ErrorMsg {
   message: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | LobbySnapshotMsg | ErrorMsg
+// ── Bounty curse ─────────────────────────────────────────────────────────────
+
+/** Sent directly to the bounty claimer asking them to choose a target to curse. */
+export interface BountyCurseRequiredMsg {
+  type:             'bounty_curse_required'
+  reward:           number   // chips just won
+  curseAmount:      number   // chips to deduct from chosen target
+  availableTargets: Array<{ id: string; name: string; stack: number }>
+  timeLimitMs:      number
+}
+
+/** Broadcast to all spectators after the curse is applied. */
+export interface BountyCursedMsg {
+  type:        'bounty_cursed'
+  curserId:    string
+  curserName:  string
+  targetId:    string
+  targetName:  string
+  amount:      number
+  handNumber:  number
+}
+
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | LobbySnapshotMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 
@@ -167,4 +189,9 @@ export interface AgentActionMsg {
   amount?: number
 }
 
-export type AgentMessage = AgentRegisterMsg | AgentActionMsg
+export interface AgentBountyCurseMsg {
+  type:     'bounty_curse'
+  targetId: string
+}
+
+export type AgentMessage = AgentRegisterMsg | AgentActionMsg | AgentBountyCurseMsg

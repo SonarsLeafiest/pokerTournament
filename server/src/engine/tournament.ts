@@ -106,6 +106,21 @@ export class Tournament {
     if (player && !player.eliminated) player.stack += amount
   }
 
+  /**
+   * Deduct chips from a player (e.g. bounty curse).
+   * Caps at the player's current stack — stack never goes negative.
+   * If the stack reaches 0 the player is marked as eliminated.
+   * Returns the actual amount deducted (≤ amount).
+   */
+  penalizePlayer(playerId: string, amount: number): number {
+    const player = this.players.get(playerId)
+    if (!player || player.eliminated) return 0
+    const actual = Math.min(amount, player.stack)
+    player.stack -= actual
+    if (player.stack === 0) player.eliminated = true
+    return actual
+  }
+
   isFinished(): boolean {
     return this.activePlayers.length <= 1
   }

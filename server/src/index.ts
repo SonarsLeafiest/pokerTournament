@@ -25,6 +25,7 @@ const SPECTATOR_DELAY_MS    = parseInt(process.env.SPECTATOR_DELAY_S      ?? '0'
 const BOUNTY_WINDOW_HANDS   = parseInt(process.env.BOUNTY_WINDOW_HANDS    ?? '0')
 const BOUNTY_FIRE_EVERY     = parseInt(process.env.BOUNTY_FIRE_EVERY      ?? '0')
 const BOUNTY_REWARD         = parseInt(process.env.BOUNTY_REWARD          ?? '500')
+const BOUNTY_CURSE_AMOUNT   = parseInt(process.env.BOUNTY_CURSE_AMOUNT    ?? '0')
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
 const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
   const generated = randomBytes(16).toString('hex').toUpperCase()
@@ -91,9 +92,10 @@ const orchestrator = new Orchestrator({
   getLobbyState:     () => lobbyState,
   setLobbyState:     (s) => { lobbyState = s },
   isAborted:         () => tournamentAbort,
-  bountyWindowHands: BOUNTY_WINDOW_HANDS,
-  bountyFireEvery:   BOUNTY_FIRE_EVERY,
-  bountyReward:      BOUNTY_REWARD,
+  bountyWindowHands:  BOUNTY_WINDOW_HANDS,
+  bountyFireEvery:    BOUNTY_FIRE_EVERY,
+  bountyReward:       BOUNTY_REWARD,
+  bountyCurseAmount:  BOUNTY_CURSE_AMOUNT,
 })
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
