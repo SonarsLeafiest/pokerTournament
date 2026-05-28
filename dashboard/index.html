@@ -919,8 +919,14 @@
         onTableState(msg)
       }
       if (msg.type === 'hand_result') {
-        const wins = msg.winners.map(w => `${w.playerId} +${w.amount}`).join(', ')
-        addLog(`Hand #${msg.handNumber}: ${wins}`, 'win')
+        const wins = msg.winners.map(w => `${esc(w.playerId)} +${w.amount}`).join(', ')
+        let text = `Hand #${msg.handNumber}: ${wins}`
+        if (msg.showdown && msg.showdown.length > 0) {
+          const fmtCard = c => `${RANKS[c.rank] ?? c.rank}${SUITS[c.suit] ?? c.suit}`
+          const fmtHand = s => `${esc(s.playerId)} ${s.holeCards.map(fmtCard).join(' ')}`
+          text += `  ·  ${msg.showdown.map(fmtHand).join(', ')}`
+        }
+        addLog(text, 'win')
       }
       if (msg.type === 'bounty_announced')   onBountyAnnounced(msg)
       if (msg.type === 'bounty_claimed')     onBountyClaimed(msg)

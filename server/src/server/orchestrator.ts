@@ -327,7 +327,7 @@ export class Orchestrator {
 
     const activeBefore = tournament.getTableActivePlayers(tableId)
     const stacksBefore = new Map(tournament.standings.map(p => [p.id, p.stack]))
-    const winners      = await tournament.playHand(tableId, requestAction)
+    const { winners, showdown } = await tournament.playHand(tableId, requestAction)
     const stacksAfter  = new Map(tournament.standings.map(p => [p.id, p.stack]))
 
     const deltas: Record<string, number> = {}
@@ -341,7 +341,7 @@ export class Orchestrator {
       gameId:     tableId,
       handNumber,
       winners:    winners.map(w => ({ playerId: w.playerId, amount: w.amount })),
-      showdown:   [],
+      showdown,
       deltas,
     }
     spectator.broadcast(resultMsg)

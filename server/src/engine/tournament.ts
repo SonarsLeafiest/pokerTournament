@@ -1,6 +1,11 @@
 import { createGame, dealHands, applyAction, getShowdownWinners, runOutBoard, GameStage, ActionType } from './game.js'
-import type { GameState, Action, ShowdownResult } from './game.js'
+import type { Card, GameState, Action, ShowdownResult } from './game.js'
 import { fetchQuantumSeeds } from './rng.js'
+
+export interface HandOutcome {
+  winners:  ShowdownResult[]
+  showdown: { playerId: string; holeCards: [Card, Card] }[]
+}
 
 export interface TournamentPlayer {
   id: string
@@ -138,13 +143,13 @@ export class Tournament {
     }
   }
 
-  async playHand(tableId: string, requestAction: ActionRequestor): Promise<ShowdownResult[]> {
+  async playHand(tableId: string, requestAction: ActionRequestor): Promise<HandOutcome> {
     const table = this.tables.get(tableId)
     if (!table) throw new Error(`Unknown table: ${tableId}`)
 
     // Prune any players eliminated in a previous hand before building the next game
     table.playerIds = table.playerIds.filter(id => !this.players.get(id)?.eliminated)
-    if (table.playerIds.length < 2) return []  // table emptied out; caller rebalances
+    if (table.playerIds.length < 2) return { winners: [], showdown: [] }  // table emptied out; caller rebalances
 
     const seeds = await fetchQuantumSeeds(8).catch(() => fallbackSeeds())
     const blinds = this.currentBlinds
@@ -192,13 +197,19 @@ export class Tournament {
     // (the betting loop may have exited before dealing flop/turn/river).
     state = runOutBoard(state)
 
+    // Collect showdown hole cards when 2+ players reach the river without folding
+    const showdownPlayers = state.players.filter(p => !p.folded)
+    const showdown: HandOutcome['showdown'] = showdownPlayers.length > 1
+      ? showdownPlayers.map(p => ({ playerId: p.id, holeCards: p.holeCards as [Card, Card] }))
+      : []
+
     // Resolve winners and update stacks
-    const results = getShowdownWinners(state)
+    const winners = getShowdownWinners(state)
     for (const player of this.players.values()) {
       const finalState = state.players.find(p => p.id === player.id)
       if (finalState) player.stack = finalState.stack
     }
-    for (const result of results) {
+    for (const result of winners) {
       const player = this.players.get(result.playerId)
       if (player) player.stack += result.amount
     }
@@ -218,7 +229,7 @@ export class Tournament {
     }
 
     table.gameState = state
-    return results
+    return { winners, showdown }
   }
 
   private advanceBlinds(): void {

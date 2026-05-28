@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Tournament, type TournamentConfig, type ActionRequestor } from './tournament.js'
+import { Tournament, type TournamentConfig, type ActionRequestor, type HandOutcome } from './tournament.js'
 import { ActionType } from './game.js'
 
 const BASE_CONFIG: TournamentConfig = {
@@ -21,14 +21,32 @@ function getTableState(t: Tournament, tableId = 'table-1') {
 }
 
 describe('playHand return value', () => {
-  it('should return the winners with amounts won', async () => {
+  it('should return winners with amounts won', async () => {
     const t = new Tournament(BASE_CONFIG)
     t.seatTables()
-    const results = await t.playHand('table-1', alwaysFold)
-    expect(Array.isArray(results)).toBe(true)
-    expect(results.length).toBeGreaterThanOrEqual(1)
-    expect(results[0]).toMatchObject({ playerId: expect.any(String), amount: expect.any(Number) })
-    expect(results[0].amount).toBeGreaterThan(0)
+    const { winners } = await t.playHand('table-1', alwaysFold)
+    expect(winners.length).toBeGreaterThanOrEqual(1)
+    expect(winners[0]).toMatchObject({ playerId: expect.any(String), amount: expect.any(Number) })
+    expect(winners[0].amount).toBeGreaterThan(0)
+  })
+
+  it('should return empty showdown when hand ends by fold', async () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const { showdown } = await t.playHand('table-1', alwaysFold)
+    expect(showdown).toHaveLength(0)
+  })
+
+  it('should return hole cards for all players that reach showdown', async () => {
+    const t = new Tournament(BASE_CONFIG)
+    t.seatTables()
+    const alwaysCall: ActionRequestor = async () => ({ type: ActionType.CALL })
+    const { showdown } = await t.playHand('table-1', alwaysCall)
+    expect(showdown.length).toBeGreaterThanOrEqual(2)
+    for (const entry of showdown) {
+      expect(entry.playerId).toBeDefined()
+      expect(entry.holeCards).toHaveLength(2)
+    }
   })
 })
 
@@ -286,8 +304,8 @@ describe('all-in runout', () => {
     }
     const t = new Tournament(cfg)
     t.seatTables()
-    const results = await t.playHand('table-1', alwaysCall)
-    expect(results.length).toBeGreaterThanOrEqual(1)
+    const { winners } = await t.playHand('table-1', alwaysCall)
+    expect(winners.length).toBeGreaterThanOrEqual(1)
   })
 
   it('conserves total chips across an all-in hand', async () => {
