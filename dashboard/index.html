@@ -1079,7 +1079,9 @@
 
         const wins = msg.winners.map(w => `${esc(w.playerId)} +${w.amount}`).join(', ')
         let text = `Hand #${msg.handNumber}: ${wins}`
-        if (msg.showdown && msg.showdown.length > 0) {
+        if (KEY && msg.showdown && msg.showdown.length > 0) {
+          // Only reveal showdown hole cards on the keyed dashboard — prevents the
+          // public feed from leaking opponent card history over time.
           const fmtCard = c => `${RANKS[c.rank] ?? c.rank}${SUITS[c.suit] ?? c.suit}`
           const fmtHand = s => `${esc(s.playerId)} ${s.holeCards.map(fmtCard).join(' ')}`
           text += `  ·  ${msg.showdown.map(fmtHand).join(', ')}`
