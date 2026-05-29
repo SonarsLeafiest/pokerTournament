@@ -116,14 +116,15 @@ VALID ACTIONS: {', '.join(valid)}{raise_info}
 Choose the best action. If raising, pick a strategically sound bet size."""
 
 
-def decide(state: dict) -> dict:
+async def decide(state: dict) -> dict:
     if not shutil.which("claude"):
         print(f"  [{AGENT_NAME}] ⚠ claude CLI not found — folding")
         return {"action": "FOLD"}
 
     prompt = build_prompt(state)
     try:
-        result = subprocess.run(
+        result = await asyncio.to_thread(
+            subprocess.run,
             ["claude", "-p", prompt,
              "--model", MODEL,
              "--output-format", "json",
@@ -194,7 +195,7 @@ async def run() -> None:
                 print("Waiting for hands…")
 
             elif msg["type"] == "action_required":
-                action = decide(msg)
+                action = await decide(msg)
                 await ws.send(json.dumps({
                     "type":   "action",
                     "gameId": msg["gameId"],

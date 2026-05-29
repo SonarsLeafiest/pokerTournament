@@ -97,13 +97,17 @@ VALID ACTIONS: {', '.join(valid)}{raise_info}
 
 Choose the best action. If raising, pick a strategically sound bet size."""
 
-def decide(state: dict) -> dict:
+async def decide(state: dict) -> dict:
     if not shutil.which("claude"):
         print(f"  [{AGENT_NAME}] ⚠ claude CLI not found — folding")
         return {"action": "FOLD"}
     prompt = build_prompt(state)
     try:
-        result = subprocess.run(
+        # Run in a thread so the asyncio event loop stays alive for WebSocket ping-pong.
+        # subprocess.run is blocking; calling it directly would stall the event loop and
+        # cause the server's keepalive heartbeat to timeout the connection.
+        result = await asyncio.to_thread(
+            subprocess.run,
             ["claude", "-p", prompt, "--model", MODEL,
              "--output-format", "json", "--json-schema", ACTION_SCHEMA],
             capture_output=True, text=True, timeout=30,
@@ -148,7 +152,7 @@ async def run() -> None:
             if msg["type"] == "register_ack":
                 print(f"  [{AGENT_NAME}] registered. Action timeout: {msg['timeLimitMs']}ms — respond within this limit or the server auto-folds.")
             elif msg["type"] == "action_required":
-                action = decide(msg)
+                action = await decide(msg)
                 await ws.send(json.dumps({"type": "action", "gameId": msg["gameId"], **action}))
             elif msg["type"] == "hand_result":
                 delta = msg.get("deltas", {}).get(AGENT_ID)

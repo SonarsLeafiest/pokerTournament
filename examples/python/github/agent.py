@@ -112,7 +112,7 @@ Respond with JSON only:
 {{"action": "FOLD|CHECK|CALL|RAISE", "amount": <chips if RAISE>, "reasoning": "<one sentence>"}}"""
 
 
-def decide(state: dict) -> dict:
+async def decide(state: dict) -> dict:
     if not GITHUB_TOKEN:
         print(f"  [{AGENT_NAME}] ⚠ GITHUB_TOKEN not set — folding")
         return {"action": "FOLD"}
@@ -123,7 +123,8 @@ def decide(state: dict) -> dict:
         if "gpt" in MODEL.lower():
             kwargs["response_format"] = {"type": "json_object"}
 
-        response = client.chat.completions.create(
+        response = await asyncio.to_thread(
+            client.chat.completions.create,
             model=MODEL,
             messages=[
                 {"role": "system", "content": "You are a poker expert. Always respond with valid JSON."},
@@ -184,7 +185,7 @@ async def run() -> None:
                 print("Waiting for hands…")
 
             elif msg["type"] == "action_required":
-                action = decide(msg)
+                action = await decide(msg)
                 await ws.send(json.dumps({
                     "type":   "action",
                     "gameId": msg["gameId"],
