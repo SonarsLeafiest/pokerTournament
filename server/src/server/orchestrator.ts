@@ -164,7 +164,7 @@ export class Orchestrator {
     standingsBefore: Map<string, number>,
     targetWasActive: boolean,
   ): Promise<void> {
-    const { spectator } = this.opts
+    const { hub, spectator } = this.opts
     if (!this.activeBounty || !targetWasActive) return
 
     const bounty = this.activeBounty
