@@ -221,7 +221,7 @@ export class Orchestrator {
       if (eliminatorId) {
         tournament.awardBonus(eliminatorId, bounty.reward)
         const claimed: BountyClaimedMsg = {
-          type: 'bounty_claimed', targetId: bounty.targetId, targetName: bounty.targetName,
+          type: 'bounty_claimed', tableId, targetId: bounty.targetId, targetName: bounty.targetName,
           claimedById: eliminatorId, claimedByName: eliminatorName,
           reward: bounty.reward, handNumber,
         }
@@ -230,7 +230,7 @@ export class Orchestrator {
         console.log(`[bounty] ${eliminatorName} eliminated ${bounty.targetName} and claimed ${bounty.reward} bonus chips! (${tableId})`)
 
         if (this.opts.bountyCurseAmount > 0) {
-          await this._applyCurse(hub, spectator, tournament, eliminatorId, eliminatorName, handNumber)
+          await this._applyCurse(hub, spectator, tournament, tableId, eliminatorId, eliminatorName, handNumber)
         }
       }
 
@@ -241,7 +241,7 @@ export class Orchestrator {
 
     if (handNumber >= bounty.expiresAfterHand) {
       const expired: BountyExpiredMsg = {
-        type: 'bounty_expired', targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
+        type: 'bounty_expired', tableId, targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
       }
       spectator.broadcast(expired)
       console.log(`[bounty] Bounty on ${bounty.targetName} expired unclaimed (${tableId})`)
@@ -253,7 +253,7 @@ export class Orchestrator {
     // Cancel at heads-up — no tactical value with only two players
     if (tablePlayers.length <= 2) {
       const expired: BountyExpiredMsg = {
-        type: 'bounty_expired', targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
+        type: 'bounty_expired', tableId, targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
       }
       spectator.broadcast(expired)
       console.log(`[bounty] Bounty on ${bounty.targetName} cancelled — heads-up reached (${tableId})`)
@@ -280,7 +280,7 @@ export class Orchestrator {
     })
 
     const msg: BountyAnnouncedMsg = {
-      type: 'bounty_announced', targetId: target.id, targetName: target.name,
+      type: 'bounty_announced', tableId, targetId: target.id, targetName: target.name,
       reward: this.opts.bountyReward, expiresAfterHand, handNumber,
     }
     this.opts.spectator.broadcast(msg)
@@ -484,6 +484,7 @@ export class Orchestrator {
     hub:           typeof this.opts.hub,
     spectator:     typeof this.opts.spectator,
     tournament:    Tournament,
+    tableId:       string,
     curserId:      string,
     curserName:    string,
     handNumber:    number,
@@ -520,6 +521,7 @@ export class Orchestrator {
     const actual = tournament.penalizePlayer(targetId, curseAmount)
     const cursed: BountyCursedMsg = {
       type:       'bounty_cursed',
+      tableId,
       curserId,
       curserName,
       targetId,

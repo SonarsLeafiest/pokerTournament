@@ -107,6 +107,7 @@ export interface TournamentCompleteMsg {
 
 export interface BountyAnnouncedMsg {
   type: 'bounty_announced'
+  tableId: string
   targetId: string
   targetName: string
   reward: number
@@ -116,6 +117,7 @@ export interface BountyAnnouncedMsg {
 
 export interface BountyClaimedMsg {
   type: 'bounty_claimed'
+  tableId: string
   targetId: string
   targetName: string
   claimedById: string
@@ -126,6 +128,7 @@ export interface BountyClaimedMsg {
 
 export interface BountyExpiredMsg {
   type: 'bounty_expired'
+  tableId: string
   targetId: string
   targetName: string
   handNumber: number
@@ -164,6 +167,7 @@ export interface BountyCurseRequiredMsg {
 /** Broadcast to all spectators after the curse is applied. */
 export interface BountyCursedMsg {
   type:        'bounty_cursed'
+  tableId:     string
   curserId:    string
   curserName:  string
   targetId:    string

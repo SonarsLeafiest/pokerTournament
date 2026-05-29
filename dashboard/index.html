@@ -629,8 +629,7 @@
     const lastHandPots = new Map()    // tableId → pot size of most recent completed hand
     let activeTableId  = null        // currently displayed table (auto-follow)
     let activeTablesFromServer = []  // from tournament_update.activeTables
-    let activeBountyTargetId = null   // for seat-box highlight
-    let activeBountyData     = null   // full active bounty or null
+    const activeBountyDataByTable = new Map()  // tableId → bounty msg (one per table)
     const bountyHistory      = []     // [{type,…}] newest-first
     const MAX_BOUNTY_HISTORY = 50
 
@@ -768,7 +767,7 @@
 
     function renderBountyPanel() {
       const panel = document.getElementById('bounty-panel')
-      if (!activeBountyData && bountyHistory.length === 0) {
+      if (activeBountyDataByTable.size === 0 && bountyHistory.length === 0) {
         panel.classList.remove('show')
         return
       }
@@ -776,25 +775,27 @@
 
       const parts = []
 
-      if (activeBountyData) {
-        const b = activeBountyData
+      // Show all active bounties (one per table)
+      for (const [tableId, b] of activeBountyDataByTable) {
+        const tableLabel = esc(tableId.replace('table-', 'Table '))
         parts.push(`<div class="bp-active">
-          <div class="bp-active-flag">💰 Active Bounty</div>
+          <div class="bp-active-flag">💰 ${tableLabel}</div>
           <div class="bp-active-name">${esc(b.targetName)}</div>
           <div class="bp-active-reward">+${b.reward.toLocaleString()} chips</div>
           <div class="bp-active-expiry">expires hand ${b.expiresAfterHand}</div>
         </div>`)
-        if (bountyHistory.length > 0) parts.push('<div class="bp-sep"></div>')
       }
+      if (activeBountyDataByTable.size > 0 && bountyHistory.length > 0) parts.push('<div class="bp-sep"></div>')
 
       for (const e of bountyHistory) {
+        const tableTag = e.tableId ? ` · ${esc(e.tableId.replace('table-', 'T'))}` : ''
         if (e.type === 'claimed') {
           parts.push(`<div class="bp-event bp-claimed">
             <span class="bp-evt-icon">✅</span>
             <div class="bp-evt-body">
               <div class="bp-evt-main">${esc(e.claimedByName)}</div>
               <div class="bp-evt-sub">claimed ${esc(e.targetName)}</div>
-              <div class="bp-evt-meta">+${e.reward} · h.${e.handNumber}</div>
+              <div class="bp-evt-meta">+${e.reward} · h.${e.handNumber}${tableTag}</div>
             </div>
           </div>`)
         } else if (e.type === 'expired') {
@@ -803,7 +804,7 @@
             <div class="bp-evt-body">
               <div class="bp-evt-main">${esc(e.targetName)}</div>
               <div class="bp-evt-sub">survived</div>
-              <div class="bp-evt-meta">h.${e.handNumber}</div>
+              <div class="bp-evt-meta">h.${e.handNumber}${tableTag}</div>
             </div>
           </div>`)
         } else if (e.type === 'cursed') {
@@ -812,7 +813,7 @@
             <div class="bp-evt-body">
               <div class="bp-evt-main">${esc(e.curserName)}</div>
               <div class="bp-evt-sub">targeted ${esc(e.targetName)}</div>
-              <div class="bp-evt-meta">-${e.amount} chips · h.${e.handNumber}</div>
+              <div class="bp-evt-meta">-${e.amount} chips · h.${e.handNumber}${tableTag}</div>
             </div>
           </div>`)
         }
@@ -836,16 +837,15 @@
     }
 
     function onBountyAnnounced(msg) {
-      activeBountyTargetId = msg.targetId
-      activeBountyData     = msg
+      if (msg.tableId) activeBountyDataByTable.set(msg.tableId, msg)
       renderBountyPanel()
-      const handsLeft = msg.expiresAfterHand - msg.handNumber
-      addLog(`💰 BOUNTY: Eliminate ${esc(msg.targetName)} within ${handsLeft} hands for +${msg.reward} chips`, 'win')
+      const handsLeft  = msg.expiresAfterHand - msg.handNumber
+      const tableLabel = msg.tableId ? ` [${esc(msg.tableId.replace('table-','T'))}]` : ''
+      addLog(`💰 BOUNTY${tableLabel}: Eliminate ${esc(msg.targetName)} within ${handsLeft} hands for +${msg.reward} chips`, 'win')
     }
 
     function onBountyClaimed(msg) {
-      activeBountyTargetId = null
-      activeBountyData     = null
+      if (msg.tableId) activeBountyDataByTable.delete(msg.tableId)
       bountyHistory.unshift({ type: 'claimed', ...msg })
       if (bountyHistory.length > MAX_BOUNTY_HISTORY) bountyHistory.pop()
       renderBountyPanel()
@@ -855,8 +855,7 @@
     }
 
     function onBountyExpired(msg) {
-      activeBountyTargetId = null
-      activeBountyData     = null
+      if (msg.tableId) activeBountyDataByTable.delete(msg.tableId)
       bountyHistory.unshift({ type: 'expired', ...msg })
       if (bountyHistory.length > MAX_BOUNTY_HISTORY) bountyHistory.pop()
       renderBountyPanel()
@@ -1048,8 +1047,7 @@
         lastHandPots.clear()
         activeTableId        = null
         activeTablesFromServer = []
-        activeBountyTargetId = null
-        activeBountyData     = null
+        activeBountyDataByTable.clear()
         bountyHistory.length = 0
         renderBountyPanel()
         renderTableList()
