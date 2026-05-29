@@ -1,6 +1,6 @@
 # Poker Tournament
 
-A Texas Hold'em tournament platform for AI agent competitions. Teams build agents that connect via WebSocket and compete in a managed tournament with automated blind escalation, multi-table play, and optional bounty events.
+A Texas Hold'em tournament platform for AI agent competitions. Teams build agents that connect via WebSocket and compete in a managed tournament with automated blind escalation, multi-table play, bounty events, and a post-bounty curse mechanic.
 
 ---
 
@@ -36,6 +36,12 @@ ws://localhost:3000
 
 ```json
 {"type":"register","agentId":"my-bot-1","agentName":"DeepStack"}
+```
+
+The server immediately replies with a `register_ack` that confirms your ID and tells you the action timeout:
+
+```json
+{"type":"register_ack","agentId":"my-bot-1","agentName":"DeepStack","timeLimitMs":5000}
 ```
 
 ### 2. Respond to `action_required`
@@ -75,7 +81,7 @@ Full message reference: [`docs/protocol.md`](docs/protocol.md)
 
 ## Example Agents
 
-Starter kits are in [`examples/`](examples/) for three languages:
+Starter kits are in [`examples/`](examples/) for three languages and multiple AI backends:
 
 | Language | AI backend | Directory |
 |----------|-----------|-----------|
@@ -86,7 +92,16 @@ Starter kits are in [`examples/`](examples/) for three languages:
 | PHP | Claude Code CLI | `examples/php/claude/` |
 | PHP | GitHub Models | `examples/php/github/` |
 
-Each example reads game state, builds a prompt, queries an LLM, and returns a JSON action. Copy one as a starting point and replace the decision logic with your own.
+**Personality agents** — six ready-to-run Claude agents with pre-configured strategic styles, based on characters from test tournaments:
+
+| Script | Style |
+|--------|-------|
+| `examples/python/personalities/ace_hunter.py` | Tight-aggressive — premium hands only |
+| `examples/python/personalities/call_station.py` | Loose-passive — sees every cheap flop |
+| `examples/python/personalities/the_maniac.py` | Hyper-aggressive — raises constantly |
+| `examples/python/personalities/pot_odds_pete.py` | Mathematical — explicit EV calculations |
+| `examples/python/personalities/bounty_hunter.py` | Bounty-obsessed — re-calibrates for targets |
+| `examples/python/personalities/balanced_bot.py` | GTO-approximating — balanced, unexploitable |
 
 ---
 
@@ -100,15 +115,17 @@ Copy `server/.env.example` to `server/.env` and adjust as needed.
 | `MIN_PLAYERS` | `2` | Minimum agents before Start is enabled |
 | `STARTING_STACK` | `1000` | Chip stack per agent |
 | `TABLE_SIZE` | `6` | Max players per table |
-| `ACTION_TIMEOUT` | `5000` | Agent response timeout (ms) |
+| `ACTION_TIMEOUT` | `5000` | Agent response timeout (ms) — agents that take longer are auto-folded |
 | `TOURNAMENT_START_DELAY` | `10` | Countdown seconds after Start is clicked |
 | `TURN_DELAY_MS` | `1500` | Pause before requesting each action (gives spectators time to see the table state) |
 | `ADMIN_KEY` | _(generated)_ | Password for the admin panel — set before deploying |
-| `SPECTATOR_KEY` | _(generated)_ | Password for the hole-card dashboard — safe to share with projector |
+| `SPECTATOR_KEY` | _(generated)_ | Password for the hole-card dashboard — safe to share on a projector URL |
 | `DEVELOPER_MODE` | `false` | Enables Reset button and bounty mock endpoints |
 | `SPECTATOR_DELAY_S` | `0` | Seconds to delay the keyed spectator feed (30 recommended for live events) |
-| `BOUNTY_WINDOW_HANDS` | `0` | Hands between bounty windows (0 = disabled) |
-| `BOUNTY_REWARD` | `500` | Bonus chips for eliminating the bounty target |
+| `BOUNTY_WINDOW_HANDS` | `0` | How many hands the bounty target has before the bounty expires (0 = disabled) |
+| `BOUNTY_FIRE_EVERY` | `0` | Hands between successive bounties (0 = same as `BOUNTY_WINDOW_HANDS`) |
+| `BOUNTY_REWARD` | `500` | Bonus chips paid to whoever eliminates the bounty target |
+| `BOUNTY_CURSE_AMOUNT` | `0` | Chips deducted from a rival after a bounty claim (0 = disabled) |
 
 ---
 
@@ -142,7 +159,7 @@ With `DEVELOPER_MODE=true`:
 
 ## Bounty Events
 
-When `BOUNTY_WINDOW_HANDS > 0`, a random player is designated the bounty target every N hands. The first agent to eliminate them earns `BOUNTY_REWARD` extra chips directly added to their stack.
+When `BOUNTY_WINDOW_HANDS > 0`, a random player is designated the bounty target every `BOUNTY_FIRE_EVERY` hands. The first agent to eliminate them earns `BOUNTY_REWARD` extra chips.
 
 Every `action_required` message includes an `activeBounty` field so agents can adapt their strategy:
 
@@ -155,7 +172,68 @@ Every `action_required` message includes an `activeBounty` field so agents can a
 }
 ```
 
-`null` when no bounty is active. See [`docs/protocol.md`](docs/protocol.md) for strategy guidance.
+`null` when no bounty is active.
+
+### The Curse
+
+When `BOUNTY_CURSE_AMOUNT > 0`, the bounty claimer gets to pick a rival to penalise. The server sends a `bounty_curse_required` message directly to the eliminator:
+
+```json
+{
+  "type": "bounty_curse_required",
+  "reward": 500,
+  "curseAmount": 100,
+  "availableTargets": [{"id":"p1","name":"AceHunter","stack":1200}],
+  "timeLimitMs": 5000
+}
+```
+
+The agent replies with:
+
+```json
+{"type":"bounty_curse","targetId":"p1"}
+```
+
+If no response arrives within `timeLimitMs` the server picks a random target. The result is broadcast to all spectators and agents as `bounty_cursed`. Agents should watch for it:
+
+```json
+{
+  "type": "bounty_cursed",
+  "curserId": "p2", "curserName": "TheManiac",
+  "targetId": "p1", "targetName": "AceHunter",
+  "amount": 100, "handNumber": 12
+}
+```
+
+See [`docs/protocol.md`](docs/protocol.md) for full bounty strategy guidance.
+
+---
+
+## Running at an Event with Cloudflare Tunnel
+
+All traffic runs on a single port (`PORT`, default `3000`), making it straightforward to expose the server publicly so teams can connect from their own laptops without any network configuration.
+
+```bash
+# Start the server first
+npm start
+
+# In another terminal — expose it through a Cloudflare tunnel
+cloudflared tunnel --url http://localhost:3000
+```
+
+Cloudflare will print a public HTTPS/WSS URL like `https://abc-def-ghi.trycloudflare.com`. Teams then connect their agents to:
+
+```
+wss://abc-def-ghi.trycloudflare.com
+```
+
+And spectators watch at:
+
+```
+https://abc-def-ghi.trycloudflare.com/?key=SPECTATOR_KEY
+```
+
+> **Tip:** Set `ADMIN_KEY` and `SPECTATOR_KEY` in `.env` before running so the URLs are stable across restarts.
 
 ---
 
@@ -164,8 +242,9 @@ Every `action_required` message includes an `activeBounty` field so agents can a
 ```
 server/       Game server — WebSocket hub, Texas Hold'em engine, tournament manager
 dashboard/    Live spectator web UI
-examples/     Starter-kit agents (TypeScript, Python, PHP)
+examples/     Starter-kit agents (TypeScript, Python, PHP) + personality agents
 docs/         Protocol reference
+test/         Test tournament runner and personality agents
 ```
 
 ### Running Tests
