@@ -118,7 +118,7 @@ async def main() -> None:
         "MIN_PLAYERS":             str(len(AGENTS)),
         "STARTING_STACK":          "1500",
         "TABLE_SIZE":              "3",     # 2 tables of 3 — multi-table play
-        "ACTION_TIMEOUT":          "8000",  # 8s reasoning window (after action_ack); ackWindowMs=32s covers CLI startup
+        "ACTION_TIMEOUT":          "20000", # 20s reasoning window (after action_ack); ackWindowMs=80s covers CLI startup
         "TOURNAMENT_START_DELAY":  "5",
         "TURN_DELAY_MS":           "300",
         "BOUNTY_WINDOW_HANDS":     "10",   # target has 10 hands to be eliminated
@@ -176,9 +176,12 @@ async def main() -> None:
                 "AGENT_PERSONALITY": a["personality"],
                 "CLAUDE_MODEL":      "haiku",  # fast enough to beat the 8s timeout
             }
+            log_path = ROOT / "test" / f"agent_{a['id']}.log"
             p = subprocess.Popen(
                 [sys.executable, str(AGENT_PY)],
                 env=agent_env,
+                stdout=open(log_path, 'w'),
+                stderr=subprocess.STDOUT,
             )
             agent_procs.append(p)
             await asyncio.sleep(0.2)  # stagger connections slightly
@@ -202,8 +205,48 @@ async def main() -> None:
             p.wait()
 
         print("\n" + "=" * 60)
-        print("  Tournament complete — check agent output above for standings")
+        print("  TOURNAMENT COMPLETE")
         print("=" * 60)
+
+        # ── Highlights from agent logs ────────────────────────────────────────
+        print("\n📋 HIGHLIGHTS\n")
+        notable = []
+        for a in AGENTS:
+            log_path = ROOT / "test" / f"agent_{a['id']}.log"
+            try:
+                lines = open(log_path).readlines()
+            except FileNotFoundError:
+                continue
+            wins = losses = timeouts = net = 0
+            for line in lines:
+                low = line.lower()
+                if "hand #" in low:
+                    for tok in line.split():
+                        if tok.startswith('+'):
+                            try: net += int(tok[1:]); wins += 1
+                            except: pass
+                        elif tok.startswith('-') and tok[1:].isdigit():
+                            try: net += int(tok); losses += 1
+                            except: pass
+                if "timeout" in low:
+                    timeouts += 1
+                for marker in ("🏆", "WINNER"):
+                    if marker in line:
+                        notable.append(f"🏆  {a['name']} won the tournament!")
+                if "💀" in line and "Cursing" in line:
+                    notable.append(f"  {line.strip()}")
+                if "🎯" in line:
+                    notable.append(f"  {line.strip()}")
+                if "BOUNTY ON ME" in line:
+                    notable.append(f"  [{a['name']}] had a bounty on their head")
+            timeout_note = f"  ⚠ {timeouts} timeout(s)" if timeouts else ""
+            print(f"  {a['name']:<16}  net: {'+' if net >= 0 else ''}{net:,}{timeout_note}")
+
+        if notable:
+            print("\n🎲 KEY MOMENTS")
+            for n in dict.fromkeys(notable)[:10]:   # deduplicate, cap at 10
+                print(f"  {n}")
+        print()
 
     finally:
         for p in agent_procs:
