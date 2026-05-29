@@ -54,12 +54,14 @@ export interface OrchestratorOptions {
 
 export class Orchestrator {
   private pendingActionMsgs = new Map<string, ActionRequiredMsg>()
-  private activeBounty:    ActiveBounty | null = null
-  private nextBountyAtHand: number             = 0
+  /** Per-table active bounties — each table runs its own bounty independently. */
+  private activeBounties    = new Map<string, ActiveBounty>()
+  /** Per-table next-fire hand counters. */
+  private nextBountyAtHand  = new Map<string, number>()
 
   constructor(private opts: OrchestratorOptions) {}
 
-  /** Hands between one bounty resolving and the next being announced. */
+  /** Hands between one bounty resolving and the next being announced on the same table. */
   private get cooldownHands(): number {
     return this.opts.bountyFireEvery > 0
       ? this.opts.bountyFireEvery
@@ -72,42 +74,71 @@ export class Orchestrator {
   }
 
   /**
-   * Force a bounty to be announced at the next hand boundary.
-   * No-op if bounties are disabled (bountyWindowHands === 0).
-   * Dev/testing use only — called from the admin panel.
+   * Force all active tables to announce a bounty at the next hand boundary.
+   * No-op if bounties are disabled. Dev/testing use only.
    */
   forceNextBounty(): void {
-    if (this.opts.bountyWindowHands > 0) this.nextBountyAtHand = 0
+    if (this.opts.bountyWindowHands > 0) {
+      for (const tableId of this.nextBountyAtHand.keys()) {
+        this.nextBountyAtHand.set(tableId, 0)
+      }
+    }
+  }
+
+  /** Initialise or refresh per-table bounty counters after seating/rebalancing. */
+  private syncTableBountyState(tableIds: string[]): void {
+    const initial = this.opts.bountyWindowHands > 0 ? this.cooldownHands : Infinity
+    // Add counters for newly-created tables
+    for (const id of tableIds) {
+      if (!this.nextBountyAtHand.has(id)) this.nextBountyAtHand.set(id, initial)
+    }
+    // Remove state for tables that no longer exist
+    for (const id of [...this.nextBountyAtHand.keys()]) {
+      if (!tableIds.includes(id)) {
+        this.nextBountyAtHand.delete(id)
+        this.activeBounties.delete(id)
+      }
+    }
   }
 
   async runTournament(config: TournamentConfig): Promise<void> {
     const { hub, spectator, getLobbyState, setLobbyState, isAborted } = this.opts
 
     spectator.resetBuffers()
-    this.activeBounty    = null
-    this.nextBountyAtHand = this.opts.bountyWindowHands > 0 ? this.cooldownHands : Infinity
+    this.activeBounties.clear()
+    this.nextBountyAtHand.clear()
 
     const tournament = new Tournament(config)
     tournament.seatTables()
+    this.syncTableBountyState(tournament.tableIds)
 
     let handNumber = 0
 
     while (!tournament.isFinished() && !isAborted()) {
       const tables = tournament.tableIds
 
-      // Snapshot standings before the round so we can detect eliminations
+      // Snapshot standings + per-table target-was-active flags before the round
       const standingsBefore = new Map(tournament.standings.map(p => [p.id, p.stack]))
-      const targetWasActive = this.activeBounty
-        ? tournament.activePlayers.some(p => p.id === this.activeBounty!.targetId)
-        : false
+      const targetWasActive = new Map<string, boolean>()
+      for (const tableId of tables) {
+        const bounty = this.activeBounties.get(tableId)
+        if (bounty) {
+          targetWasActive.set(tableId,
+            tournament.getTableActivePlayers(tableId).some(p => p.id === bounty.targetId))
+        }
+      }
 
       await Promise.all(tables.map(tableId => this.playHand(tournament, tableId, ++handNumber)))
 
-      // Bounty resolution must happen before standings broadcast
-      await this.resolveBounty(tournament, handNumber, standingsBefore, targetWasActive)
-      this.maybeAnnounceBounty(tournament, handNumber)
+      // Bounty resolution per table — must happen before standings broadcast
+      for (const tableId of tables) {
+        await this.resolveBounty(tournament, tableId, handNumber, standingsBefore,
+          targetWasActive.get(tableId) ?? false)
+        this.maybeAnnounceBounty(tournament, tableId, handNumber)
+      }
 
       tournament.rebalance()
+      this.syncTableBountyState(tournament.tableIds)  // add/remove entries as tables merge
       this.broadcastStandings(tournament, handNumber)
     }
 
@@ -153,26 +184,25 @@ export class Orchestrator {
   // ── Bounty helpers ──────────────────────────────────────────────────────────
 
   /**
-   * Check whether the active bounty target was eliminated during the round that
-   * just finished.  If so, award the reward to whoever gained the most chips at
-   * their table and broadcast a bounty_claimed message.
-   * Also expire the bounty if its window has closed without a claim.
+   * Resolve the bounty for one table after a hand round.
+   * Awards chips if the target was eliminated, expires if the window closed,
+   * or cancels if the table is down to heads-up.
    */
   private async resolveBounty(
-    tournament:     Tournament,
-    handNumber:     number,
+    tournament:      Tournament,
+    tableId:         string,
+    handNumber:      number,
     standingsBefore: Map<string, number>,
     targetWasActive: boolean,
   ): Promise<void> {
     const { hub, spectator } = this.opts
-    if (!this.activeBounty || !targetWasActive) return
+    const bounty = this.activeBounties.get(tableId)
+    if (!bounty || !targetWasActive) return
 
-    const bounty = this.activeBounty
+    const tablePlayers        = tournament.getTableActivePlayers(tableId)
+    const targetNowEliminated = !tablePlayers.some(p => p.id === bounty.targetId)
 
-    // Check if the target is now eliminated
-    const targetNowEliminated = !tournament.activePlayers.some(p => p.id === bounty.targetId)
     if (targetNowEliminated) {
-      // Find the eliminator: player with the largest positive stack delta
       let eliminatorId:   string | null = null
       let eliminatorName: string        = ''
       let maxGain                       = 0
@@ -191,92 +221,70 @@ export class Orchestrator {
       if (eliminatorId) {
         tournament.awardBonus(eliminatorId, bounty.reward)
         const claimed: BountyClaimedMsg = {
-          type:          'bounty_claimed',
-          targetId:      bounty.targetId,
-          targetName:    bounty.targetName,
-          claimedById:   eliminatorId,
-          claimedByName: eliminatorName,
-          reward:        bounty.reward,
-          handNumber,
+          type: 'bounty_claimed', targetId: bounty.targetId, targetName: bounty.targetName,
+          claimedById: eliminatorId, claimedByName: eliminatorName,
+          reward: bounty.reward, handNumber,
         }
         spectator.broadcast(claimed)
         hub.broadcast(claimed)
-        console.log(
-          `[bounty] ${eliminatorName} eliminated ${bounty.targetName} and claimed ${bounty.reward} bonus chips!`
-        )
+        console.log(`[bounty] ${eliminatorName} eliminated ${bounty.targetName} and claimed ${bounty.reward} bonus chips! (${tableId})`)
 
-        // ── Curse mechanic ────────────────────────────────────────────────────
         if (this.opts.bountyCurseAmount > 0) {
           await this._applyCurse(hub, spectator, tournament, eliminatorId, eliminatorName, handNumber)
         }
       }
 
-      this.activeBounty    = null
-      this.nextBountyAtHand = handNumber + this.cooldownHands
+      this.activeBounties.delete(tableId)
+      this.nextBountyAtHand.set(tableId, handNumber + this.cooldownHands)
       return
     }
 
-    // Check if the window has expired without a claim
     if (handNumber >= bounty.expiresAfterHand) {
       const expired: BountyExpiredMsg = {
-        type:       'bounty_expired',
-        targetId:   bounty.targetId,
-        targetName: bounty.targetName,
-        handNumber,
+        type: 'bounty_expired', targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
       }
       spectator.broadcast(expired)
-      console.log(`[bounty] Bounty on ${bounty.targetName} expired unclaimed`)
-      this.activeBounty    = null
-      this.nextBountyAtHand = handNumber + this.cooldownHands
+      console.log(`[bounty] Bounty on ${bounty.targetName} expired unclaimed (${tableId})`)
+      this.activeBounties.delete(tableId)
+      this.nextBountyAtHand.set(tableId, handNumber + this.cooldownHands)
       return
     }
 
-    // Cancel any active bounty when the game reaches heads-up — with only two
-    // players left there is no third party to create a bounty incentive.
-    if (tournament.activePlayers.length <= 2) {
+    // Cancel at heads-up — no tactical value with only two players
+    if (tablePlayers.length <= 2) {
       const expired: BountyExpiredMsg = {
-        type:       'bounty_expired',
-        targetId:   bounty.targetId,
-        targetName: bounty.targetName,
-        handNumber,
+        type: 'bounty_expired', targetId: bounty.targetId, targetName: bounty.targetName, handNumber,
       }
       spectator.broadcast(expired)
-      console.log(`[bounty] Bounty on ${bounty.targetName} cancelled — heads-up reached`)
-      this.activeBounty    = null
-      this.nextBountyAtHand = Infinity  // no more bounties at heads-up
+      console.log(`[bounty] Bounty on ${bounty.targetName} cancelled — heads-up reached (${tableId})`)
+      this.activeBounties.delete(tableId)
+      this.nextBountyAtHand.set(tableId, Infinity)
     }
   }
 
-  /** Announce a new bounty if enough hands have passed since the last one. */
-  private maybeAnnounceBounty(tournament: Tournament, handNumber: number): void {
-    if (this.activeBounty) return
-    if (handNumber < this.nextBountyAtHand) return
-    if (tournament.activePlayers.length <= 2) return  // need 3+ for bounty to have tactical value
+  /** Announce a new bounty for one table if enough hands have passed. */
+  private maybeAnnounceBounty(tournament: Tournament, tableId: string, handNumber: number): void {
+    if (this.activeBounties.has(tableId)) return
+    const nextHand = this.nextBountyAtHand.get(tableId) ?? Infinity
+    if (handNumber < nextHand) return
 
-    // Pick a random active player as the target
-    const active = tournament.activePlayers
-    const target = active[Math.floor(Math.random() * active.length)]
+    const tablePlayers = tournament.getTableActivePlayers(tableId)
+    if (tablePlayers.length <= 2) return  // need 3+ seated at this table
 
+    const target           = tablePlayers[Math.floor(Math.random() * tablePlayers.length)]
     const expiresAfterHand = handNumber + this.opts.bountyWindowHands
-    this.activeBounty = {
-      targetId:         target.id,
-      targetName:       target.name,
-      reward:           this.opts.bountyReward,
-      expiresAfterHand,
-    }
+
+    this.activeBounties.set(tableId, {
+      targetId: target.id, targetName: target.name,
+      reward: this.opts.bountyReward, expiresAfterHand,
+    })
 
     const msg: BountyAnnouncedMsg = {
-      type:             'bounty_announced',
-      targetId:         target.id,
-      targetName:       target.name,
-      reward:           this.opts.bountyReward,
-      expiresAfterHand,
-      handNumber,
+      type: 'bounty_announced', targetId: target.id, targetName: target.name,
+      reward: this.opts.bountyReward, expiresAfterHand, handNumber,
     }
     this.opts.spectator.broadcast(msg)
-    console.log(
-      `[bounty] 💰 BOUNTY on ${target.name} — ${this.opts.bountyReward} chips to whoever eliminates them before hand ${expiresAfterHand}`
-    )
+    console.log(`[bounty] 💰 BOUNTY on ${target.name} at ${tableId} — ${this.opts.bountyReward} chips, expires h.${expiresAfterHand}`)
   }
 
   // ── Hand loop ───────────────────────────────────────────────────────────────
@@ -294,15 +302,9 @@ export class Orchestrator {
       const player       = state.players[playerIdx]
       const validActions = validActionsFor(state, playerIdx)
 
-      // Build bounty info for this agent's action message
-      const activeBountyInfo: BountyInfo | null = this.activeBounty
-        ? {
-            targetId:         this.activeBounty.targetId,
-            targetName:       this.activeBounty.targetName,
-            reward:           this.activeBounty.reward,
-            expiresAfterHand: this.activeBounty.expiresAfterHand,
-          }
-        : null
+      // Build bounty info for this agent — scoped to their table
+      const activeBountyInfo: BountyInfo | null =
+        (this.activeBounties.get(tId) as BountyInfo | undefined) ?? null
 
       const msg: ActionRequiredMsg = {
         type:           'action_required',
@@ -421,7 +423,7 @@ export class Orchestrator {
     lastActions:    Map<string, string>,
   ): void {
     const { hub, spectator } = this.opts
-    const bountyTargetId = this.activeBounty?.targetId ?? null
+    const bountyTargetId = this.activeBounties.get(tableId)?.targetId ?? null
     const msg: TableStateMsg = {
       type:           'table_state',
       tableId,
