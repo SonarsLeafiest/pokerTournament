@@ -1,10 +1,24 @@
 import { createGame, dealHands, applyAction, getShowdownWinners, runOutBoard, GameStage, ActionType } from './game.js'
 import type { Card, GameState, Action, ShowdownResult } from './game.js'
+import { evaluateHand, HandRank } from './evaluator.js'
 import { fetchQuantumSeeds } from './rng.js'
 
+const HAND_RANK_NAMES: Record<HandRank, string> = {
+  [HandRank.HIGH_CARD]:       'High Card',
+  [HandRank.ONE_PAIR]:        'One Pair',
+  [HandRank.TWO_PAIR]:        'Two Pair',
+  [HandRank.THREE_OF_A_KIND]: 'Three of a Kind',
+  [HandRank.STRAIGHT]:        'Straight',
+  [HandRank.FLUSH]:           'Flush',
+  [HandRank.FULL_HOUSE]:      'Full House',
+  [HandRank.FOUR_OF_A_KIND]:  'Four of a Kind',
+  [HandRank.STRAIGHT_FLUSH]:  'Straight Flush',
+}
+
 export interface HandOutcome {
-  winners:  ShowdownResult[]
-  showdown: { playerId: string; holeCards: [Card, Card] }[]
+  winners:       ShowdownResult[]
+  showdown:      { playerId: string; holeCards: [Card, Card]; handRank: string }[]
+  communityCards: Card[]
 }
 
 export interface TournamentPlayer {
@@ -222,8 +236,15 @@ export class Tournament {
     // Collect showdown hole cards when 2+ players reach the river without folding
     const showdownPlayers = state.players.filter(p => !p.folded)
     const showdown: HandOutcome['showdown'] = showdownPlayers.length > 1
-      ? showdownPlayers.map(p => ({ playerId: p.id, holeCards: p.holeCards as [Card, Card] }))
+      ? showdownPlayers.map(p => {
+          const allCards = [...p.holeCards, ...state.communityCards]
+          const handRank = allCards.length >= 5
+            ? HAND_RANK_NAMES[evaluateHand(allCards).rank] ?? ''
+            : ''
+          return { playerId: p.id, holeCards: p.holeCards as [Card, Card], handRank }
+        })
       : []
+    const communityCards: Card[] = [...state.communityCards]
 
     // Resolve winners and update stacks
     const winners = getShowdownWinners(state)
@@ -251,7 +272,7 @@ export class Tournament {
     }
 
     table.gameState = state
-    return { winners, showdown }
+    return { winners, showdown, communityCards }
   }
 
   private advanceBlinds(): void {

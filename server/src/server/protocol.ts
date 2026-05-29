@@ -69,8 +69,9 @@ export interface HandResultMsg {
   type: 'hand_result'
   gameId: string
   handNumber: number
-  winners: { playerId: string; amount: number; hand?: string }[]
-  showdown: { playerId: string; holeCards: [Card, Card] }[]
+  winners:        { playerId: string; amount: number }[]
+  showdown:       { playerId: string; holeCards: [Card, Card]; handRank: string }[]
+  communityCards: Card[]
   deltas: Record<string, number>   // net chip change per player (positive = won, negative = lost)
 }
 
