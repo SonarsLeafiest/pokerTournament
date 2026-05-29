@@ -388,6 +388,11 @@ export class Orchestrator {
       if (after !== before) deltas[id] = after - before
     }
 
+    // Skip broadcasting when the table had < 2 players and playHand returned
+    // early — no cards were dealt and winners is empty. The hand number was
+    // already incremented; we just don't emit a log entry for it.
+    if (winners.length === 0) return
+
     const resultMsg: HandResultMsg = {
       type:       'hand_result',
       gameId:     tableId,
