@@ -27,8 +27,6 @@ ADMIN_KEY      = "test-tournament-2025"
 SPECTATOR_KEY  = "test-spectator-2025"
 
 # ── Agent roster ──────────────────────────────────────────────────────────────
-# Keep to 3 agents for faster games and lower token usage.
-# Swap in any of the personalities from examples/python/personalities/ as desired.
 AGENTS = [
     {
         "id":   "ace-hunter",
@@ -36,6 +34,14 @@ AGENTS = [
         "personality": (
             "Play tight-aggressive. Only open with premium hands (AA, KK, QQ, JJ, AK, AQ). "
             "Raise big when you do play. Fold everything else without hesitation."
+        ),
+    },
+    {
+        "id":   "call-station",
+        "name": "CallStation",
+        "personality": (
+            "Play loose-passive. Call almost every bet to see cheap cards. "
+            "Rarely raise unless you have the absolute nuts. See as many flops as possible."
         ),
     },
     {
@@ -47,12 +53,28 @@ AGENTS = [
         ),
     },
     {
+        "id":   "pot-odds-pete",
+        "name": "PotOddsPete",
+        "personality": (
+            "Play by pot odds and expected value. Calculate whether calling is mathematically "
+            "profitable. Raise with hands that have strong equity. Fold when the math says fold."
+        ),
+    },
+    {
         "id":   "bounty-hunter",
         "name": "BountyHunter",
         "personality": (
             "Focus on collecting bounties. When a bounty target is at your table, aggressively "
             "go after them. Adjust your range to pressure bounty targets specifically. "
             "Be willing to gamble to claim a bounty reward."
+        ),
+    },
+    {
+        "id":   "balanced-bot",
+        "name": "BalancedBot",
+        "personality": (
+            "Play balanced, unexploitable poker. Mix bluffs with value bets at appropriate "
+            "frequencies. Adjust based on position and stack depth. Think several streets ahead."
         ),
     },
 ]
@@ -95,10 +117,10 @@ async def main() -> None:
         "PORT":                    str(PORT),
         "MIN_PLAYERS":             str(len(AGENTS)),
         "STARTING_STACK":          "1500",
-        "TABLE_SIZE":              "6",     # all 3 agents at one table
-        "ACTION_TIMEOUT":          "8000",  # 8s — forces fast decisions (the challenge!)
+        "TABLE_SIZE":              "3",     # 2 tables of 3 — multi-table play
+        "ACTION_TIMEOUT":          "20000", # 20s for CLI overhead; production server keeps 8s
         "TOURNAMENT_START_DELAY":  "5",
-        "TURN_DELAY_MS":           "400",
+        "TURN_DELAY_MS":           "300",
         "BOUNTY_WINDOW_HANDS":     "10",   # target has 10 hands to be eliminated
         "BOUNTY_FIRE_EVERY":       "5",    # new bounty every 5 hands after last resolved
         "BOUNTY_REWARD":           "400",  # meaningful but not game-breaking
@@ -152,7 +174,7 @@ async def main() -> None:
                 "AGENT_ID":          a["id"],
                 "AGENT_NAME":        a["name"],
                 "AGENT_PERSONALITY": a["personality"],
-                "CLAUDE_MODEL":      "sonnet",
+                "CLAUDE_MODEL":      "haiku",  # fast enough to beat the 8s timeout
             }
             p = subprocess.Popen(
                 [sys.executable, str(AGENT_PY)],
