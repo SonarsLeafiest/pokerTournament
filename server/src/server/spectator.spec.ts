@@ -176,15 +176,15 @@ describe('delayed message types', () => {
     standings: [{ playerId: 'p1', name: 'Alice', place: 1, stack: 2000 }],
   }
   const BOUNTY_ANNOUNCED_MSG: BountyAnnouncedMsg = {
-    type: 'bounty_announced', targetId: 'p2', targetName: 'Bob',
+    type: 'bounty_announced', tableId: 'table-1', targetId: 'p2', targetName: 'Bob',
     reward: 500, expiresAfterHand: 15, handNumber: 5,
   }
   const BOUNTY_CLAIMED_MSG: BountyClaimedMsg = {
-    type: 'bounty_claimed', targetId: 'p2', targetName: 'Bob',
+    type: 'bounty_claimed', tableId: 'table-1', targetId: 'p2', targetName: 'Bob',
     claimedById: 'p1', claimedByName: 'Alice', reward: 500, handNumber: 8,
   }
   const BOUNTY_EXPIRED_MSG: BountyExpiredMsg = {
-    type: 'bounty_expired', targetId: 'p2', targetName: 'Bob', handNumber: 15,
+    type: 'bounty_expired', tableId: 'table-1', targetId: 'p2', targetName: 'Bob', handNumber: 15,
   }
 
   beforeEach(() => { vi.useFakeTimers() })
@@ -199,7 +199,8 @@ describe('delayed message types', () => {
     ['bounty_claimed',       BOUNTY_CLAIMED_MSG],
     ['bounty_expired',       BOUNTY_EXPIRED_MSG],
     ['countdown',            COUNTDOWN_MSG],
-    ['bounty_cursed',        { type: 'bounty_cursed' as const, curserId: 'p1', curserName: 'Alice',
+    ['bounty_cursed',        { type: 'bounty_cursed' as const, tableId: 'table-1',
+                               curserId: 'p1', curserName: 'Alice',
                                targetId: 'p2', targetName: 'Bob', amount: 100, handNumber: 9 }],
   ] as const) {
     it(`${label}: public receives immediately`, () => {
