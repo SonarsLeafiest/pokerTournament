@@ -104,7 +104,7 @@ export class Orchestrator {
       await Promise.all(tables.map(tableId => this.playHand(tournament, tableId, ++handNumber)))
 
       // Bounty resolution must happen before standings broadcast
-      this.resolveBounty(tournament, handNumber, standingsBefore, targetWasActive)
+      await this.resolveBounty(tournament, handNumber, standingsBefore, targetWasActive)
       this.maybeAnnounceBounty(tournament, handNumber)
 
       tournament.rebalance()
@@ -158,12 +158,12 @@ export class Orchestrator {
    * their table and broadcast a bounty_claimed message.
    * Also expire the bounty if its window has closed without a claim.
    */
-  private resolveBounty(
+  private async resolveBounty(
     tournament:     Tournament,
     handNumber:     number,
     standingsBefore: Map<string, number>,
     targetWasActive: boolean,
-  ): void {
+  ): Promise<void> {
     const { spectator } = this.opts
     if (!this.activeBounty || !targetWasActive) return
 
