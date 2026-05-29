@@ -351,6 +351,17 @@ export class Orchestrator {
         return { type: ActionType.FOLD }
       }
 
+      // M1: validate raise amount is at least minRaise — a sub-minimum raise
+      // would cause applyAction to throw and crash the tournament (DoS).
+      if (action === ActionType.RAISE) {
+        const minRaiseRequired = state.currentBet + state.lastRaiseSize
+        if (amount == null || amount < minRaiseRequired) {
+          hub.sendToAgent(playerId, { type: 'error', message: `Raise amount ${amount} below minimum ${minRaiseRequired}` })
+          lastActions.set(playerId, ActionType.FOLD)
+          return { type: ActionType.FOLD }
+        }
+      }
+
       lastActions.set(playerId,
         action === ActionType.RAISE && amount != null ? `${action} ${amount}` : action)
 

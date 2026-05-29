@@ -205,7 +205,14 @@ export class Tournament {
         action = { type: ActionType.FOLD }
       }
 
-      state = applyAction(state, actingPlayer.id, action)
+      try {
+        state = applyAction(state, actingPlayer.id, action)
+      } catch {
+        // applyAction validation failed (e.g. raise below minRaise that slipped
+        // through orchestrator validation). Treat as a fold and continue — never
+        // let a malformed agent message crash the tournament.
+        state = applyAction(state, actingPlayer.id, { type: ActionType.FOLD })
+      }
     }
 
     // Run out any remaining community cards when all active players are all-in

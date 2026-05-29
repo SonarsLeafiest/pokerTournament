@@ -271,6 +271,8 @@ export class WebSocketHub {
         return
       }
 
+      const sentAt = Date.now()
+
       const startTimer = (ms: number) => {
         clearTimeout(agent.actionTimer)
         agent.actionTimer = setTimeout(() => {
@@ -282,6 +284,11 @@ export class WebSocketHub {
       }
 
       const resolveAction = (msg: AgentMessage) => {
+        // C2: stale ack in phase 2 — re-register and keep waiting
+        if ((msg as any).type === 'action_ack') {
+          agent.pendingResolve = resolveAction
+          return
+        }
         clearTimeout(agent.actionTimer)
         agent.actionTimer   = undefined
         agent.pendingReject = undefined
@@ -289,15 +296,15 @@ export class WebSocketHub {
       }
 
       // Phase 1 handler: receives either action_ack or a direct action.
-      // If action_ack arrives, register phase 2 handler and restart timer
-      // with the (shorter) reasoning window so only thinking time counts.
-      // Agents that skip the ack and send an action directly are handled
-      // transparently — the ackWindowMs timer is their total budget.
+      // C1 fix: when ack arrives, the reasoning window is capped to
+      // max(0, actionTimeoutMs - elapsed) so delaying the ack cannot
+      // extend the total think time beyond ackWindowMs.
       agent.pendingResolve = (msg) => {
         if ((msg as any).type === 'action_ack') {
-          // Phase 2: reasoning window starts now
+          const elapsed   = Date.now() - sentAt
+          const remaining = Math.max(0, this.actionTimeoutMs - elapsed)
           agent.pendingResolve = resolveAction
-          startTimer(this.actionTimeoutMs)
+          startTimer(remaining)
           return
         }
         resolveAction(msg)
