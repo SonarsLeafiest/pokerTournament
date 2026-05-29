@@ -61,6 +61,9 @@ const spectator = new SpectatorState(SPECTATOR_KEY, SPECTATOR_DELAY_MS)
 const hub = new WebSocketHub({
   noServer:        true,
   actionTimeoutMs: ACTION_TIMEOUT,
+  // 4× the reasoning window as the overhead budget — generous enough for slow
+  // LLM clients (CLI subprocess, slow networks) without hanging forever.
+  ackWindowMs:     ACTION_TIMEOUT * 4,
   // Only allow new registrations while the lobby is open; reconnects always pass.
   canRegister: () => lobbyState === 'open',
 

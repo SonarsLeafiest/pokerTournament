@@ -183,10 +183,11 @@ async function run(): Promise<void> {
     const msg = JSON.parse(raw.toString());
 
     if (msg.type === "register_ack") {
-      console.log(`Registered as ${msg.agentName}. Action timeout: ${msg.timeLimitMs}ms — respond within this limit or the server auto-folds.`);
+      console.log(`Registered as ${msg.agentName}. Send action_ack immediately, then reason within ${msg.timeLimitMs}ms (setup window: ${(msg as any).setupMs}ms).`);
       console.log("Waiting for hands…");
 
     } else if (msg.type === "action_required") {
+      ws.send(JSON.stringify({ type: "action_ack", gameId: msg.gameId }))
       const action = await decide(msg as ActionRequired);
       ws.send(JSON.stringify({ type: "action", gameId: msg.gameId, ...action }));
 

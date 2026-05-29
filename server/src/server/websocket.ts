@@ -19,6 +19,15 @@ export interface HubOptions {
   port?: number          // standalone mode (local dev / tests)
   noServer?: boolean     // attach to an existing HTTP server via handleUpgrade()
   actionTimeoutMs?: number
+  /**
+   * How long to wait for an action_ack before auto-folding.
+   * action_ack is sent by the agent immediately on receipt of action_required
+   * (before starting the LLM call), which resets the timer to actionTimeoutMs
+   * so the reasoning deadline only counts actual thinking time.
+   * Defaults to 30 s — generous enough to cover subprocess startup overhead.
+   * Falls back to actionTimeoutMs behaviour for agents that don't send acks.
+   */
+  ackWindowMs?: number
   heartbeatIntervalMs?: number
   onAgentConnect?: (agent: ConnectedAgent) => void
   onAgentDisconnect?: (agentId: string) => void
@@ -36,9 +45,11 @@ export class WebSocketHub {
   private agents: Map<string, ConnectedAgent> = new Map()
   private isAlive: Map<string, boolean> = new Map()
   private readonly actionTimeoutMs: number
+  private readonly ackWindowMs: number
 
   constructor(private opts: HubOptions) {
     this.actionTimeoutMs = opts.actionTimeoutMs ?? 5000
+    this.ackWindowMs     = opts.ackWindowMs     ?? 30_000
 
     if (opts.noServer) {
       this.wss = new WebSocketServer({ noServer: true, maxPayload: 65_536 })
@@ -156,6 +167,7 @@ export class WebSocketHub {
             agentId,
             agentName:   msg.agentName,
             timeLimitMs: this.actionTimeoutMs,
+            setupMs:     this.ackWindowMs,
           })
           this.opts.onAgentConnect?.(agent)
         }
@@ -169,8 +181,11 @@ export class WebSocketHub {
 
       const agent = this.agents.get(agentId)
       if (agent?.pendingResolve) {
-        agent.pendingResolve(msg)
+        // Clear before calling so the handler can re-register pendingResolve
+        // for phase 2 (action_ack → action two-phase timing).
+        const handler = agent.pendingResolve
         agent.pendingResolve = undefined
+        handler(msg)
       }
     })
 
@@ -256,12 +271,38 @@ export class WebSocketHub {
         return
       }
 
-      agent.pendingResolve = (msg) => {
+      const startTimer = (ms: number) => {
+        clearTimeout(agent.actionTimer)
+        agent.actionTimer = setTimeout(() => {
+          agent.pendingResolve = undefined
+          agent.pendingReject  = undefined
+          agent.actionTimer    = undefined
+          reject(new Error(`Agent ${agentId} timed out`))
+        }, ms)
+      }
+
+      const resolveAction = (msg: AgentMessage) => {
         clearTimeout(agent.actionTimer)
         agent.actionTimer   = undefined
         agent.pendingReject = undefined
         resolve(msg)
       }
+
+      // Phase 1 handler: receives either action_ack or a direct action.
+      // If action_ack arrives, register phase 2 handler and restart timer
+      // with the (shorter) reasoning window so only thinking time counts.
+      // Agents that skip the ack and send an action directly are handled
+      // transparently — the ackWindowMs timer is their total budget.
+      agent.pendingResolve = (msg) => {
+        if ((msg as any).type === 'action_ack') {
+          // Phase 2: reasoning window starts now
+          agent.pendingResolve = resolveAction
+          startTimer(this.actionTimeoutMs)
+          return
+        }
+        resolveAction(msg)
+      }
+
       agent.pendingReject = (err) => {
         clearTimeout(agent.actionTimer)
         agent.actionTimer    = undefined
@@ -269,17 +310,8 @@ export class WebSocketHub {
         reject(err)
       }
 
-      // Only run the timeout while connected — it restarts on reconnect
-      if (agent.connected) {
-        agent.actionTimer = setTimeout(() => {
-          if (agent.pendingResolve) {
-            agent.pendingResolve = undefined
-            agent.pendingReject  = undefined
-            agent.actionTimer    = undefined
-            reject(new Error(`Agent ${agentId} timed out`))
-          }
-        }, this.actionTimeoutMs)
-      }
+      // Phase 1 timer: generous overhead window so CLI / slow starts don't stall
+      if (agent.connected) startTimer(this.ackWindowMs)
     })
   }
 

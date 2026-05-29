@@ -176,7 +176,13 @@ export interface RegisterAckMsg {
   type:        'register_ack'
   agentId:     string
   agentName:   string
-  timeLimitMs: number   // respond faster than this per action or the server auto-folds
+  timeLimitMs: number   // reasoning budget: starts when the server receives action_ack
+  setupMs:     number   // overhead budget: how long to send action_ack before auto-fold
+}
+
+export interface AgentActionAckMsg {
+  type:   'action_ack'
+  gameId: string
 }
 
 export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | RegisterAckMsg | LobbySnapshotMsg | ErrorMsg
@@ -201,4 +207,4 @@ export interface AgentBountyCurseMsg {
   targetId: string
 }
 
-export type AgentMessage = AgentRegisterMsg | AgentActionMsg | AgentBountyCurseMsg
+export type AgentMessage = AgentRegisterMsg | AgentActionMsg | AgentBountyCurseMsg | AgentActionAckMsg

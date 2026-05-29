@@ -118,7 +118,7 @@ async def main() -> None:
         "MIN_PLAYERS":             str(len(AGENTS)),
         "STARTING_STACK":          "1500",
         "TABLE_SIZE":              "3",     # 2 tables of 3 — multi-table play
-        "ACTION_TIMEOUT":          "20000", # 20s for CLI overhead; production server keeps 8s
+        "ACTION_TIMEOUT":          "8000",  # 8s reasoning window (after action_ack); ackWindowMs=32s covers CLI startup
         "TOURNAMENT_START_DELAY":  "5",
         "TURN_DELAY_MS":           "300",
         "BOUNTY_WINDOW_HANDS":     "10",   # target has 10 hands to be eliminated

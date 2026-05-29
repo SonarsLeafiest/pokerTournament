@@ -145,6 +145,7 @@ async def run() -> None:
                 print(f"  [{AGENT_NAME}] registered. Action timeout: {msg['timeLimitMs']}ms")
 
             elif msg["type"] == "action_required":
+                await ws.send(json.dumps({"type": "action_ack", "gameId": msg["gameId"]}))
                 action = await decide(msg)
                 await ws.send(json.dumps({"type": "action", "gameId": msg["gameId"], **action}))
 

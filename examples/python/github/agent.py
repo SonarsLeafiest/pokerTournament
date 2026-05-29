@@ -181,10 +181,11 @@ async def run() -> None:
 
             if msg["type"] == "register_ack":
                 print(f"Registered as {msg['agentName']}. "
-                      f"Action timeout: {msg['timeLimitMs']}ms — respond within this limit or the server auto-folds.")
+                      f"Send action_ack immediately, then reason within {msg['timeLimitMs']}ms. Setup window: {msg.get('setupMs', '?')}ms.")
                 print("Waiting for hands…")
 
             elif msg["type"] == "action_required":
+                await ws.send(json.dumps({"type": "action_ack", "gameId": msg["gameId"]}))
                 action = await decide(msg)
                 await ws.send(json.dumps({
                     "type":   "action",

@@ -193,10 +193,11 @@ $loop = Loop::get();
             $msg = json_decode((string)$raw, true);
 
             if ($msg['type'] === 'register_ack') {
-                echo "Registered as {$msg['agentName']}. Action timeout: {$msg['timeLimitMs']}ms — respond within this limit or the server auto-folds.\n";
+                echo "Registered as {$msg['agentName']}. Send action_ack immediately, then reason within {$msg['timeLimitMs']}ms (setup window: {$msg['setupMs']}ms).\n";
                 echo "Waiting for hands…\n";
 
             } elseif ($msg['type'] === 'action_required') {
+                $ws->send(json_encode(['type' => 'action_ack', 'gameId' => $msg['gameId']]));
                 $action = decide($msg);
                 $ws->send(json_encode(array_merge(['type' => 'action', 'gameId' => $msg['gameId']], $action)));
 
