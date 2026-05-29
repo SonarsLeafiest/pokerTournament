@@ -13,6 +13,9 @@ export interface ConnectedAgent {
   pendingResolve?: (msg: AgentMessage) => void
   pendingReject?: (err: Error) => void
   remoteAddress?: string
+  /** M2: track timing phase so reconnect restarts with the correct remaining budget. */
+  actionPhase?:  'ack' | 'reasoning'
+  actionSentAt?: number   // start of current phase (updated at phase transition)
 }
 
 export interface HubOptions {
@@ -131,18 +134,26 @@ export class WebSocketHub {
           existing.name         = msg.agentName
           this.isAlive.set(agentId, true)
 
-          // Restart the action timeout (was paused on disconnect)
+          // M2: restart the action timeout with the correct *remaining* budget
+          // rather than a fresh window, so reconnecting can't extend think time.
           if (existing.pendingResolve && existing.pendingReject && !existing.actionTimer) {
             const reject = existing.pendingReject
             const id     = agentId
+            const window = existing.actionPhase === 'reasoning'
+              ? this.actionTimeoutMs
+              : this.ackWindowMs
+            const elapsed   = existing.actionSentAt ? Date.now() - existing.actionSentAt : 0
+            const remaining = Math.max(0, window - elapsed)
             existing.actionTimer = setTimeout(() => {
               if (existing.pendingResolve) {
                 existing.pendingResolve = undefined
                 existing.pendingReject  = undefined
                 existing.actionTimer    = undefined
+                existing.actionPhase    = undefined
+                existing.actionSentAt   = undefined
                 reject(new Error(`Agent ${id} timed out`))
               }
-            }, this.actionTimeoutMs)
+            }, remaining)
           }
 
           this.opts.onAgentReconnect?.(existing)
@@ -272,6 +283,13 @@ export class WebSocketHub {
       }
 
       const sentAt = Date.now()
+      agent.actionPhase  = 'ack'
+      agent.actionSentAt = sentAt
+
+      const clearPhase = () => {
+        agent.actionPhase  = undefined
+        agent.actionSentAt = undefined
+      }
 
       const startTimer = (ms: number) => {
         clearTimeout(agent.actionTimer)
@@ -279,6 +297,7 @@ export class WebSocketHub {
           agent.pendingResolve = undefined
           agent.pendingReject  = undefined
           agent.actionTimer    = undefined
+          clearPhase()
           reject(new Error(`Agent ${agentId} timed out`))
         }, ms)
       }
@@ -292,6 +311,7 @@ export class WebSocketHub {
         clearTimeout(agent.actionTimer)
         agent.actionTimer   = undefined
         agent.pendingReject = undefined
+        clearPhase()
         resolve(msg)
       }
 
@@ -303,6 +323,9 @@ export class WebSocketHub {
         if ((msg as any).type === 'action_ack') {
           const elapsed   = Date.now() - sentAt
           const remaining = Math.max(0, this.actionTimeoutMs - elapsed)
+          // M2: update phase for reconnect tracking
+          agent.actionPhase  = 'reasoning'
+          agent.actionSentAt = Date.now()
           agent.pendingResolve = resolveAction
           startTimer(remaining)
           return

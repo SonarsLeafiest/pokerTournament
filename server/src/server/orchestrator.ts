@@ -335,6 +335,13 @@ export class Orchestrator {
       const response = await hub.waitForAction(playerId) as AgentActionMsg
       this.pendingActionMsgs.delete(playerId)
 
+      // H3: discard actions that claim to be for a different game/table
+      if (response.gameId && response.gameId !== tId) {
+        hub.sendToAgent(playerId, { type: 'error', message: `Action for game ${response.gameId} ignored (expected ${tId})` })
+        lastActions.set(playerId, ActionType.FOLD)
+        return { type: ActionType.FOLD }
+      }
+
       const VALID_ACTIONS = ['FOLD', 'CHECK', 'CALL', 'RAISE']
       const action = (typeof response.action === 'string' && VALID_ACTIONS.includes(response.action.toUpperCase()))
         ? response.action.toUpperCase() as ActionType
