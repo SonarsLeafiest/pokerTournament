@@ -1070,6 +1070,10 @@
         onTableState(msg)
       }
       if (msg.type === 'hand_result') {
+        // Skip empty hands — happens when a table had < 2 players and playHand
+        // returned early; the hand number was incremented but no cards were dealt.
+        if (!msg.winners || msg.winners.length === 0) return
+
         // Track the total chips that changed hands — used by auto-follow to find the
         // most active table.  Sum of winning amounts is the pot size.
         const pot = msg.winners.reduce((s, w) => s + w.amount, 0)
