@@ -13,6 +13,16 @@ All development MUST follow these two skills — they are non-negotiable on ever
 
 Both are defined as project slash commands in `.claude/commands/`.
 
+## Participant Skills
+
+Three additional skills are available for hackathon participants building agents:
+
+| Skill | Command | What it does |
+|-------|---------|-------------|
+| Run Test Tournament | `/run-test-tournament` | Spin up the server + all 6 personality opponents and watch your agent compete |
+| Check Agent | `/check-agent <path>` | Audit any agent file for protocol correctness — missing handlers, wrong formats, timeout gaps |
+| Strategy | `/strategy <situation>` | Analyse a hand situation and explain optimal play; great for debugging bad agent decisions |
+
 ## Agent Roles
 
 This project uses two custom subagent roles defined in `.claude/agents/`:
