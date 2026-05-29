@@ -174,7 +174,7 @@ async def main() -> None:
                 "AGENT_ID":          a["id"],
                 "AGENT_NAME":        a["name"],
                 "AGENT_PERSONALITY": a["personality"],
-                "CLAUDE_MODEL":      "haiku",  # fast enough to beat the 8s timeout
+                "CLAUDE_MODEL":      "claude-haiku-4-5-20251001",
             }
             log_path = ROOT / "test" / f"agent_{a['id']}.log"
             p = subprocess.Popen(

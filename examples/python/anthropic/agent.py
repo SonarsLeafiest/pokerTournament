@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 """
-Personality-aware Anthropic SDK poker agent.
+Anthropic SDK Poker Agent
 
-Used by the test tournament runner.  Reads AGENT_PERSONALITY from the
-environment and injects it into cached static context, giving each instance
-a distinct strategic identity while benefiting from SDK speed.
+Uses the Anthropic Python SDK directly instead of the claude CLI subprocess,
+enabling two major speedups:
 
-  Prompt caching   — personality + rules cached for 5 min; only hand state
-                     is reprocessed each action.
-  Response prefill — jumps straight to JSON output without any preamble.
+  Prompt caching   — the static game context (rules + personality) is marked
+                     with cache_control so Anthropic re-uses it for 5 minutes.
+                     Only the changing hand state is processed fresh each action.
 
-Usage:
-  AGENT_ID=ace-hunter AGENT_NAME=AceHunter \
-  AGENT_PERSONALITY="Play tight-aggressive." \
-  POKER_SERVER=ws://localhost:3001 python3 test/personality_agent.py
+  Response prefill — the assistant turn starts with '{"action":' so the model
+                     skips any preamble and continues straight to the JSON value.
+                     This eliminates "Sure! Here is my decision:" style output.
+
+Typical latency: 1-2 s (vs 10-15 s via CLI subprocess).
+
+Setup:
+  pip install -r requirements.txt
+  ANTHROPIC_API_KEY=sk-ant-...  python3 agent.py
 """
 
 import asyncio
@@ -23,11 +27,11 @@ import anthropic
 import websockets
 from dotenv import load_dotenv
 
-load_dotenv(os.path.join(os.path.dirname(__file__), '..', 'server', '.env'))
+load_dotenv()
 
-SERVER_URL  = os.environ.get("POKER_SERVER",       "ws://localhost:3001")
-AGENT_ID    = os.environ.get("AGENT_ID",           "agent-1")
-AGENT_NAME  = os.environ.get("AGENT_NAME",         "Agent1")
+SERVER_URL  = os.environ.get("POKER_SERVER",       "ws://localhost:3000")
+AGENT_ID    = os.environ.get("AGENT_ID",           "sdk-agent-1")
+AGENT_NAME  = os.environ.get("AGENT_NAME",         "SDKBot")
 MODEL       = os.environ.get("CLAUDE_MODEL",       "claude-haiku-4-5-20251001")
 PERSONALITY = os.environ.get("AGENT_PERSONALITY",  "")
 
@@ -45,37 +49,42 @@ def fmt_cards(cards: list) -> str:
     return " ".join(fmt_card(c) for c in cards) if cards else "none"
 
 
-# ── Cached static context (personality + rules) ───────────────────────────────
+# ── Cached content ────────────────────────────────────────────────────────────
+# Built once at startup.  The text block carrying cache_control is only
+# re-processed when the cache expires (5 minutes) — saving input tokens and
+# latency on every action in between.
 
-def _build_static() -> str:
+def _build_static_context() -> str:
     style = f"\nYour playing style: {PERSONALITY}\n" if PERSONALITY else ""
     return f"""You are playing Texas Hold'em in a poker tournament.{style}
-Respond ONLY with a JSON object — no preamble, no text outside JSON.
-Format: {{"action":"FOLD|CHECK|CALL|RAISE","amount":<int if RAISE>,"reasoning":"<one sentence>"}}"""
+Rules:
+- Valid actions: FOLD, CHECK, CALL, RAISE
+- If you RAISE, include the total bet amount as "amount"
+- Respond ONLY with a JSON object — no preamble, no explanation outside JSON
+- Format: {{"action":"FOLD|CHECK|CALL|RAISE","amount":<int if RAISE>,"reasoning":"<one sentence>"}}"""
+
+STATIC_CONTEXT = _build_static_context()
 
 
-STATIC_CONTEXT = _build_static()
-PREFILL        = '{"action":'
+# ── Dynamic content ───────────────────────────────────────────────────────────
+# Changes every hand — not cached.
 
-
-# ── Dynamic prompt (hand state) ───────────────────────────────────────────────
-
-def build_bounty_section(state: dict) -> str:
+def _bounty_section(state: dict) -> str:
     b = state.get("activeBounty")
     if not b:
         return ""
     r, exp, tid = b["reward"], b["expiresAfterHand"], b["targetId"]
     if tid == AGENT_ID:
-        return (f"\n⚠️ BOUNTY ON YOU: Opponents earn {r:,} chips if they eliminate you "
+        return (f"\n⚠️ BOUNTY ON YOU: Opponents earn {r:,} bonus chips if they eliminate you "
                 f"before hand {exp}. Play conservatively.\n")
     at_table = any(p["id"] == tid for p in state.get("players", []))
     if at_table:
-        return (f"\n💰 BOUNTY TARGET HERE: {b['targetName']} worth {r:,} chips "
+        return (f"\n💰 BOUNTY TARGET AT TABLE: {b['targetName']} worth {r:,} chips "
                 f"if eliminated before hand {exp}. Widen your range against them.\n")
     return f"\n💰 ACTIVE BOUNTY: {b['targetName']} at another table ({r:,} chips, exp. h.{exp}).\n"
 
 
-def build_prompt(state: dict) -> str:
+def build_hand_prompt(state: dict) -> str:
     valid    = state["validActions"]
     raise_rng = f"\n  Raise range: {state['minRaise']} – {state['maxRaise']}" if "RAISE" in valid else ""
     opponents = "\n".join(
@@ -83,23 +92,27 @@ def build_prompt(state: dict) -> str:
         f"{'folded' if p['folded'] else 'all-in' if p['allIn'] else 'active'}"
         for p in state.get("players", [])
     )
-    return f"""{build_bounty_section(state)}
+    return f"""{_bounty_section(state)}
 YOUR HAND:    {fmt_cards(state['holeCards'])}
 COMMUNITY:    {fmt_cards(state['communityCards'])}
-STAGE:        {state.get('stage', '?')}   (hand #{state.get('handNumber', '?')})
-POSITION:     {state.get('position', '?')}
+STAGE:        {state.get('stage','?')}  (hand #{state.get('handNumber','?')})
+POSITION:     {state.get('position','?')}
 POT:          {state['pot']:,}
 MY STACK:     {state['myStack']:,}
 MY BET:       {state['myBet']:,}
 CURRENT BET:  {state['currentBet']:,}
 OPPONENTS:
-{opponents if opponents else '  (none visible)'}
+{opponents or '  (none visible)'}
 
 VALID ACTIONS: {', '.join(valid)}{raise_rng}"""
 
 
-def _extract_json(continuation: str) -> dict:
-    raw = PREFILL + continuation
+# ── Decision logic ────────────────────────────────────────────────────────────
+
+def _extract_json(prefill: str, continuation: str) -> dict:
+    """Reconstruct and parse the JSON assembled from prefill + model continuation."""
+    raw = prefill + continuation
+    # Walk to the first complete balanced object in case model added trailing text
     depth = 0
     for i, ch in enumerate(raw):
         if ch == "{":
@@ -108,8 +121,10 @@ def _extract_json(continuation: str) -> dict:
             depth -= 1
             if depth == 0:
                 return json.loads(raw[: i + 1])
-    return json.loads(raw)
+    return json.loads(raw)  # fallback — let json.loads raise a clear error
 
+
+PREFILL = '{"action":'
 
 async def decide(state: dict) -> dict:
     try:
@@ -121,29 +136,35 @@ async def decide(state: dict) -> dict:
                 {
                     "role": "user",
                     "content": [
+                        # Cached block — rules + personality, reused across hands
                         {"type": "text", "text": STATIC_CONTEXT,
                          "cache_control": {"type": "ephemeral"}},
-                        {"type": "text", "text": build_prompt(state)},
+                        # Fresh block — current hand state
+                        {"type": "text", "text": build_hand_prompt(state)},
                     ],
                 },
+                # Prefill: model continues from here, skipping any preamble
                 {"role": "assistant", "content": PREFILL},
             ],
         )
-        decision  = _extract_json(resp.content[0].text)
+
+        decision  = _extract_json(PREFILL, resp.content[0].text)
         action    = decision.get("action", "FOLD").upper()
         reasoning = decision.get("reasoning", "")
+
         if reasoning:
             amt = f" {decision.get('amount')}" if action == "RAISE" else ""
             print(f"  [{AGENT_NAME}] {action}{amt} — {reasoning}")
+
         if action not in state["validActions"]:
-            print(f"  [{AGENT_NAME}] invalid action {action!r}, folding")
             return {"action": "FOLD"}
+
         out = {"action": action}
         if action == "RAISE" and "amount" in decision:
-            amt = int(decision["amount"])
-            amt = max(state["minRaise"], min(state["maxRaise"], amt))
+            amt = max(state["minRaise"], min(state["maxRaise"], int(decision["amount"])))
             out["amount"] = amt
         return out
+
     except Exception as e:
         print(f"  [{AGENT_NAME}] error: {e} — folding")
         return {"action": "FOLD"}
@@ -152,8 +173,7 @@ async def decide(state: dict) -> dict:
 # ── WebSocket loop ────────────────────────────────────────────────────────────
 
 async def run() -> None:
-    style_note = f" [{PERSONALITY[:40]}…]" if PERSONALITY else ""
-    print(f"Connecting {AGENT_NAME} ({AGENT_ID}){style_note}")
+    print(f"Connecting to {SERVER_URL} as {AGENT_NAME} ({AGENT_ID}) via Anthropic SDK [{MODEL}]")
 
     async with websockets.connect(SERVER_URL) as ws:
         await ws.send(json.dumps({"type": "register", "agentId": AGENT_ID, "agentName": AGENT_NAME}))
@@ -163,7 +183,8 @@ async def run() -> None:
 
             if msg["type"] == "register_ack":
                 print(f"  [{AGENT_NAME}] registered. "
-                      f"Reasoning: {msg['timeLimitMs']}ms  Setup: {msg.get('setupMs','?')}ms")
+                      f"Reasoning window: {msg['timeLimitMs']}ms  "
+                      f"Setup window: {msg.get('setupMs','?')}ms")
 
             elif msg["type"] == "action_required":
                 await ws.send(json.dumps({"type": "action_ack", "gameId": msg["gameId"]}))
@@ -176,8 +197,8 @@ async def run() -> None:
                     print(f"  [{AGENT_NAME}] hand #{msg['handNumber']}  "
                           f"{'+' if delta > 0 else ''}{delta}")
                 if msg.get("showdown") and msg.get("communityCards"):
-                    board = fmt_cards(msg["communityCards"])
-                    hands = ", ".join(
+                    board  = fmt_cards(msg["communityCards"])
+                    hands  = ", ".join(
                         f"{s['playerId']} {fmt_cards(s['holeCards'])}"
                         + (f" ({s['handRank']})" if s.get("handRank") else "")
                         for s in msg["showdown"]
@@ -187,7 +208,7 @@ async def run() -> None:
             elif msg["type"] == "bounty_announced":
                 if msg["targetId"] == AGENT_ID:
                     print(f"\n  [{AGENT_NAME}] ⚠️ BOUNTY ON ME! "
-                          f"+{msg['reward']} chips, exp. h.{msg['expiresAfterHand']}\n")
+                          f"+{msg['reward']} chips, expires h.{msg['expiresAfterHand']}\n")
                 else:
                     print(f"  [{AGENT_NAME}] 💰 Bounty: {msg['targetName']} "
                           f"+{msg['reward']}, exp. h.{msg['expiresAfterHand']}")
@@ -210,13 +231,23 @@ async def run() -> None:
                 if msg["targetId"] == AGENT_ID:
                     print(f"  [{AGENT_NAME}] 😤 Cursed by {msg['curserName']} — -{msg['amount']} chips!")
 
+            elif msg["type"] == "tournament_update":
+                me = next((p for p in msg["standings"] if p["playerId"] == AGENT_ID), None)
+                if me:
+                    print(f"  [{AGENT_NAME}] Stack: {me['stack']:,}  |  "
+                          f"Blinds {msg['smallBlind']}/{msg['bigBlind']}")
+
             elif msg["type"] == "tournament_end":
-                result = "🏆 WINNER" if msg["result"] == "won" else f"place #{msg['place']}"
-                print(f"\n  [{AGENT_NAME}] {result}  stack: {msg['finalStack']:,}\n")
+                if msg["result"] == "won":
+                    print(f"\n  [{AGENT_NAME}] 🏆 TOURNAMENT WINNER!  "
+                          f"Final stack: {msg['finalStack']:,}\n")
+                else:
+                    print(f"\n  [{AGENT_NAME}] Finished #{msg['place']}  "
+                          f"Final stack: {msg['finalStack']:,}\n")
                 break
 
             elif msg["type"] == "error":
-                print(f"  [{AGENT_NAME}] server: {msg['message']}")
+                print(f"  [{AGENT_NAME}] server error: {msg['message']}")
 
 
 if __name__ == "__main__":
