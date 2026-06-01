@@ -233,3 +233,841 @@ Connecting BountyHunter (bounty-hunter) [Focus on collecting bounties. When a bo
   [BountyHunter] hand #265  +200
   [BountyHunter] hand #266  +200
   [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #267  -200
+  [BountyHunter] hand #268  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #271  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #273  -200
+  [BountyHunter] hand #274  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #277  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #279  -200
+  [BountyHunter] hand #280  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #283  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #285  -200
+  [BountyHunter] hand #286  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #289  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #291  -200
+  [BountyHunter] hand #292  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #295  +200
+  [BountyHunter] hand #296  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #297  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #301  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #303  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #307  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #309  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #313  +200
+  [BountyHunter] hand #314  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #315  -200
+  [BountyHunter] hand #316  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #319  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #321  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #325  +200
+  [BountyHunter] hand #326  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #327  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #331  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #333  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #337  +200
+  [BountyHunter] hand #338  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #339  -200
+  [BountyHunter] hand #340  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #343  +200
+  [BountyHunter] hand #344  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #345  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #349  +200
+  [BountyHunter] hand #350  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #351  -200
+  [BountyHunter] hand #352  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #355  +200
+  [BountyHunter] hand #356  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #357  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #361  +200
+  [BountyHunter] hand #362  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #363  -200
+  [BountyHunter] hand #364  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #367  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #369  -200
+  [BountyHunter] hand #370  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #373  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #375  -200
+  [BountyHunter] hand #376  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #379  +200
+  [BountyHunter] hand #380  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #381  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #385  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #387  -200
+  [BountyHunter] hand #388  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #391  +200
+  [BountyHunter] hand #392  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #393  -200
+  [BountyHunter] hand #394  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #397  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #399  -200
+  [BountyHunter] hand #400  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #403  +200
+  [BountyHunter] hand #404  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #405  -200
+  [BountyHunter] hand #406  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #409  +200
+  [BountyHunter] hand #410  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #411  -200
+  [BountyHunter] hand #412  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #415  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #417  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #421  +200
+  [BountyHunter] hand #422  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #423  -200
+  [BountyHunter] hand #424  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #427  +200
+  [BountyHunter] hand #428  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #429  -200
+  [BountyHunter] hand #430  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #433  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #435  -200
+  [BountyHunter] hand #436  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #439  +200
+  [BountyHunter] hand #440  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #441  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #445  +200
+  [BountyHunter] hand #446  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #447  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #451  +200
+  [BountyHunter] hand #452  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #453  -200
+  [BountyHunter] hand #454  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #457  +200
+  [BountyHunter] hand #458  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #459  -200
+  [BountyHunter] hand #460  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #463  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #465  -200
+  [BountyHunter] hand #466  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #469  +200
+  [BountyHunter] hand #470  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #471  -200
+  [BountyHunter] hand #472  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #475  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #477  -200
+  [BountyHunter] hand #478  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #481  +200
+  [BountyHunter] hand #482  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #483  -200
+  [BountyHunter] hand #484  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #487  +200
+  [BountyHunter] hand #488  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #489  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #493  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #495  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #499  +200
+  [BountyHunter] hand #500  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #501  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #505  +200
+  [BountyHunter] hand #506  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #507  -200
+  [BountyHunter] hand #508  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #511  +200
+  [BountyHunter] hand #512  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #513  -200
+  [BountyHunter] hand #514  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #517  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #519  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #523  +200
+  [BountyHunter] hand #524  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #525  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #529  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #531  -200
+  [BountyHunter] hand #532  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #535  +200
+  [BountyHunter] hand #536  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #537  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #541  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #543  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #547  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #549  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #553  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #555  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #559  +200
+  [BountyHunter] hand #560  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #561  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #565  +200
+  [BountyHunter] hand #566  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #567  -200
+  [BountyHunter] hand #568  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #571  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #573  -200
+  [BountyHunter] hand #574  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #577  +200
+  [BountyHunter] hand #578  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #579  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #583  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #585  -200
+  [BountyHunter] hand #586  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #589  +200
+  [BountyHunter] hand #590  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #591  -200
+  [BountyHunter] hand #592  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #595  +200
+  [BountyHunter] hand #596  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #597  -200
+  [BountyHunter] hand #598  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #601  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #603  -200
+  [BountyHunter] hand #604  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #607  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #609  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #613  +200
+  [BountyHunter] hand #614  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #615  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #619  +200
+  [BountyHunter] hand #620  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #621  -200
+  [BountyHunter] hand #622  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #625  +200
+  [BountyHunter] hand #626  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #627  -200
+  [BountyHunter] hand #628  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #631  +200
+  [BountyHunter] hand #632  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #633  -200
+  [BountyHunter] hand #634  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #637  +200
+  [BountyHunter] hand #638  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #639  -200
+  [BountyHunter] hand #640  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #643  +200
+  [BountyHunter] hand #644  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #645  -200
+  [BountyHunter] hand #646  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #649  +200
+  [BountyHunter] hand #650  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #651  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #655  +200
+  [BountyHunter] hand #656  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #657  -200
+  [BountyHunter] hand #658  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #661  +200
+  [BountyHunter] hand #662  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #663  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #667  +200
+  [BountyHunter] hand #668  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #669  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #673  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #675  -200
+  [BountyHunter] hand #676  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #679  +200
+  [BountyHunter] hand #680  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #681  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #685  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #687  -200
+  [BountyHunter] hand #688  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #691  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #693  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #697  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #699  -200
+  [BountyHunter] hand #700  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #703  +200
+  [BountyHunter] hand #704  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #705  -200
+  [BountyHunter] hand #706  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #709  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #711  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #715  +200
+  [BountyHunter] hand #716  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #717  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #721  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #723  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #727  +200
+  [BountyHunter] hand #728  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #729  -200
+  [BountyHunter] hand #730  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #733  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #735  -200
+  [BountyHunter] hand #736  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #739  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #741  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #745  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #747  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #751  +200
+  [BountyHunter] hand #752  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #753  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #757  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #759  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #763  +200
+  [BountyHunter] hand #764  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #765  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #769  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #771  -200
+  [BountyHunter] hand #772  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #775  +200
+  [BountyHunter] hand #776  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #777  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #781  +200
+  [BountyHunter] hand #782  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #783  -200
+  [BountyHunter] hand #784  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #787  +200
+  [BountyHunter] hand #788  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #789  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #793  +200
+  [BountyHunter] hand #794  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #795  -200
+  [BountyHunter] hand #796  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #799  +200
+  [BountyHunter] hand #800  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #801  -200
+  [BountyHunter] hand #802  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #805  +200
+  [BountyHunter] hand #806  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #807  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #811  +200
+  [BountyHunter] hand #812  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #813  -200
+  [BountyHunter] hand #814  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #817  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #819  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #823  +200
+  [BountyHunter] hand #824  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #825  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #829  +200
+  [BountyHunter] hand #830  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #831  -200
+  [BountyHunter] hand #832  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #835  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #837  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #841  +200
+  [BountyHunter] hand #842  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #843  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #847  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #849  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #853  +200
+  [BountyHunter] hand #854  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #855  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #859  +200
+  [BountyHunter] hand #860  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #861  -200
+  [BountyHunter] hand #862  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #865  +200
+  [BountyHunter] hand #866  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #867  -200
+  [BountyHunter] hand #868  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #871  +200
+  [BountyHunter] hand #872  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #873  -200
+  [BountyHunter] hand #874  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #877  +200
+  [BountyHunter] hand #878  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #879  -200
+  [BountyHunter] hand #880  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #883  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #885  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #889  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #891  -200
+  [BountyHunter] hand #892  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #895  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #897  -200
+  [BountyHunter] hand #898  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #901  +200
+  [BountyHunter] hand #902  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #903  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #907  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #909  -200
+  [BountyHunter] hand #910  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #913  +200
+  [BountyHunter] hand #914  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #915  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #919  +200
+  [BountyHunter] hand #920  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #921  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #925  +200
+  [BountyHunter] hand #926  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #927  -200
+  [BountyHunter] hand #928  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #931  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #933  -200
+  [BountyHunter] hand #934  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #937  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #939  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #943  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #945  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #949  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #951  -200
+  [BountyHunter] hand #952  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #955  +200
+  [BountyHunter] hand #956  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #957  -200
+  [BountyHunter] hand #958  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #961  +200
+  [BountyHunter] hand #962  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #963  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #967  +200
+  [BountyHunter] hand #968  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #969  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #973  +200
+  [BountyHunter] hand #974  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #975  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #979  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #981  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #985  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #987  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #991  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #993  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #997  +200
+  [BountyHunter] hand #998  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #999  -200
+  [BountyHunter] hand #1000  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1003  +200
+  [BountyHunter] hand #1004  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1005  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1009  +200
+  [BountyHunter] hand #1010  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1011  -200
+  [BountyHunter] hand #1012  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1015  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1017  -200
+  [BountyHunter] hand #1018  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1021  +200
+  [BountyHunter] hand #1022  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1023  -200
+  [BountyHunter] hand #1024  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1027  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1029  -200
+  [BountyHunter] hand #1030  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1033  +200
+  [BountyHunter] hand #1034  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1035  -200
+  [BountyHunter] hand #1036  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1039  +200
+  [BountyHunter] hand #1040  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1041  -200
+  [BountyHunter] hand #1042  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1045  +200
+  [BountyHunter] hand #1046  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1047  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1051  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1053  -200
+  [BountyHunter] hand #1054  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1057  +200
+  [BountyHunter] hand #1058  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1059  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1063  +200
+  [BountyHunter] hand #1064  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1065  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1069  +200
+  [BountyHunter] hand #1070  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1071  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1075  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1077  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1081  +200
+  [BountyHunter] hand #1082  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1083  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1087  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1089  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1093  +200
+  [BountyHunter] hand #1094  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1095  -200
+  [BountyHunter] hand #1096  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1099  +200
+  [BountyHunter] hand #1100  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1101  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1105  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1107  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1111  +200
+  [BountyHunter] hand #1112  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1113  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1117  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1119  -200
+  [BountyHunter] hand #1120  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1123  +200
+  [BountyHunter] hand #1124  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1125  -200
+  [BountyHunter] hand #1126  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1129  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1131  -200
+  [BountyHunter] hand #1132  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1135  +200
+  [BountyHunter] hand #1136  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1137  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1141  +200
+  [BountyHunter] hand #1142  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1143  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1147  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1149  -200
+  [BountyHunter] hand #1150  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1153  +200
+  [BountyHunter] hand #1154  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1155  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1159  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1161  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1165  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1167  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1171  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1173  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1177  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1179  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1183  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1185  -200
+  [BountyHunter] hand #1186  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1189  +200
+  [BountyHunter] hand #1190  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1191  -200
+  [BountyHunter] hand #1192  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1195  +200
+  [BountyHunter] hand #1196  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1197  -200
+  [BountyHunter] hand #1198  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1201  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1203  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1207  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1209  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1213  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1215  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1219  +200
+  [BountyHunter] hand #1220  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1221  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1225  +200
+  [BountyHunter] hand #1226  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1227  -200
+  [BountyHunter] hand #1228  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1231  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1233  -200
+  [BountyHunter] hand #1234  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1237  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1239  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1243  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1245  -200
+  [BountyHunter] hand #1246  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1249  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1251  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1255  +200
+  [BountyHunter] hand #1256  +200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BountyHunter] hand #1257  -200
+  [BountyHunter] hand #1258  -200
+  [BountyHunter] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding

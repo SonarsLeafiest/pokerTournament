@@ -174,7 +174,8 @@ async def main() -> None:
                 "AGENT_ID":          a["id"],
                 "AGENT_NAME":        a["name"],
                 "AGENT_PERSONALITY": a["personality"],
-                "CLAUDE_MODEL":      "claude-haiku-4-5-20251001",
+                "CLAUDE_MODEL":      "claude-haiku-4-5-20251001",  # SDK model id
+                # CLI_MODEL env used automatically when ANTHROPIC_API_KEY not set
             }
             log_path = ROOT / "test" / f"agent_{a['id']}.log"
             p = subprocess.Popen(

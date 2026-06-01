@@ -219,3 +219,833 @@ Connecting CallStation (call-station) [Play loose-passive. Call almost every be�
   [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
   [CallStation] hand #276  -200
   [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #280  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #282  -200
+  [CallStation] hand #281  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #286  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #288  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #292  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #294  -200
+  [CallStation] hand #293  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #298  +200
+  [CallStation] hand #297  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #300  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #304  +200
+  [CallStation] hand #303  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #306  -200
+  [CallStation] hand #305  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #310  +200
+  [CallStation] hand #309  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #312  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #316  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #318  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #322  +200
+  [CallStation] hand #321  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #324  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #328  +200
+  [CallStation] hand #327  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #330  -200
+  [CallStation] hand #329  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #334  +200
+  [CallStation] hand #333  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #336  -200
+  [CallStation] hand #335  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #340  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #342  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #346  +200
+  [CallStation] hand #345  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #348  -200
+  [CallStation] hand #347  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #352  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #354  -200
+  [CallStation] hand #353  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #358  +200
+  [CallStation] hand #357  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #360  -200
+  [CallStation] hand #359  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #364  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #366  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #370  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #372  -200
+  [CallStation] hand #371  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #376  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #378  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #382  +200
+  [CallStation] hand #381  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #384  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #388  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #390  -200
+  [CallStation] hand #389  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #394  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #396  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #400  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #402  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #406  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #408  -200
+  [CallStation] hand #407  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #412  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #414  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #418  +200
+  [CallStation] hand #417  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #420  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #424  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #426  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #430  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #432  -200
+  [CallStation] hand #431  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #436  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #438  -200
+  [CallStation] hand #437  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #442  +200
+  [CallStation] hand #441  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #444  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #448  +200
+  [CallStation] hand #447  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #450  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #454  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #456  -200
+  [CallStation] hand #455  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #460  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #462  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #466  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #468  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #472  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #474  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #478  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #480  -200
+  [CallStation] hand #479  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #484  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #486  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #490  +200
+  [CallStation] hand #489  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #492  -200
+  [CallStation] hand #491  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #496  +200
+  [CallStation] hand #495  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #498  -200
+  [CallStation] hand #497  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #502  +200
+  [CallStation] hand #501  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #504  -200
+  [CallStation] hand #503  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #508  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #510  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #514  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #516  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #520  +200
+  [CallStation] hand #519  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #522  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #526  +200
+  [CallStation] hand #525  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #528  -200
+  [CallStation] hand #527  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #532  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #534  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #538  +200
+  [CallStation] hand #537  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #540  -200
+  [CallStation] hand #539  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #544  +200
+  [CallStation] hand #543  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #546  -200
+  [CallStation] hand #545  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #550  +200
+  [CallStation] hand #549  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #552  -200
+  [CallStation] hand #551  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #556  +200
+  [CallStation] hand #555  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #558  -200
+  [CallStation] hand #557  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #562  +200
+  [CallStation] hand #561  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #564  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #568  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #570  -200
+  [CallStation] hand #569  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #574  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #576  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #580  +200
+  [CallStation] hand #579  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #582  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #586  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #588  -200
+  [CallStation] hand #587  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #592  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #594  -200
+  [CallStation] hand #593  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #598  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #600  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #604  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #606  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #610  +200
+  [CallStation] hand #609  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #612  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #616  +200
+  [CallStation] hand #615  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #618  -200
+  [CallStation] hand #617  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #622  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #624  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #628  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #630  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #634  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #636  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #640  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #642  -200
+  [CallStation] hand #641  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #646  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #648  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #652  +200
+  [CallStation] hand #651  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #654  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #658  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #660  -200
+  [CallStation] hand #659  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #664  +200
+  [CallStation] hand #663  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #666  -200
+  [CallStation] hand #665  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #670  +200
+  [CallStation] hand #669  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #672  -200
+  [CallStation] hand #671  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #676  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #678  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #682  +200
+  [CallStation] hand #681  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #684  -200
+  [CallStation] hand #683  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #688  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #690  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #694  +200
+  [CallStation] hand #693  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #696  -200
+  [CallStation] hand #695  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #700  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #702  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #706  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #708  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #712  +200
+  [CallStation] hand #711  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #714  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #718  +200
+  [CallStation] hand #717  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #720  -200
+  [CallStation] hand #719  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #724  +200
+  [CallStation] hand #723  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #726  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #730  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #732  -200
+  [CallStation] hand #731  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #736  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #738  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #742  +200
+  [CallStation] hand #741  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #744  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #748  +200
+  [CallStation] hand #747  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #750  -200
+  [CallStation] hand #749  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #754  +200
+  [CallStation] hand #753  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #756  -200
+  [CallStation] hand #755  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #760  +200
+  [CallStation] hand #759  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #762  -200
+  [CallStation] hand #761  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #766  +200
+  [CallStation] hand #765  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #768  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #772  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #774  -200
+  [CallStation] hand #773  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #778  +200
+  [CallStation] hand #777  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #780  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #784  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #786  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #790  +200
+  [CallStation] hand #789  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #792  -200
+  [CallStation] hand #791  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #796  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #798  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #802  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #804  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #808  +200
+  [CallStation] hand #807  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #810  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #814  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #816  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #820  +200
+  [CallStation] hand #819  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #822  -200
+  [CallStation] hand #821  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #826  +200
+  [CallStation] hand #825  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #828  -200
+  [CallStation] hand #827  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #832  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #834  -200
+  [CallStation] hand #833  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #838  +200
+  [CallStation] hand #837  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #840  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #844  +200
+  [CallStation] hand #843  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #846  -200
+  [CallStation] hand #845  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #850  +200
+  [CallStation] hand #849  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #852  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #856  +200
+  [CallStation] hand #855  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #858  -200
+  [CallStation] hand #857  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #862  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #864  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #868  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #870  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #874  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #876  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #880  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #882  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #886  +200
+  [CallStation] hand #885  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #888  -200
+  [CallStation] hand #887  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #892  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #894  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #898  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #900  -200
+  [CallStation] hand #899  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #904  +200
+  [CallStation] hand #903  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #906  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #910  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #912  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #916  +200
+  [CallStation] hand #915  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #918  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #922  +200
+  [CallStation] hand #921  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #924  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #928  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #930  -200
+  [CallStation] hand #929  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #934  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #936  -200
+  [CallStation] hand #935  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #940  +200
+  [CallStation] hand #939  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #942  -200
+  [CallStation] hand #941  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #946  +200
+  [CallStation] hand #945  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #948  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #952  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #954  -200
+  [CallStation] hand #953  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #958  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #960  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #964  +200
+  [CallStation] hand #963  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #966  -200
+  [CallStation] hand #965  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #970  +200
+  [CallStation] hand #969  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #972  -200
+  [CallStation] hand #971  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #976  +200
+  [CallStation] hand #975  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #978  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #982  +200
+  [CallStation] hand #981  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #984  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #988  +200
+  [CallStation] hand #987  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #990  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #994  +200
+  [CallStation] hand #993  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #996  -200
+  [CallStation] hand #995  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1000  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1002  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1006  +200
+  [CallStation] hand #1005  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1008  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1012  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1014  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1018  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1020  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1024  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1026  -200
+  [CallStation] hand #1025  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1030  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1032  -200
+  [CallStation] hand #1031  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1036  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1038  -200
+  [CallStation] hand #1037  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1042  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1044  -200
+  [CallStation] hand #1043  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1048  +200
+  [CallStation] hand #1047  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1050  -200
+  [CallStation] hand #1049  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1054  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1056  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1060  +200
+  [CallStation] hand #1059  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1062  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1066  +200
+  [CallStation] hand #1065  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1068  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1072  +200
+  [CallStation] hand #1071  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1074  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1078  +200
+  [CallStation] hand #1077  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1080  -200
+  [CallStation] hand #1079  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1084  +200
+  [CallStation] hand #1083  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1086  -200
+  [CallStation] hand #1085  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1090  +200
+  [CallStation] hand #1089  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1092  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1096  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1098  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1102  +200
+  [CallStation] hand #1101  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1104  -200
+  [CallStation] hand #1103  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1108  +200
+  [CallStation] hand #1107  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1110  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1114  +200
+  [CallStation] hand #1113  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1116  -200
+  [CallStation] hand #1115  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1120  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1122  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1126  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1128  -200
+  [CallStation] hand #1127  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1132  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1134  -200
+  [CallStation] hand #1133  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1138  +200
+  [CallStation] hand #1137  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1140  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1144  +200
+  [CallStation] hand #1143  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1146  -200
+  [CallStation] hand #1145  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1150  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1152  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1156  +200
+  [CallStation] hand #1155  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1158  -200
+  [CallStation] hand #1157  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1162  +200
+  [CallStation] hand #1161  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1164  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1168  +200
+  [CallStation] hand #1167  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1170  -200
+  [CallStation] hand #1169  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1174  +200
+  [CallStation] hand #1173  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1176  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1180  +200
+  [CallStation] hand #1179  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1182  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1186  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1188  -200
+  [CallStation] hand #1187  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1192  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1194  -200
+  [CallStation] hand #1193  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1198  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1200  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1204  +200
+  [CallStation] hand #1203  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1206  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1210  +200
+  [CallStation] hand #1209  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1212  -200
+  [CallStation] hand #1211  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1216  +200
+  [CallStation] hand #1215  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1218  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1222  +200
+  [CallStation] hand #1221  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1224  -200
+  [CallStation] hand #1223  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1228  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1230  -200
+  [CallStation] hand #1229  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1234  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1236  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1240  +200
+  [CallStation] hand #1239  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1242  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1246  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1248  -200
+  [CallStation] hand #1247  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1252  +200
+  [CallStation] hand #1251  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1254  -200
+  [CallStation] hand #1253  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1258  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1260  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1264  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1266  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1270  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1272  -200
+  [CallStation] hand #1271  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1276  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1278  -200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [CallStation] hand #1282  +200
+  [CallStation] hand #1281  +200
+  [CallStation] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding

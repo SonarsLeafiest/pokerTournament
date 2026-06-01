@@ -222,3 +222,829 @@ Connecting BalancedBot (balanced-bot) [Play balanced, unexploitable poker. Mix �
   [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
   [BalancedBot] hand #276  +200
   [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #278  -200
+  [BalancedBot] hand #277  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #282  +200
+  [BalancedBot] hand #281  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #284  -200
+  [BalancedBot] hand #283  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #288  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #290  -200
+  [BalancedBot] hand #289  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #294  +200
+  [BalancedBot] hand #293  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #296  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #300  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #302  -200
+  [BalancedBot] hand #301  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #306  +200
+  [BalancedBot] hand #305  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #308  -200
+  [BalancedBot] hand #307  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #312  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #314  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #318  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #320  -200
+  [BalancedBot] hand #319  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #324  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #326  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #330  +200
+  [BalancedBot] hand #329  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #332  -200
+  [BalancedBot] hand #331  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #336  +200
+  [BalancedBot] hand #335  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #338  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #342  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #344  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #348  +200
+  [BalancedBot] hand #347  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #350  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #354  +200
+  [BalancedBot] hand #353  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #356  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #360  +200
+  [BalancedBot] hand #359  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #362  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #366  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #368  -200
+  [BalancedBot] hand #367  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #372  +200
+  [BalancedBot] hand #371  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #374  -200
+  [BalancedBot] hand #373  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #378  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #380  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #384  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #386  -200
+  [BalancedBot] hand #385  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #390  +200
+  [BalancedBot] hand #389  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #392  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #396  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #398  -200
+  [BalancedBot] hand #397  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #402  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #404  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #408  +200
+  [BalancedBot] hand #407  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #410  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #414  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #416  -200
+  [BalancedBot] hand #415  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #420  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #422  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #426  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #428  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #432  +200
+  [BalancedBot] hand #431  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #434  -200
+  [BalancedBot] hand #433  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #438  +200
+  [BalancedBot] hand #437  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #440  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #444  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #446  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #450  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #452  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #456  +200
+  [BalancedBot] hand #455  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #458  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #462  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #464  -200
+  [BalancedBot] hand #463  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #468  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #470  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #474  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #476  -200
+  [BalancedBot] hand #475  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #480  +200
+  [BalancedBot] hand #479  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #482  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #486  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #488  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #492  +200
+  [BalancedBot] hand #491  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #494  -200
+  [BalancedBot] hand #493  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #498  +200
+  [BalancedBot] hand #497  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #500  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #504  +200
+  [BalancedBot] hand #503  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #506  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #510  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #512  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #516  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #518  -200
+  [BalancedBot] hand #517  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #522  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #524  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #528  +200
+  [BalancedBot] hand #527  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #530  -200
+  [BalancedBot] hand #529  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #534  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #536  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #540  +200
+  [BalancedBot] hand #539  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #542  -200
+  [BalancedBot] hand #541  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #546  +200
+  [BalancedBot] hand #545  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #548  -200
+  [BalancedBot] hand #547  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #552  +200
+  [BalancedBot] hand #551  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #554  -200
+  [BalancedBot] hand #553  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #558  +200
+  [BalancedBot] hand #557  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #560  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #564  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #566  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #570  +200
+  [BalancedBot] hand #569  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #572  -200
+  [BalancedBot] hand #571  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #576  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #578  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #582  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #584  -200
+  [BalancedBot] hand #583  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #588  +200
+  [BalancedBot] hand #587  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #590  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #594  +200
+  [BalancedBot] hand #593  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #596  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #600  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #602  -200
+  [BalancedBot] hand #601  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #606  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #608  -200
+  [BalancedBot] hand #607  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #612  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #614  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #618  +200
+  [BalancedBot] hand #617  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #620  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #624  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #626  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #630  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #632  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #636  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #638  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #642  +200
+  [BalancedBot] hand #641  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #644  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #648  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #650  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #654  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #656  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #660  +200
+  [BalancedBot] hand #659  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #662  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #666  +200
+  [BalancedBot] hand #665  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #668  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #672  +200
+  [BalancedBot] hand #671  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #674  -200
+  [BalancedBot] hand #673  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #678  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #680  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #684  +200
+  [BalancedBot] hand #683  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #686  -200
+  [BalancedBot] hand #685  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #690  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #692  -200
+  [BalancedBot] hand #691  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #696  +200
+  [BalancedBot] hand #695  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #698  -200
+  [BalancedBot] hand #697  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #702  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #704  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #708  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #710  -200
+  [BalancedBot] hand #709  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #714  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #716  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #720  +200
+  [BalancedBot] hand #719  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #722  -200
+  [BalancedBot] hand #721  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #726  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #728  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #732  +200
+  [BalancedBot] hand #731  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #734  -200
+  [BalancedBot] hand #733  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #738  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #740  -200
+  [BalancedBot] hand #739  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #744  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #746  -200
+  [BalancedBot] hand #745  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #750  +200
+  [BalancedBot] hand #749  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #752  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #756  +200
+  [BalancedBot] hand #755  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #758  -200
+  [BalancedBot] hand #757  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #762  +200
+  [BalancedBot] hand #761  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #764  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #768  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #770  -200
+  [BalancedBot] hand #769  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #774  +200
+  [BalancedBot] hand #773  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #776  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #780  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #782  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #786  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #788  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #792  +200
+  [BalancedBot] hand #791  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #794  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #798  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #800  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #804  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #806  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #810  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #812  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #816  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #818  -200
+  [BalancedBot] hand #817  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #822  +200
+  [BalancedBot] hand #821  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #824  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #828  +200
+  [BalancedBot] hand #827  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #830  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #834  +200
+  [BalancedBot] hand #833  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #836  -200
+  [BalancedBot] hand #835  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #840  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #842  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #846  +200
+  [BalancedBot] hand #845  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #848  -200
+  [BalancedBot] hand #847  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #852  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #854  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #858  +200
+  [BalancedBot] hand #857  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #860  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #864  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #866  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #870  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #872  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #876  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #878  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #882  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #884  -200
+  [BalancedBot] hand #883  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #888  +200
+  [BalancedBot] hand #887  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #890  -200
+  [BalancedBot] hand #889  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #894  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #896  -200
+  [BalancedBot] hand #895  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #900  +200
+  [BalancedBot] hand #899  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #902  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #906  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #908  -200
+  [BalancedBot] hand #907  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #912  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #914  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #918  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #920  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #924  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #926  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #930  +200
+  [BalancedBot] hand #929  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #932  -200
+  [BalancedBot] hand #931  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #936  +200
+  [BalancedBot] hand #935  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #938  -200
+  [BalancedBot] hand #937  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #942  +200
+  [BalancedBot] hand #941  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #944  -200
+  [BalancedBot] hand #943  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #948  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #950  -200
+  [BalancedBot] hand #949  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #954  +200
+  [BalancedBot] hand #953  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #956  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #960  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #962  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #966  +200
+  [BalancedBot] hand #965  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #968  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #972  +200
+  [BalancedBot] hand #971  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #974  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #978  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #980  -200
+  [BalancedBot] hand #979  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #984  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #986  -200
+  [BalancedBot] hand #985  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #990  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #992  -200
+  [BalancedBot] hand #991  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #996  +200
+  [BalancedBot] hand #995  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #998  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1002  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1004  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1008  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1010  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1014  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1016  -200
+  [BalancedBot] hand #1015  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1020  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1022  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1026  +200
+  [BalancedBot] hand #1025  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1028  -200
+  [BalancedBot] hand #1027  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1032  +200
+  [BalancedBot] hand #1031  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1034  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1038  +200
+  [BalancedBot] hand #1037  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1040  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1044  +200
+  [BalancedBot] hand #1043  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1046  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1050  +200
+  [BalancedBot] hand #1049  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1052  -200
+  [BalancedBot] hand #1051  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1056  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1058  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1062  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1064  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1068  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1070  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1074  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1076  -200
+  [BalancedBot] hand #1075  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1080  +200
+  [BalancedBot] hand #1079  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1082  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1086  +200
+  [BalancedBot] hand #1085  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1088  -200
+  [BalancedBot] hand #1087  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1092  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1094  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1098  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1100  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1104  +200
+  [BalancedBot] hand #1103  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1106  -200
+  [BalancedBot] hand #1105  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1110  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1112  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1116  +200
+  [BalancedBot] hand #1115  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1118  -200
+  [BalancedBot] hand #1117  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1122  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1124  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1128  +200
+  [BalancedBot] hand #1127  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1130  -200
+  [BalancedBot] hand #1129  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1134  +200
+  [BalancedBot] hand #1133  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1136  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1140  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1142  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1146  +200
+  [BalancedBot] hand #1145  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1148  -200
+  [BalancedBot] hand #1147  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1152  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1154  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1158  +200
+  [BalancedBot] hand #1157  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1160  -200
+  [BalancedBot] hand #1159  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1164  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1166  -200
+  [BalancedBot] hand #1165  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1170  +200
+  [BalancedBot] hand #1169  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1172  -200
+  [BalancedBot] hand #1171  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1176  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1178  -200
+  [BalancedBot] hand #1177  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1182  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1184  -200
+  [BalancedBot] hand #1183  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1188  +200
+  [BalancedBot] hand #1187  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1190  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1194  +200
+  [BalancedBot] hand #1193  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1196  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1200  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1202  -200
+  [BalancedBot] hand #1201  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1206  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1208  -200
+  [BalancedBot] hand #1207  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1212  +200
+  [BalancedBot] hand #1211  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1214  -200
+  [BalancedBot] hand #1213  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1218  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1220  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1224  +200
+  [BalancedBot] hand #1223  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1226  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1230  +200
+  [BalancedBot] hand #1229  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1232  -200
+  [BalancedBot] hand #1231  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1236  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1238  -200
+  [BalancedBot] hand #1237  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1242  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1244  -200
+  [BalancedBot] hand #1243  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1248  +200
+  [BalancedBot] hand #1247  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1250  -200
+  [BalancedBot] hand #1249  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1254  +200
+  [BalancedBot] hand #1253  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1256  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1260  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1262  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1266  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1268  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1272  +200
+  [BalancedBot] hand #1271  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1274  -200
+  [BalancedBot] hand #1273  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1278  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1280  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1284  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1286  -200
+  [BalancedBot] hand #1285  -200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1290  +200
+  [BalancedBot] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [BalancedBot] hand #1292  -200

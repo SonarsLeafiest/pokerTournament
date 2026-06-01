@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-Personality-aware Anthropic SDK poker agent.
+Personality-aware poker agent with automatic SDK / CLI selection.
 
-Used by the test tournament runner.  Reads AGENT_PERSONALITY from the
-environment and injects it into cached static context, giving each instance
-a distinct strategic identity while benefiting from SDK speed.
+Used by the test tournament runner.
 
-  Prompt caching   — personality + rules cached for 5 min; only hand state
-                     is reprocessed each action.
-  Response prefill — jumps straight to JSON output without any preamble.
+  If ANTHROPIC_API_KEY is set → Anthropic SDK (fast, ~1-2 s per decision)
+    • Prompt caching: personality + rules cached 5 min, only hand state
+      is reprocessed each action.
+    • Response prefill: model continues straight from '{"action":'.
+
+  Otherwise → Claude CLI subprocess (uses OAuth session, ~10-15 s per decision)
 
 Usage:
   AGENT_ID=ace-hunter AGENT_NAME=AceHunter \
@@ -19,7 +20,8 @@ Usage:
 import asyncio
 import json
 import os
-import anthropic
+import shutil
+import subprocess
 import websockets
 from dotenv import load_dotenv
 
@@ -31,7 +33,17 @@ AGENT_NAME  = os.environ.get("AGENT_NAME",         "Agent1")
 MODEL       = os.environ.get("CLAUDE_MODEL",       "claude-haiku-4-5-20251001")
 PERSONALITY = os.environ.get("AGENT_PERSONALITY",  "")
 
-client = anthropic.Anthropic()
+# ── Auth detection ────────────────────────────────────────────────────────────
+USE_SDK = bool(os.environ.get("ANTHROPIC_API_KEY"))
+
+if USE_SDK:
+    import anthropic as _anthropic
+    sdk_client = _anthropic.Anthropic()
+    print(f"  Using Anthropic SDK (prompt caching + prefill) [{MODEL}]")
+else:
+    sdk_client = None
+    CLI_MODEL = os.environ.get("CLAUDE_MODEL", "sonnet")  # CLI uses short names
+    print(f"  Using Claude CLI fallback [{CLI_MODEL}] — set ANTHROPIC_API_KEY for SDK speed")
 
 RANK_LABELS = {14: "A", 13: "K", 12: "Q", 11: "J", 10: "T"}
 SUIT_LABELS = {"s": "♠", "h": "♥", "d": "♦", "c": "♣"}
@@ -111,25 +123,61 @@ def _extract_json(continuation: str) -> dict:
     return json.loads(raw)
 
 
+async def _decide_sdk(state: dict) -> dict:
+    """Fast path: Anthropic SDK with caching + prefill."""
+    resp = await asyncio.to_thread(
+        sdk_client.messages.create,
+        model=MODEL,
+        max_tokens=120,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": STATIC_CONTEXT,
+                     "cache_control": {"type": "ephemeral"}},
+                    {"type": "text", "text": build_prompt(state)},
+                ],
+            },
+            {"role": "assistant", "content": PREFILL},
+        ],
+    )
+    return _extract_json(resp.content[0].text)
+
+
+ACTION_SCHEMA = json.dumps({
+    "type": "object",
+    "properties": {
+        "action":    {"type": "string", "enum": ["FOLD", "CHECK", "CALL", "RAISE"]},
+        "amount":    {"type": "integer"},
+        "reasoning": {"type": "string"},
+    },
+    "required": ["action", "reasoning"],
+})
+
+
+async def _decide_cli(state: dict) -> dict:
+    """Fallback path: Claude CLI subprocess (uses OAuth session)."""
+    if not shutil.which("claude"):
+        print(f"  [{AGENT_NAME}] ⚠ claude CLI not found — folding")
+        return {"action": "FOLD"}
+    result = await asyncio.to_thread(
+        subprocess.run,
+        ["claude", "-p", build_prompt(state),
+         "--model", CLI_MODEL,
+         "--output-format", "json", "--json-schema", ACTION_SCHEMA],
+        capture_output=True, text=True, timeout=30,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip())
+    data = json.loads(result.stdout)
+    decision = (data.get("structured_output") or
+                json.loads(data.get("result", "{}").strip().lstrip("```json").rstrip("`")))
+    return decision
+
+
 async def decide(state: dict) -> dict:
     try:
-        resp = await asyncio.to_thread(
-            client.messages.create,
-            model=MODEL,
-            max_tokens=120,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": STATIC_CONTEXT,
-                         "cache_control": {"type": "ephemeral"}},
-                        {"type": "text", "text": build_prompt(state)},
-                    ],
-                },
-                {"role": "assistant", "content": PREFILL},
-            ],
-        )
-        decision  = _extract_json(resp.content[0].text)
+        decision = await (_decide_sdk(state) if USE_SDK else _decide_cli(state))
         action    = decision.get("action", "FOLD").upper()
         reasoning = decision.get("reasoning", "")
         if reasoning:
