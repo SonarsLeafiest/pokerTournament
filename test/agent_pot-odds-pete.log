@@ -1,0 +1,224 @@
+Connecting PotOddsPete (pot-odds-pete) [Play by pot odds and expected value. Cal…]
+  [PotOddsPete] registered. Reasoning: 20000ms  Setup: 80000ms
+  [PotOddsPete] hand #2  +10
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #4  -10
+  [PotOddsPete] hand #3  -10
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #8  +10
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #10  -10
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #14  +25
+  [PotOddsPete] hand #13  +25
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #16  -25
+  [PotOddsPete] hand #15  -25
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #20  +25
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #22  -50
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #26  +50
+  [PotOddsPete] hand #25  +50
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #28  -50
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #32  +100
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #34  -100
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #38  +100
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #40  -100
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #44  +200
+  [PotOddsPete] hand #43  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #46  -200
+  [PotOddsPete] hand #45  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #50  +200
+  [PotOddsPete] hand #49  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #52  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #56  +200
+  [PotOddsPete] hand #55  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #58  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #62  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #64  -200
+  [PotOddsPete] hand #63  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #68  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #70  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #74  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #76  -200
+  [PotOddsPete] hand #75  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #80  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #82  -200
+  [PotOddsPete] hand #81  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #86  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #88  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #92  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #94  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #98  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #100  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #104  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #106  -200
+  [PotOddsPete] hand #105  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #110  +200
+  [PotOddsPete] hand #109  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #112  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #116  +200
+  [PotOddsPete] hand #115  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #118  -200
+  [PotOddsPete] hand #117  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #122  +200
+  [PotOddsPete] hand #121  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #124  -200
+  [PotOddsPete] hand #123  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #128  +200
+  [PotOddsPete] hand #127  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #130  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #134  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #136  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #140  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #142  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #146  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #148  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #152  +200
+  [PotOddsPete] hand #151  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #154  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #158  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #160  -200
+  [PotOddsPete] hand #159  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #164  +200
+  [PotOddsPete] hand #163  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #166  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #170  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #172  -200
+  [PotOddsPete] hand #171  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #176  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #178  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #182  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #184  -200
+  [PotOddsPete] hand #183  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #188  +200
+  [PotOddsPete] hand #187  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #190  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #194  +200
+  [PotOddsPete] hand #193  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #196  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #200  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #202  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #206  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #208  -200
+  [PotOddsPete] hand #207  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #212  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #214  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #218  +200
+  [PotOddsPete] hand #217  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #220  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #224  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #226  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #230  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #232  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #236  +200
+  [PotOddsPete] hand #235  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #238  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #242  +200
+  [PotOddsPete] hand #241  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #244  -200
+  [PotOddsPete] hand #243  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #248  +200
+  [PotOddsPete] hand #247  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #250  -200
+  [PotOddsPete] hand #249  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #254  +200
+  [PotOddsPete] hand #253  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #256  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #260  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #262  -200
+  [PotOddsPete] hand #261  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #266  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #268  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #272  +200
+  [PotOddsPete] hand #271  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #274  -200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding
+  [PotOddsPete] hand #278  +200
+  [PotOddsPete] hand #277  +200
+  [PotOddsPete] error: "Could not resolve authentication method. Expected one of api_key, auth_token, or credentials to be set. Or for one of the `X-Api-Key` or `Authorization` headers to be explicitly omitted" — folding

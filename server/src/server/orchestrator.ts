@@ -209,7 +209,9 @@ export class Orchestrator {
 
       for (const player of tournament.standings) {
         if (player.id === bounty.targetId) continue
-        const before = standingsBefore.get(player.id) ?? player.stack
+        // Skip players absent from the pre-hand snapshot — their delta is unknown
+        if (!standingsBefore.has(player.id)) continue
+        const before = standingsBefore.get(player.id)!
         const gain   = player.stack - before
         if (gain > maxGain) {
           maxGain        = gain
@@ -218,7 +220,7 @@ export class Orchestrator {
         }
       }
 
-      if (eliminatorId) {
+      if (eliminatorId && bounty.reward > 0) {
         tournament.awardBonus(eliminatorId, bounty.reward)
         const claimed: BountyClaimedMsg = {
           type: 'bounty_claimed', tableId, targetId: bounty.targetId, targetName: bounty.targetName,
@@ -518,6 +520,8 @@ export class Orchestrator {
       targetId = (response as any).targetId
     }
     if (!targetId) {
+      // available.length is checked to be > 0 above, but guard defensively
+      if (available.length === 0) return
       targetId = available[Math.floor(Math.random() * available.length)].id
     }
 
