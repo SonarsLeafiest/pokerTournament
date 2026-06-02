@@ -4,3 +4,6 @@ dist/
 .env
 .env.local
 coverage/
+
+# Test tournament agent logs
+test/agent_*.log
