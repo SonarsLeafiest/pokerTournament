@@ -27,3 +27,26 @@ export async function fetchQuantumSeeds(count = 8): Promise<number[]> {
     clearTimeout(timeout)
   }
 }
+
+/**
+ * Returns seeds for shuffleDeck that always include local CSPRNG entropy.
+ * Even if the QRNG response is intercepted or forged, the 256 bits from
+ * crypto.getRandomValues are hashed in — making the deck unpredictable
+ * to anyone who doesn't control this process.
+ */
+export async function fetchMixedSeeds(count = 8): Promise<number[]> {
+  const quantum = await fetchQuantumSeeds(count).catch((err: unknown) => {
+    console.warn('[rng] QRNG unavailable — local entropy only:', (err as Error).message ?? String(err))
+    return [] as number[]
+  })
+
+  const local = Array.from(crypto.getRandomValues(new Uint32Array(count)))
+
+  if (quantum.length > 0) {
+    console.log(`[rng] mixed seed: ANU QRNG (${quantum.length} × uint16) + local CSPRNG (${count} × uint32)`)
+  }
+
+  // Concatenate so shuffleDeck's SHA-256 PRNG hashes both sources together.
+  // An attacker controlling the QRNG response still cannot know the local contribution.
+  return [...quantum, ...local]
+}

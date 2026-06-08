@@ -1,7 +1,7 @@
 import { createGame, dealHands, applyAction, getShowdownWinners, runOutBoard, GameStage, ActionType } from './game.js'
 import type { Card, GameState, Action, ShowdownResult } from './game.js'
 import { evaluateHand, HandRank } from './evaluator.js'
-import { fetchQuantumSeeds } from './rng.js'
+import { fetchMixedSeeds } from './rng.js'
 
 const HAND_RANK_NAMES: Record<HandRank, string> = {
   [HandRank.HIGH_CARD]:       'High Card',
@@ -180,7 +180,7 @@ export class Tournament {
     table.playerIds = table.playerIds.filter(id => !this.players.get(id)?.eliminated)
     if (table.playerIds.length < 2) return { winners: [], showdown: [] }  // table emptied out; caller rebalances
 
-    const seeds = await fetchQuantumSeeds(8).catch(() => fallbackSeeds())
+    const seeds = await fetchMixedSeeds(8)
     const blinds = this.currentBlinds
 
     const playerStacks: Record<string, number> = {}
@@ -281,11 +281,4 @@ export class Tournament {
       this.handsPlayedAtLevel = 0
     }
   }
-}
-
-function fallbackSeeds(): number[] {
-  console.warn('[rng] QRNG unavailable — using crypto.getRandomValues fallback')
-  const buf = new Uint32Array(8)
-  crypto.getRandomValues(buf)
-  return [...buf]
 }
