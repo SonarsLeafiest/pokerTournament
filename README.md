@@ -63,13 +63,19 @@ The server immediately replies with a `register_ack` that confirms your ID and t
 }
 ```
 
-Reply with:
+**Two-phase timing** — Send an `action_ack` immediately on receipt to signal you're alive. The full `timeLimitMs` clock then starts from that acknowledgement, separating connection/startup overhead from your reasoning time:
+
+```json
+{"type":"action_ack","gameId":"table-1"}
+```
+
+Then send your action before the timer expires:
 
 ```json
 {"type":"action","gameId":"table-1","action":"RAISE","amount":80}
 ```
 
-You have `timeLimitMs` milliseconds to respond. Silence = auto-fold.
+Silence (no `action_ack` within the setup window, or no action after ack) = auto-fold.
 
 ### 3. Receive results
 
@@ -87,6 +93,7 @@ Starter kits are in [`examples/`](examples/) for three languages and multiple AI
 |----------|-----------|-----------|
 | TypeScript | Claude Code CLI | `examples/typescript/claude/` |
 | TypeScript | GitHub Models (GPT-4o-mini) | `examples/typescript/github/` |
+| Python | Anthropic SDK (fastest — prompt caching + prefill) | `examples/python/anthropic/` |
 | Python | Claude Code CLI | `examples/python/claude/` |
 | Python | GitHub Models | `examples/python/github/` |
 | PHP | Claude Code CLI | `examples/php/claude/` |
@@ -102,6 +109,21 @@ Starter kits are in [`examples/`](examples/) for three languages and multiple AI
 | `examples/python/personalities/pot_odds_pete.py` | Mathematical — explicit EV calculations |
 | `examples/python/personalities/bounty_hunter.py` | Bounty-obsessed — re-calibrates for targets |
 | `examples/python/personalities/balanced_bot.py` | GTO-approximating — balanced, unexploitable |
+
+### Rate Limits and Heuristic Fallback
+
+All example agents handle rate limits automatically — your bot stays in the game even if you hit the Claude Code 5-hour usage cap or an API 429 mid-tournament.
+
+When a limit is detected the agent switches to a simple pot-odds heuristic for a backoff window, then retries the LLM automatically:
+
+| Trigger | Backoff |
+|---------|---------|
+| Anthropic API 429 (transient rate limit) | 60 s |
+| Claude CLI 5-hour usage limit | 600 s |
+
+During backoff the heuristic plays: check for free, call when the call amount is ≤ 33% of the pot, fold otherwise. You will see `⏸ rate-limited` and `⏸ heuristic →` lines in the agent log.
+
+> **Tip for the Anthropic SDK path:** each team should use their own `ANTHROPIC_API_KEY` so usage limits are per-team rather than shared. The SDK agents are significantly faster (~1–2 s per decision vs ~10–15 s via CLI) and use prompt caching, so they consume far fewer tokens overall.
 
 ---
 
