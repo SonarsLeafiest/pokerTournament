@@ -22,6 +22,7 @@ import json
 import os
 import shutil
 import subprocess
+import time
 import websockets
 from dotenv import load_dotenv
 
@@ -44,6 +45,40 @@ else:
     sdk_client = None
     CLI_MODEL = os.environ.get("CLAUDE_MODEL", "sonnet")  # CLI uses short names
     print(f"  Using Claude CLI fallback [{CLI_MODEL}] — set ANTHROPIC_API_KEY for SDK speed")
+
+# ── Rate-limit handling ───────────────────────────────────────────────────────
+
+class _RateLimitError(Exception):
+    """Raised by either backend when a usage/rate limit is detected."""
+    def __init__(self, backoff_s: float, detail: str = ""):
+        self.backoff_s = backoff_s
+        super().__init__(detail)
+
+
+_rate_limited_until: float = 0.0
+
+
+def _is_rate_limited() -> bool:
+    return time.monotonic() < _rate_limited_until
+
+
+def _set_rate_limit(err: _RateLimitError) -> None:
+    global _rate_limited_until
+    _rate_limited_until = time.monotonic() + err.backoff_s
+    print(f"  [{AGENT_NAME}] ⏸ rate-limited ({err}) — heuristic for {err.backoff_s:.0f}s")
+
+
+def heuristic_decide(state: dict) -> dict:
+    """Pot-odds fallback used when the LLM is unavailable."""
+    valid = state["validActions"]
+    if "CHECK" in valid:
+        return {"action": "CHECK"}
+    call_amt = state["currentBet"] - state["myBet"]
+    pot = state["pot"]
+    if "CALL" in valid and pot > 0 and call_amt <= pot * 0.33:
+        return {"action": "CALL"}
+    return {"action": "FOLD"}
+
 
 RANK_LABELS = {14: "A", 13: "K", 12: "Q", 11: "J", 10: "T"}
 SUIT_LABELS = {"s": "♠", "h": "♥", "d": "♦", "c": "♣"}
@@ -125,23 +160,26 @@ def _extract_json(continuation: str) -> dict:
 
 async def _decide_sdk(state: dict) -> dict:
     """Fast path: Anthropic SDK with caching + prefill."""
-    resp = await asyncio.to_thread(
-        sdk_client.messages.create,
-        model=MODEL,
-        max_tokens=120,
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": STATIC_CONTEXT,
-                     "cache_control": {"type": "ephemeral"}},
-                    {"type": "text", "text": build_prompt(state)},
-                ],
-            },
-            {"role": "assistant", "content": PREFILL},
-        ],
-    )
-    return _extract_json(resp.content[0].text)
+    try:
+        resp = await asyncio.to_thread(
+            sdk_client.messages.create,
+            model=MODEL,
+            max_tokens=120,
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {"type": "text", "text": STATIC_CONTEXT,
+                         "cache_control": {"type": "ephemeral"}},
+                        {"type": "text", "text": build_prompt(state)},
+                    ],
+                },
+                {"role": "assistant", "content": PREFILL},
+            ],
+        )
+        return _extract_json(resp.content[0].text)
+    except _anthropic.RateLimitError as e:
+        raise _RateLimitError(60.0, f"API 429 – {e}") from e
 
 
 ACTION_SCHEMA = json.dumps({
@@ -154,6 +192,8 @@ ACTION_SCHEMA = json.dumps({
     "required": ["action", "reasoning"],
 })
 
+
+_CLI_RATE_LIMIT_KEYWORDS = ("rate limit", "usage limit", "limit reached", "exceeded your", "monthly limit")
 
 async def _decide_cli(state: dict) -> dict:
     """Fallback path: Claude CLI subprocess (uses OAuth session)."""
@@ -168,6 +208,9 @@ async def _decide_cli(state: dict) -> dict:
         capture_output=True, text=True, timeout=30,
     )
     if result.returncode != 0:
+        combined = (result.stderr + result.stdout).lower()
+        if any(kw in combined for kw in _CLI_RATE_LIMIT_KEYWORDS):
+            raise _RateLimitError(600.0, "Claude CLI usage limit reached")
         raise RuntimeError(result.stderr.strip())
     data = json.loads(result.stdout)
     decision = (data.get("structured_output") or
@@ -176,6 +219,10 @@ async def _decide_cli(state: dict) -> dict:
 
 
 async def decide(state: dict) -> dict:
+    if _is_rate_limited():
+        action = heuristic_decide(state)
+        print(f"  [{AGENT_NAME}] ⏸ heuristic → {action['action']}")
+        return action
     try:
         decision = await (_decide_sdk(state) if USE_SDK else _decide_cli(state))
         action    = decision.get("action", "FOLD").upper()
@@ -192,6 +239,9 @@ async def decide(state: dict) -> dict:
             amt = max(state["minRaise"], min(state["maxRaise"], amt))
             out["amount"] = amt
         return out
+    except _RateLimitError as e:
+        _set_rate_limit(e)
+        return heuristic_decide(state)
     except Exception as e:
         print(f"  [{AGENT_NAME}] error: {e} — folding")
         return {"action": "FOLD"}

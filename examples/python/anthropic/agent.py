@@ -23,6 +23,7 @@ Setup:
 import asyncio
 import json
 import os
+import time
 import anthropic
 import websockets
 from dotenv import load_dotenv
@@ -107,6 +108,33 @@ OPPONENTS:
 VALID ACTIONS: {', '.join(valid)}{raise_rng}"""
 
 
+# ── Rate-limit handling ───────────────────────────────────────────────────────
+
+_rate_limited_until: float = 0.0
+
+
+def _is_rate_limited() -> bool:
+    return time.monotonic() < _rate_limited_until
+
+
+def _set_rate_limit(backoff_s: float, detail: str) -> None:
+    global _rate_limited_until
+    _rate_limited_until = time.monotonic() + backoff_s
+    print(f"  [{AGENT_NAME}] ⏸ rate-limited ({detail}) — heuristic mode for {backoff_s:.0f}s")
+
+
+def heuristic_decide(state: dict) -> dict:
+    """Pot-odds fallback used when the LLM is unavailable."""
+    valid = state["validActions"]
+    if "CHECK" in valid:
+        return {"action": "CHECK"}
+    call_amt = state["currentBet"] - state["myBet"]
+    pot = state["pot"]
+    if "CALL" in valid and pot > 0 and call_amt <= pot * 0.33:
+        return {"action": "CALL"}
+    return {"action": "FOLD"}
+
+
 # ── Decision logic ────────────────────────────────────────────────────────────
 
 def _extract_json(prefill: str, continuation: str) -> dict:
@@ -127,6 +155,10 @@ def _extract_json(prefill: str, continuation: str) -> dict:
 PREFILL = '{"action":'
 
 async def decide(state: dict) -> dict:
+    if _is_rate_limited():
+        action = heuristic_decide(state)
+        print(f"  [{AGENT_NAME}] ⏸ heuristic → {action['action']}")
+        return action
     try:
         resp = await asyncio.to_thread(
             client.messages.create,
@@ -165,6 +197,9 @@ async def decide(state: dict) -> dict:
             out["amount"] = amt
         return out
 
+    except anthropic.RateLimitError as e:
+        _set_rate_limit(60.0, f"429 – {e}")
+        return heuristic_decide(state)
     except Exception as e:
         print(f"  [{AGENT_NAME}] error: {e} — folding")
         return {"action": "FOLD"}
