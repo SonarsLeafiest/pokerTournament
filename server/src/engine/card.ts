@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto'
+
 export type Suit = 'c' | 'd' | 'h' | 's'
 export type Rank = 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14
 
@@ -39,23 +41,33 @@ export function createDeck(): Card[] {
 
 export function shuffleDeck(deck: Card[], seeds: number[]): Card[] {
   const result = [...deck]
-  // Seeded Fisher-Yates using the provided seed values as entropy
-  // Build an LCG seeded from the quantum values
-  let state = seeds.reduce((acc, v) => (acc ^ v) >>> 0, 0)
-  const rand = (): number => {
-    state = Math.imul(1664525, state) + 1013904223
-    state = state >>> 0
-    return state / 0x100000000
-  }
 
-  // Mix all seed values into the LCG state before use
-  for (const s of seeds) {
-    state = (state ^ s) >>> 0
-    rand()
+  // Pack all seed values as uint32 big-endian into one buffer so the full
+  // entropy is available (128 bits from 8×uint16 quantum values, 256 bits
+  // from 8×uint32 crypto fallback — nothing collapses to 32-bit state).
+  const seedBuf = Buffer.alloc(seeds.length * 4)
+  seeds.forEach((v, i) => seedBuf.writeUInt32BE(v >>> 0, i * 4))
+
+  // Counter-mode SHA-256 PRNG: H(seed || counter) — each 32-byte digest
+  // yields 8 uint32 values before the counter increments.
+  let block = Buffer.alloc(0)
+  let blockOffset = 0
+  let counter = 0
+
+  const nextUint32 = (): number => {
+    if (blockOffset + 4 > block.length) {
+      const ctrBuf = Buffer.alloc(4)
+      ctrBuf.writeUInt32BE(counter++, 0)
+      block = createHash('sha256').update(seedBuf).update(ctrBuf).digest()
+      blockOffset = 0
+    }
+    const v = block.readUInt32BE(blockOffset)
+    blockOffset += 4
+    return v
   }
 
   for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1))
+    const j = nextUint32() % (i + 1)
     ;[result[i], result[j]] = [result[j], result[i]]
   }
 

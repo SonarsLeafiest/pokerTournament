@@ -170,12 +170,12 @@ async def main() -> None:
         for a in AGENTS:
             agent_env = {
                 **os.environ,
-                "POKER_SERVER":      f"ws://localhost:{PORT}",
-                "AGENT_ID":          a["id"],
-                "AGENT_NAME":        a["name"],
-                "AGENT_PERSONALITY": a["personality"],
-                "CLAUDE_MODEL":      "claude-haiku-4-5-20251001",  # SDK model id
-                # CLI_MODEL env used automatically when ANTHROPIC_API_KEY not set
+                "POKER_SERVER":        f"ws://localhost:{PORT}",
+                "AGENT_ID":            a["id"],
+                "AGENT_NAME":          a["name"],
+                "AGENT_PERSONALITY":   a["personality"],
+                "CLAUDE_MODEL":        "claude-haiku-4-5-20251001",
+                "PYTHONUNBUFFERED":    "1",  # flush print() to log files immediately
             }
             log_path = ROOT / "test" / f"agent_{a['id']}.log"
             p = subprocess.Popen(

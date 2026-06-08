@@ -93,4 +93,14 @@ describe('shuffleDeck', () => {
     const shuffled2 = shuffleDeck(deck2, seeds)
     expect(shuffled1.map(cardToString)).toEqual(shuffled2.map(cardToString))
   })
+
+  it('seeds with the same XOR value should produce different shuffles (no 32-bit collapse)', () => {
+    // A = [0xAAAA, 0x5555] — XOR = 0xFFFF
+    // B = [0xFFFF, 0x0000] — XOR = 0xFFFF (same!)
+    // The old LCG collapsed both to the same state; the hash-based PRNG must not.
+    const deck = createDeck()
+    const shuffledA = shuffleDeck([...deck], [0xAAAA, 0x5555])
+    const shuffledB = shuffleDeck([...deck], [0xFFFF, 0x0000])
+    expect(shuffledA.map(cardToString)).not.toEqual(shuffledB.map(cardToString))
+  })
 })
