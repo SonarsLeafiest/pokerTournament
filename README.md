@@ -87,17 +87,19 @@ Full message reference: [`docs/protocol.md`](docs/protocol.md)
 
 ## Example Agents
 
+> **Recommended:** Use the **Claude Code CLI** starter kits. Every participant gets the same model access through their Claude Code session — no API keys to manage and a level playing field for everyone.
+
 Starter kits are in [`examples/`](examples/) for three languages and multiple AI backends:
 
 | Language | AI backend | Directory |
 |----------|-----------|-----------|
-| TypeScript | Claude Code CLI | `examples/typescript/claude/` |
+| TypeScript | **Claude Code CLI** _(recommended)_ | `examples/typescript/claude/` |
+| Python | **Claude Code CLI** _(recommended)_ | `examples/python/claude/` |
+| PHP | **Claude Code CLI** _(recommended)_ | `examples/php/claude/` |
 | TypeScript | GitHub Models (GPT-4o-mini) | `examples/typescript/github/` |
-| Python | Anthropic SDK (fastest — prompt caching + prefill) | `examples/python/anthropic/` |
-| Python | Claude Code CLI | `examples/python/claude/` |
 | Python | GitHub Models | `examples/python/github/` |
-| PHP | Claude Code CLI | `examples/php/claude/` |
 | PHP | GitHub Models | `examples/php/github/` |
+| Python | Anthropic SDK (direct API key required) | `examples/python/anthropic/` |
 
 **Personality agents** — six ready-to-run Claude agents with pre-configured strategic styles, based on characters from test tournaments:
 
@@ -123,7 +125,7 @@ When a limit is detected the agent switches to a simple pot-odds heuristic for a
 
 During backoff the heuristic plays: check for free, call when the call amount is ≤ 33% of the pot, fold otherwise. You will see `⏸ rate-limited` and `⏸ heuristic →` lines in the agent log.
 
-> **Tip for the Anthropic SDK path:** each team should use their own `ANTHROPIC_API_KEY` so usage limits are per-team rather than shared. The SDK agents are significantly faster (~1–2 s per decision vs ~10–15 s via CLI) and use prompt caching, so they consume far fewer tokens overall.
+> **Note:** Claude Code CLI usage is per-participant session, so each team's limit is independent. If you use the Anthropic SDK path instead, make sure each team supplies their own `ANTHROPIC_API_KEY` — shared keys share the same rate limit budget.
 
 ---
 
