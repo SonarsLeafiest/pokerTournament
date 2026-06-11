@@ -5,6 +5,7 @@ import { timingSafeEqual } from 'crypto'
 import type { IncomingMessage, ServerResponse } from 'http'
 import type { WebSocketHub } from './websocket.js'
 import type { SpectatorState } from './spectator.js'
+import { serverLogBuffer } from './logger.js'
 
 export function checkAdminKey(provided: string | null, expected: string): boolean {
   if (!provided) return false
@@ -213,6 +214,26 @@ export function createHttpHandler(opts: HttpHandlerOptions): (req: IncomingMessa
       if (getLobbyState() !== 'in_progress')                          { res.writeHead(409); res.end('Tournament not in progress'); return }
       onForceBounty()
       res.writeHead(200); res.end('OK')
+      return
+    }
+
+    // Real-time server log stream (admin key required)
+    if (url.pathname === '/api/logs') {
+      if (!checkAdminKey(url.searchParams.get('key'), adminKey)) { res.writeHead(401); res.end('Unauthorized'); return }
+      res.writeHead(200, {
+        'Content-Type':      'text/event-stream',
+        'Cache-Control':     'no-cache',
+        'Connection':        'keep-alive',
+        'X-Accel-Buffering': 'no',  // prevent nginx/Cloudflare response buffering
+      })
+      res.flushHeaders()
+      for (const entry of serverLogBuffer.getAll()) {
+        res.write(`data: ${JSON.stringify(entry)}\n\n`)
+      }
+      const unsubscribe = serverLogBuffer.subscribe(entry => {
+        if (!res.writableEnded) res.write(`data: ${JSON.stringify(entry)}\n\n`)
+      })
+      req.on('close', unsubscribe)
       return
     }
 

@@ -1,4 +1,7 @@
 import 'dotenv/config'
+import { patchConsole } from './server/logger.js'
+patchConsole()  // intercept console before any other module logs
+
 import { createServer } from 'http'
 import { readFileSync } from 'fs'
 import { dirname, join } from 'path'

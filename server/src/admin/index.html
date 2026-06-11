@@ -36,6 +36,12 @@
     .need { font-size: 0.8rem; color: #666; margin-top: 6px; }
     .hint { font-size: 0.85rem; color: #555; margin-bottom: 16px; }
     .btn-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    #log-panel { height: 260px; overflow-y: auto; background: #050505; border: 1px solid #222;
+                 border-radius: 4px; padding: 8px; font-size: 0.72rem; line-height: 1.6; }
+    .log-log   { color: #888; }
+    .log-warn  { color: #f0c040; }
+    .log-error { color: #f05050; }
+    #log-status { font-size: 0.72rem; color: #444; margin-top: 6px; }
   </style>
 </head>
 <body>
@@ -83,6 +89,12 @@
   </div>
 
   __DEV_SECTION__
+
+  <div class="section">
+    <h2>Server Logs</h2>
+    <div id="log-panel"></div>
+    <p id="log-status">Connecting…</p>
+  </div>
 
   <script>
     const KEY = new URLSearchParams(location.search).get('key') || ''
@@ -189,6 +201,37 @@
       ws.onerror = () => ws.close()
     }
     connectAdminWs()
+
+    // ── Real-time log stream ──────────────────────────────────────────────────
+    function connectLogs() {
+      if (!KEY) {
+        document.getElementById('log-status').textContent = 'No admin key — logs unavailable'
+        return
+      }
+      const panel  = document.getElementById('log-panel')
+      const status = document.getElementById('log-status')
+
+      function appendEntry(entry) {
+        const line = document.createElement('div')
+        const t = new Date(entry.ts)
+        const hms = t.toTimeString().slice(0, 8)
+        line.className = 'log-' + entry.level
+        line.textContent = hms + ' ' + entry.message
+        panel.appendChild(line)
+        // Auto-scroll if already near the bottom
+        if (panel.scrollHeight - panel.scrollTop < panel.clientHeight + 60) {
+          panel.scrollTop = panel.scrollHeight
+        }
+        // Cap DOM size to avoid memory growth on long tournaments
+        while (panel.children.length > 500) panel.removeChild(panel.firstChild)
+      }
+
+      const es = new EventSource('/api/logs?key=' + KEY)
+      es.onopen    = () => { status.textContent = 'Live' }
+      es.onmessage = (e) => appendEntry(JSON.parse(e.data))
+      es.onerror   = () => { status.textContent = 'Reconnecting…' }
+    }
+    connectLogs()
 
     setInterval(refresh, 1000)
     refresh()
