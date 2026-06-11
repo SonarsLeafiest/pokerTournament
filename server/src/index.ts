@@ -26,6 +26,7 @@ const BOUNTY_WINDOW_HANDS   = parseInt(process.env.BOUNTY_WINDOW_HANDS    ?? '0'
 const BOUNTY_FIRE_EVERY     = parseInt(process.env.BOUNTY_FIRE_EVERY      ?? '0')
 const BOUNTY_REWARD         = parseInt(process.env.BOUNTY_REWARD          ?? '500')
 const BOUNTY_CURSE_AMOUNT   = parseInt(process.env.BOUNTY_CURSE_AMOUNT    ?? '0')
+const RECONNECT_TIMEOUT_MS  = parseInt(process.env.RECONNECT_TIMEOUT_MS   ?? '60000')
 const DEVELOPER_MODE        = process.env.DEVELOPER_MODE === 'true'
 const ADMIN_KEY = process.env.ADMIN_KEY ?? (() => {
   const generated = randomBytes(16).toString('hex').toUpperCase()
@@ -59,11 +60,12 @@ let tournamentAbort: boolean    = false
 const spectator = new SpectatorState(SPECTATOR_KEY, SPECTATOR_DELAY_MS)
 
 const hub = new WebSocketHub({
-  noServer:        true,
-  actionTimeoutMs: ACTION_TIMEOUT,
+  noServer:           true,
+  actionTimeoutMs:    ACTION_TIMEOUT,
   // 4× the reasoning window as the overhead budget — generous enough for slow
   // LLM clients (CLI subprocess, slow networks) without hanging forever.
-  ackWindowMs:     ACTION_TIMEOUT * 4,
+  ackWindowMs:        ACTION_TIMEOUT * 4,
+  reconnectTimeoutMs: RECONNECT_TIMEOUT_MS,
   // Only allow new registrations while the lobby is open; reconnects always pass.
   canRegister: () => lobbyState === 'open',
 

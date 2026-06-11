@@ -150,6 +150,7 @@ Copy `server/.env.example` to `server/.env` and adjust as needed.
 | `BOUNTY_FIRE_EVERY` | `0` | Hands between successive bounties (0 = same as `BOUNTY_WINDOW_HANDS`) |
 | `BOUNTY_REWARD` | `500` | Bonus chips paid to whoever eliminates the bounty target |
 | `BOUNTY_CURSE_AMOUNT` | `0` | Chips deducted from a rival after a bounty claim (0 = disabled) |
+| `RECONNECT_TIMEOUT_MS` | `60000` | How long a disconnected agent has to reconnect before being auto-folded (ms). Increase for high-latency tunnels. |
 
 ---
 

@@ -8,8 +8,9 @@ export interface ConnectedAgent {
   name: string
   ws: WebSocket
   connected: boolean
-  actionTimer?: ReturnType<typeof setTimeout>  // paused while disconnected; restarted on reconnect
-  _serverClose?: boolean                        // set by disconnectAll() to skip reconnect window
+  actionTimer?: ReturnType<typeof setTimeout>    // paused while disconnected; restarted on reconnect
+  reconnectTimer?: ReturnType<typeof setTimeout> // fires if agent doesn't reconnect in time
+  _serverClose?: boolean                         // set by disconnectAll() to skip reconnect window
   pendingResolve?: (msg: AgentMessage) => void
   pendingReject?: (err: Error) => void
   remoteAddress?: string
@@ -31,6 +32,13 @@ export interface HubOptions {
    * Falls back to actionTimeoutMs behaviour for agents that don't send acks.
    */
   ackWindowMs?: number
+  /**
+   * How long to wait for a disconnected agent to reconnect before auto-folding.
+   * Without this, a permanently-gone agent stalls the game indefinitely.
+   * Defaults to 60 s — long enough for a momentary network drop to recover,
+   * short enough that a dead agent doesn't block the tournament for long.
+   */
+  reconnectTimeoutMs?: number
   heartbeatIntervalMs?: number
   onAgentConnect?: (agent: ConnectedAgent) => void
   onAgentDisconnect?: (agentId: string) => void
@@ -49,10 +57,12 @@ export class WebSocketHub {
   private isAlive: Map<string, boolean> = new Map()
   private readonly actionTimeoutMs: number
   private readonly ackWindowMs: number
+  private readonly reconnectTimeoutMs: number
 
   constructor(private opts: HubOptions) {
-    this.actionTimeoutMs = opts.actionTimeoutMs ?? 5000
-    this.ackWindowMs     = opts.ackWindowMs     ?? 30_000
+    this.actionTimeoutMs    = opts.actionTimeoutMs    ?? 5000
+    this.ackWindowMs        = opts.ackWindowMs        ?? 30_000
+    this.reconnectTimeoutMs = opts.reconnectTimeoutMs ?? 60_000
 
     if (opts.noServer) {
       this.wss = new WebSocketServer({ noServer: true, maxPayload: 65_536 })
@@ -133,6 +143,8 @@ export class WebSocketHub {
           existing._serverClose = undefined
           existing.name         = msg.agentName
           this.isAlive.set(agentId, true)
+          clearTimeout(existing.reconnectTimer)
+          existing.reconnectTimer = undefined
 
           // M2: restart the action timeout with the correct *remaining* budget
           // rather than a fresh window, so reconnecting can't extend think time.
@@ -224,7 +236,20 @@ export class WebSocketHub {
       clearTimeout(agent.actionTimer)
       agent.actionTimer = undefined
       this.opts.onAgentDisconnect?.(id)
-      // No timer: game pauses until agent reconnects or admin resets/closes
+      // Reconnect window: if the agent doesn't come back within reconnectTimeoutMs,
+      // reject the pending action so the game can auto-fold and continue.
+      agent.reconnectTimer = setTimeout(() => {
+        agent.reconnectTimer = undefined
+        if (!agent.connected && agent.pendingReject) {
+          console.warn(`[ws] ${id} did not reconnect within ${this.reconnectTimeoutMs}ms — auto-folding`)
+          const reject        = agent.pendingReject
+          agent.pendingResolve = undefined
+          agent.pendingReject  = undefined
+          agent.actionPhase    = undefined
+          agent.actionSentAt   = undefined
+          reject(new Error(`Agent ${id} disconnected and did not reconnect in time`))
+        }
+      }, this.reconnectTimeoutMs)
     })
   }
 
