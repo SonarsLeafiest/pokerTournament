@@ -37,6 +37,15 @@ except ImportError:
 DEFAULT_SERVER = os.environ.get("POKER_SERVER", "ws://localhost:3000")
 
 
+def _to_ws_url(url: str) -> str:
+    """Convert http(s):// URLs to ws(s):// so tunnel URLs work without fuss."""
+    if url.startswith("https://"):
+        return "wss://" + url[len("https://"):]
+    if url.startswith("http://"):
+        return "ws://" + url[len("http://"):]
+    return url
+
+
 # ── Decision logic ────────────────────────────────────────────────────────────
 
 def decide(state: dict) -> dict:
@@ -109,12 +118,21 @@ class TestAgent:
                         await ws.close()
                         return
 
+                    await ws.send(json.dumps({"type": "action_ack", "gameId": msg["gameId"]}))
                     action = decide(msg)
                     await ws.send(json.dumps({
                         "type":   "action",
                         "gameId": msg["gameId"],
                         **action,
                     }))
+
+                elif msg["type"] == "bounty_curse_required":
+                    targets = msg.get("availableTargets", [])
+                    if targets:
+                        await ws.send(json.dumps({
+                            "type":     "bounty_curse",
+                            "targetId": targets[0]["id"],
+                        }))
 
                 elif msg["type"] == "hand_result":
                     self.hands_played += 1
@@ -169,6 +187,7 @@ async def main() -> None:
     parser.add_argument("--reconnect",        action="store_true",
                         help="disconnected agents automatically reconnect")
     args = parser.parse_args()
+    args.server = _to_ws_url(args.server)
 
     print(f"\nStarting {args.count} test agent(s) → {args.server}")
     if args.disconnect:
