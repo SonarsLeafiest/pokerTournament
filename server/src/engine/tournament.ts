@@ -26,6 +26,8 @@ export interface TournamentPlayer {
   name: string
   stack: number
   eliminated: boolean
+  /** Monotonically increasing counter set at elimination time. Higher = eliminated later = better finishing place. */
+  eliminationRank?: number
 }
 
 export interface BlindLevel {
@@ -64,6 +66,7 @@ export class Tournament {
   private blindLevelIndex = 0
   private handsPlayedAtLevel = 0
   private handCount = 0
+  private eliminationCounter = 0
 
   constructor(private config: TournamentConfig) {
     this.players = new Map(
@@ -72,7 +75,13 @@ export class Tournament {
   }
 
   get standings(): TournamentPlayer[] {
-    return [...this.players.values()].sort((a, b) => b.stack - a.stack)
+    return [...this.players.values()].sort((a, b) => {
+      if (!a.eliminated && !b.eliminated) return b.stack - a.stack
+      if (!a.eliminated) return -1
+      if (!b.eliminated) return 1
+      // Both eliminated: higher eliminationRank = eliminated later = better place
+      return (b.eliminationRank ?? 0) - (a.eliminationRank ?? 0)
+    })
   }
 
   get activePlayers(): TournamentPlayer[] {
@@ -131,7 +140,7 @@ export class Tournament {
     if (!player || player.eliminated) return 0
     const actual = Math.min(amount, player.stack)
     player.stack -= actual
-    if (player.stack === 0) player.eliminated = true
+    if (player.stack === 0) { player.eliminated = true; player.eliminationRank = ++this.eliminationCounter }
     return actual
   }
 
@@ -257,9 +266,12 @@ export class Tournament {
       if (player) player.stack += result.amount
     }
 
-    // Mark eliminations
+    // Mark eliminations in a stable order (map iteration = registration order)
     for (const player of this.players.values()) {
-      if (player.stack === 0) player.eliminated = true
+      if (player.stack === 0 && !player.eliminated) {
+        player.eliminated = true
+        player.eliminationRank = ++this.eliminationCounter
+      }
     }
 
     table.dealerIndex = (table.dealerIndex + 1) % table.playerIds.length
