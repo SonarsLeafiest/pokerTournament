@@ -144,6 +144,7 @@ function startTournament(): void {
 // ── HTTP server ───────────────────────────────────────────────────────────────
 
 const dashboardHtml = readFileSync(join(__dirname, '../../dashboard/index.html'), 'utf-8')
+  .replace('__SPECTATOR_DELAY_S__', String(SPECTATOR_DELAY_MS / 1000))
 
 const handleHttp = createHttpHandler({
   dashboardHtml,

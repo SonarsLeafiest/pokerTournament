@@ -624,6 +624,8 @@
       return '<div class="card h-card back"></div>'
     }
 
+    const SPECTATOR_DELAY_S = __SPECTATOR_DELAY_S__  // injected at server startup
+
     let lastState = null
     const tableStates  = new Map()    // tableId → TableStateMsg
     const lastHandPots = new Map()    // tableId → pot size of most recent completed hand
@@ -633,8 +635,39 @@
     const bountyHistory      = []     // [{type,…}] newest-first
     const MAX_BOUNTY_HISTORY = 50
 
+    // ── Delayed-view countdown ────────────────────────────────────────────────
+    let _dvTimer = null
+    function fmtCountdown(s) {
+      const m = Math.floor(s / 60), sec = s % 60
+      return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0')
+    }
+    function startDelayCountdown() {
+      clearInterval(_dvTimer)
+      const label = document.querySelector('#delayed-view-msg .dv-label')
+      if (!KEY || SPECTATOR_DELAY_S <= 0) {
+        if (label) label.textContent = 'Delayed view — catching up…'
+        return
+      }
+      let remaining = SPECTATOR_DELAY_S
+      const tick = () => {
+        if (remaining > 0) {
+          if (label) label.textContent = `Delayed view — ${fmtCountdown(remaining)}`
+          remaining--
+        } else {
+          clearInterval(_dvTimer)
+          if (label) label.textContent = 'Delayed view — catching up…'
+        }
+      }
+      tick()
+      _dvTimer = setInterval(tick, 1000)
+    }
+    function stopDelayCountdown() {
+      clearInterval(_dvTimer)
+      _dvTimer = null
+    }
+
     // Show catching-up indicator for keyed (delayed) connections until first data arrives
-    if (KEY) document.getElementById('delayed-view-msg').classList.add('show')
+    if (KEY) { document.getElementById('delayed-view-msg').classList.add('show'); startDelayCountdown() }
 
     // ── Seat layout ───────────────────────────────────────────────────────────
 
@@ -899,7 +932,7 @@
     function renderTableState(msg) {
       lastState = msg
       document.getElementById('waiting').style.display = 'none'
-      document.getElementById('delayed-view-msg').classList.remove('show')
+      document.getElementById('delayed-view-msg').classList.remove('show'); stopDelayCountdown()
       document.getElementById('stage-label').textContent =
         (activeTablesFromServer.length > 1
           ? msg.tableId.replace('table-', 'Table ') + '  ·  '
@@ -1053,7 +1086,7 @@
         renderTableList()
         document.getElementById('winner-overlay').classList.remove('show')
         // Re-show catching-up indicator for keyed connections (new tournament, new delay)
-        if (KEY) document.getElementById('delayed-view-msg').classList.add('show')
+        if (KEY) { document.getElementById('delayed-view-msg').classList.add('show'); startDelayCountdown() }
         document.getElementById('countdown-overlay').classList.add('show')
         document.getElementById('cd-num').textContent =
           msg.secondsRemaining > 0 ? msg.secondsRemaining : 'GO!'
