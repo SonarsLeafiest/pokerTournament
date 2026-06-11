@@ -239,7 +239,8 @@ All traffic runs on a single port (`PORT`, default `3000`), making it straightfo
 
 ```bash
 # Start the server first
-npm start
+cd server/
+npm run dev
 
 # In another terminal — expose it through a Cloudflare tunnel
 cloudflared tunnel --url http://localhost:3000
