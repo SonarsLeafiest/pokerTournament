@@ -336,7 +336,16 @@ export class Orchestrator {
       this.pendingActionMsgs.set(playerId, msg)
       hub.sendToAgent(playerId, msg)
 
-      const response = await hub.waitForAction(playerId) as AgentActionMsg
+      let response: AgentActionMsg
+      try {
+        response = await hub.waitForAction(playerId) as AgentActionMsg
+      } catch (e) {
+        this.pendingActionMsgs.delete(playerId)
+        lastActions.set(playerId, 'TIMEOUT')
+        spectator.broadcast({ type: 'agent_timeout', tableId: tId, playerId, handNumber })
+        console.log(`[timeout] ⏰  ${playerId} timed out — auto-fold (hand #${handNumber}, ${tId})`)
+        throw e
+      }
       this.pendingActionMsgs.delete(playerId)
 
       // H3: discard actions that claim to be for a different game/table
@@ -449,6 +458,7 @@ export class Orchestrator {
         holeCards:      p.holeCards,
         lastAction:     lastActions.get(p.id),
         isBountyTarget: p.id === bountyTargetId,
+        avatarUrl:      hub.getAgentAvatarUrl(p.id),
       })),
       communityCards: state.communityCards,
       pot:            state.pot,

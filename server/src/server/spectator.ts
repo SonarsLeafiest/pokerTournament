@@ -9,6 +9,7 @@ import type {
   TableStateMsg,
   LobbySnapshotMsg,
   TournamentCompleteMsg,
+  SpectatorSyncMsg,
 } from './protocol.js'
 
 const MAX_HAND_HISTORY = 200
@@ -24,6 +25,7 @@ const DELAYED_FOR_AUTH = new Set<string>([
   'tournament_update',                                   // standings, blind levels, counts
   'bounty_announced', 'bounty_claimed', 'bounty_expired', 'bounty_cursed', // in-game events
   'countdown',                                           // tournament start timing
+  'agent_timeout',                                       // LLM missed its action window
 ])
 
 /**
@@ -97,6 +99,16 @@ export class SpectatorState {
     // Keyed auth with delay: no game-state catch-up. The felt starts blank and
     // fills in as the delayed queue delivers messages. This ensures no real-time
     // data is ever visible on the keyed view, even on initial load.
+    // Tell the client how long until the first queued message arrives so the
+    // countdown timer shows the actual remaining wait rather than always the full delay.
+    if (isAdmin && this.delayMs > 0) {
+      const hasQueuedMessages = this.queue.length > 0
+      const delayRemainingMs = hasQueuedMessages
+        ? Math.max(0, this.queue[0].deliverAt - Date.now())
+        : this.delayMs
+      const syncMsg: SpectatorSyncMsg = { type: 'spectator_sync', delayRemainingMs, hasQueuedMessages }
+      this._send(ws, syncMsg)
+    }
 
     ws.on('error', (err) => {
       console.error('[ws] spectator socket error:', err.message)

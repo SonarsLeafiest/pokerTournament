@@ -15,6 +15,7 @@ export interface TablePlayerState {
   holeCards: Card[]
   lastAction?: string
   isBountyTarget?: boolean
+  avatarUrl?: string
 }
 
 export interface TableStateMsg {
@@ -146,7 +147,22 @@ export interface TableWinnerMsg {
 
 export interface LobbySnapshotMsg {
   type: 'lobby_snapshot'
-  agents: { id: string; name: string }[]
+  agents: { id: string; name: string; avatarUrl?: string }[]
+}
+
+export interface AgentTimeoutMsg {
+  type: 'agent_timeout'
+  tableId: string
+  playerId: string
+  handNumber: number
+}
+
+export interface SpectatorSyncMsg {
+  type: 'spectator_sync'
+  /** Milliseconds until the first queued message will be released to this viewer. */
+  delayRemainingMs: number
+  /** True if the server queue has messages waiting — countdown should tick. False means no active tournament, show static time. */
+  hasQueuedMessages: boolean
 }
 
 export interface ErrorMsg {
@@ -190,7 +206,7 @@ export interface AgentActionAckMsg {
   gameId: string
 }
 
-export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | RegisterAckMsg | LobbySnapshotMsg | ErrorMsg
+export type ServerMessage = ActionRequiredMsg | HandResultMsg | TournamentUpdateMsg | CountdownMsg | TableStateMsg | TournamentEndMsg | TournamentCompleteMsg | TableWinnerMsg | BountyAnnouncedMsg | BountyClaimedMsg | BountyExpiredMsg | BountyCurseRequiredMsg | BountyCursedMsg | RegisterAckMsg | LobbySnapshotMsg | SpectatorSyncMsg | AgentTimeoutMsg | ErrorMsg
 
 // ── Agent → Server ───────────────────────────────────────────────────────────
 
@@ -198,6 +214,7 @@ export interface AgentRegisterMsg {
   type: 'register'
   agentId: string
   agentName: string
+  avatarUrl?: string
 }
 
 export interface AgentActionMsg {

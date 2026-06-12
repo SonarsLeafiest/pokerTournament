@@ -1,11 +1,12 @@
 import { WebSocketServer, WebSocket } from 'ws'
 import type { IncomingMessage } from 'http'
 import type { Duplex } from 'stream'
-import type { AgentMessage, ServerMessage } from './protocol.js'
+import type { AgentMessage, AgentRegisterMsg, ServerMessage } from './protocol.js'
 
 export interface ConnectedAgent {
   id: string
   name: string
+  avatarUrl?: string
   ws: WebSocket
   connected: boolean
   actionTimer?: ReturnType<typeof setTimeout>    // paused while disconnected; restarted on reconnect
@@ -130,6 +131,13 @@ export class WebSocketHub {
         agentId = agentIdRaw
         const existing = this.agents.get(agentId)
 
+        // Validate optional avatar URL: must be an absolute http(s) URL, max 512 chars.
+        const rawAvatarUrl = (msg as AgentRegisterMsg & { avatarUrl?: unknown }).avatarUrl
+        const avatarUrl = (typeof rawAvatarUrl === 'string'
+          && rawAvatarUrl.length <= 512
+          && /^https?:\/\/\S+$/.test(rawAvatarUrl))
+          ? rawAvatarUrl : undefined
+
         if (existing && !existing.connected) {
           // Reconnect: check IP matches to prevent identity hijacking
           if (remoteAddress && existing.remoteAddress && existing.remoteAddress !== remoteAddress) {
@@ -142,6 +150,7 @@ export class WebSocketHub {
           existing.connected    = true
           existing._serverClose = undefined
           existing.name         = msg.agentName
+          if (avatarUrl !== undefined) existing.avatarUrl = avatarUrl
           this.isAlive.set(agentId, true)
           clearTimeout(existing.reconnectTimer)
           existing.reconnectTimer = undefined
@@ -182,7 +191,7 @@ export class WebSocketHub {
             ws.close()
             return
           }
-          const agent: ConnectedAgent = { id: agentId, name: msg.agentName, ws, connected: true, remoteAddress }
+          const agent: ConnectedAgent = { id: agentId, name: msg.agentName, avatarUrl, ws, connected: true, remoteAddress }
           this.agents.set(agentId, agent)
           this.isAlive.set(agentId, true)
           this.send(ws, {
@@ -376,10 +385,14 @@ export class WebSocketHub {
       .map(([id]) => id)
   }
 
-  getConnectedAgents(): { id: string; name: string }[] {
+  getConnectedAgents(): { id: string; name: string; avatarUrl?: string }[] {
     return [...this.agents.values()]
       .filter(a => a.connected)
-      .map(a => ({ id: a.id, name: a.name }))
+      .map(a => ({ id: a.id, name: a.name, avatarUrl: a.avatarUrl }))
+  }
+
+  getAgentAvatarUrl(agentId: string): string | undefined {
+    return this.agents.get(agentId)?.avatarUrl
   }
 
   isAgentConnected(agentId: string): boolean {
